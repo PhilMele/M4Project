@@ -5,4 +5,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Allauth package
     path('accounts/', include('allauth.urls')),
+    path('', include('user_management.urls')),
 ]
