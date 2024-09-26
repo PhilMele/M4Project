@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # used to assign country to userprofile model
+    'django_countries',
     # list of django apps interacting in the project
     'user_management',
     'parking_management',
