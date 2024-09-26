@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # list of django apps interacting in the project
     'user_management',
+    'parking_management',
+    'parking_activity',
     # all auth package:
     'django.contrib.sites',
     'allauth',

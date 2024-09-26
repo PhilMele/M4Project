@@ -5,24 +5,31 @@
 <div class="container h-100">
     <div class="row h-100">
         <div class="col-7 col-md-6 my-auto">
-            <h1>Hi, {{request.user}}, welcome to your dashboard!</h1>
-
+            <h1>Hello {{request.user}}, welcome to your dashboard!</h1>
         </div>
     </div>
     <div class="row h-100">
-        <div class="col-7 col-md-6 my-auto">
-            <h2>Enter Or Leave Parking</h2>
-
+        <div class="col-6 col-md-6 my-auto">
+            <h2>Enter/Leave Parking</h2>
+        </div>
+        <div class="col-6 col-md-6 my-auto">
+            <a class="btn btn-success" href="{% url 'enter' %}">Button</a>
         </div>
     </div>
     <div class="row h-100">
-        <div class="col-7 col-md-6 my-auto">
-            <h2>Edit Account</h2>
+        <div class="col-6 col-md-6 my-auto">
+            <h2>My Account</h2>
+        </div>
+        <div class="col-6 col-md-6 my-auto">
+            <a class="btn btn-success">Button</a>
         </div>
     </div>
     <div class="row h-100">
-        <div class="col-7 col-md-6 my-auto">
-            <h2>Transaction History</h2>
+        <div class="col-6 col-md-6 my-auto">
+            <h2>History</h2>
+        </div>
+        <div class="col-6 col-md-6 my-auto">
+            <a class="btn btn-success">Button</a>
         </div>
     </div>
 </div>
