@@ -19,16 +19,16 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-        
+
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
-        # Create the UserProfile when a new User is created
+        print(f"User {instance.username} has been created with ID {instance.id}.")
         UserProfile.objects.create(user=instance)
     else:
-        # Ensure the UserProfile exists + save it
-        try:
-            instance.userprofile.save()
-        except UserProfile.DoesNotExist:
-            # If the user profile doesn't exist then create it
-            UserProfile.objects.create(user=instance)
+        print(f"User {instance.username} already exists, updating profile.")
+    # If the userprofile doesn't exist yet, this will raise an exception
+    try:
+        instance.userprofile.save()
+    except UserProfile.DoesNotExist:
+        print("No UserProfile found for this user.")
