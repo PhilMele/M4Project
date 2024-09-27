@@ -11,7 +11,7 @@ class Stay(models.Model):
     parking_name = models.ForeignKey(Parking, on_delete=models.CASCADE)
     
     def __str__(self):
-        return f"{self.user.user.username} - {self.parking_name.name} ({self.timestamp_enter})"
+        return f"{self.id} -{self.user.user.username} - {self.parking_name.name}"
 
 #note: there is redundancy in some of the FK, but equally adds more visibility from admin panel
 class EnterParking(models.Model):
@@ -20,11 +20,17 @@ class EnterParking(models.Model):
     stay = models.ForeignKey(Stay, on_delete=models.CASCADE)
     timestamp_enter = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
+    def __str__(self):
+        return f"{self.id} -{self.user.user.username} - {self.stay}"
+
 class LeaveParking(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     parking_name = models.ForeignKey(Parking, on_delete=models.CASCADE)
     stay = models.ForeignKey(Stay, on_delete=models.CASCADE)
     timestamp_leave = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.id} -{self.user.user.username} - {self.stay}"
 
 class Fee (models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

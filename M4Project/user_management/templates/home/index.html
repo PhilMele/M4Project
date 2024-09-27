@@ -9,12 +9,21 @@
         </div>
     </div>
     <div class="row h-100">
-        <div class="col-6 col-md-6 my-auto">
-            <h2>Enter/Leave Parking</h2>
+        {%if existing_stay_obj %}
+     
+        <div class="col-12 col-md-12">
+            <form method="POST" class="form-group" action = "{% url 'leave' stay_id %}">
+                {% csrf_token %}
+                <button class="btn btn-success">Leave {{parking_name}}</button>
+            </form>
         </div>
-        <div class="col-6 col-md-6 my-auto">
-            <a class="btn btn-success" href="{% url 'enter' %}">Button</a>
+        {%else%}
+        <div class="col-12 col-md-12">
+            <a class="btn btn-success" href="{% url 'enter' %}">Enter Parking</a>
         </div>
+        {%endif%}
+
+
     </div>
     <div class="row h-100">
         <div class="col-6 col-md-6 my-auto">
