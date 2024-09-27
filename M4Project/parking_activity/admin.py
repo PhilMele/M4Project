@@ -2,18 +2,36 @@ from django.contrib import admin
 from .models import Stay, Fee, LeaveParking, EnterParking
 # Register your models here.
 
-@admin.register(Stay)
-class stay(admin.ModelAdmin):
-    pass
+class StayAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'parking_name'
+    )
 
-@admin.register(Fee)
-class fee(admin.ModelAdmin):
-    pass
+class LeaveParkingAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'parking_name',
+        'stay',
+        'timestamp_leave',
+    )
 
-@admin.register(EnterParking)
-class enterparking(admin.ModelAdmin):
-    pass
+class FeeAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'calculated_fee',
+        'parking_name',
+    )
 
-@admin.register(LeaveParking)
-class leaveparking(admin.ModelAdmin):
-    pass
+class EnterParkingAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'parking_name',
+        'stay',
+        'timestamp_enter',
+    )
+
+admin.site.register(Stay, StayAdmin)
+admin.site.register(Fee, FeeAdmin)
+admin.site.register(EnterParking, EnterParkingAdmin)
+admin.site.register(LeaveParking, LeaveParkingAdmin)
