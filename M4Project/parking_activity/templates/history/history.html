@@ -1,0 +1,23 @@
+{%extends 'base.html' %}
+{%load static %}
+
+{%block content%}
+
+<div class="container">
+    {%for stay in user_history%}
+        <div class="row">
+            <div class="col">{{stay.parking_name}}</div>
+        </div>
+        <div class="row">
+            <div class="col-6">Arrived at: </div>
+            <div class="col-6">{{stay.timestamp_enter}}</div>
+        </div>
+        <div class="row">
+            <div class="col-6">Left at: </div>
+            <div class="col-6">{{stay.timestamp_leave}}</div>
+        </div>
+    {%endfor%}
+    
+</div>
+
+{%endblock%}
