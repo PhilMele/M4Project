@@ -68,9 +68,19 @@ def history(request):
                 'stay': stay,
                 'entry': entry
             })
+        
         #I need to return timestamp of child LeaverParking
-        print(f'user_history: {user_history}+ ')
+        leave_object = LeaveParking.objects.filter(stay=stay)
+        print(f'leave_object: {leave_object}')
+        #append resuls to empty list created above
+        for leave in leave_object:
+            leave_parking_history.append({
+                'stay': stay,
+                'leave': leave
+            })
+        
     return render(request, 'history/history.html', {
         'user_history':user_history,
         'enter_parking_history':enter_parking_history,
+        'leave_parking_history':leave_parking_history,
         })

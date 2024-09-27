@@ -19,7 +19,11 @@
         </div>
         <div class="row">
             <div class="col-6">Left at: </div>
-            <div class="col-6"></div>
+            {% for item in leave_parking_history %}
+                {%if stay.id == item.stay.id%}
+                    <div class="col-6">{{ item.leave.timestamp_leave }}</div>
+                {%endif%}
+            {%endfor%}
         </div>
     {% endfor %}
     
