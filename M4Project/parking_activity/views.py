@@ -50,6 +50,27 @@ def leave(request, stay_id):
 
 @login_required
 def history(request):
-    user_history = Stay.objects.filter(user=request.user.userprofile)
+    user_history = Stay.objects.filter(user=request.user.userprofile).order_by('-id')
     print(user_history)
-    return render(request, 'history/history.html', {'user_history':user_history})
+
+    #create empty list of enter and leave parking
+    enter_parking_history = []
+    leave_parking_history = []
+
+    for stay in user_history:
+        #I need to return timestamp of child EnterParking
+        #I filtjer all EnterParking objects with a matching stay ID
+        enter_object = EnterParking.objects.filter(stay=stay)
+        print(f'enter_object: {enter_object}')
+        #append resuls to empty list created above
+        for entry in enter_object:
+            enter_parking_history.append({
+                'stay': stay,
+                'entry': entry
+            })
+        #I need to return timestamp of child LeaverParking
+        print(f'user_history: {user_history}+ ')
+    return render(request, 'history/history.html', {
+        'user_history':user_history,
+        'enter_parking_history':enter_parking_history,
+        })
