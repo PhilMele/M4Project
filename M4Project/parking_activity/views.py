@@ -5,6 +5,8 @@ from .forms import StayForm
 from .models import Stay, Fee, EnterParking, LeaveParking
 from parking_management.models import Rate
 from datetime import timedelta
+from decimal import Decimal
+import math
 
 # Create your views here.
 @login_required
@@ -60,17 +62,38 @@ def leave(request, stay_id):
         print(f'total_stay_time = {total_stay_time}')
 
         # Convert total_stay_time to hours
-        total_stay_time_hours = total_stay_time.total_seconds() / 3600
+        total_stay_time_hours = Decimal(total_stay_time.total_seconds()) / Decimal(3600)
         print(f'total_stay_time in hours = {total_stay_time_hours}')
     
 
         #look for applicate rate for parking ID and total stay again rate.hour_range
         rate_available = Rate.objects.filter(parking_name=stay.parking_name).order_by('hour_range')
         
+        #return applicable fee
+        #create variable to attach closest rate to it during loop
+        closest_rate = None
         for rate in rate_available:
             print(f'rate_available = Hour range:{rate.hour_range}; Rate:{rate.rate}')
-        #return applicable fee
+            if total_stay_time_hours <= Decimal(rate.hour_range):
+                closest_rate = rate
+                break 
+        
+        #if the user stayed longer than longest rate
+        #apply the latest rate on the list
+        if closest_rate is None and rate_available.exists():
+            closest_rate = rate_available.last()
+
+        if closest_rate:
+            print(f'closest rate is {closest_rate}')
+        else:
+            print('Looks like there is a problem!')
+        
         #apply applicable fee against total user stay
+        #round up stay to next hour value
+        roundedup_total_stay_time_hours = math.ceil(total_stay_time_hours)
+        print(f'rounded_total_stay_time_hours = {roundedup_total_stay_time_hours}')
+        applicable_fee = closest_rate.rate * roundedup_total_stay_time_hours
+        print(f'applicable_fee = {applicable_fee}')
 
 
         return redirect('home')  
