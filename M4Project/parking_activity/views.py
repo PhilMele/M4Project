@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import StayForm
 from .models import Stay, Fee, EnterParking, LeaveParking
+from parking_management.models import Rate
 
 # Create your views here.
 @login_required
@@ -41,8 +42,16 @@ def leave(request, stay_id):
             parking_name=stay.parking_name,
             stay=stay,
         )
-        
         messages.success(request, "Successfully left the parking.")
+        #calculte fee relating to stay
+        #calculate total user stay
+        
+        #retrive parking name user is checking out from
+        #look for applicate rate for parking ID and total stay again rate.hour_range
+        #return applicable fee
+        #apply applicable fee against total user stay
+
+
         return redirect('home')  
     except Stay.DoesNotExist:
         messages.error(request, "Stay does not exist.")
@@ -56,6 +65,7 @@ def history(request):
     #create empty list of enter and leave parking
     enter_parking_history = []
     leave_parking_history = []
+    Fee = None
 
     for stay in user_history:
         #I need to return timestamp of child EnterParking
@@ -78,6 +88,8 @@ def history(request):
                 'stay': stay,
                 'leave': leave
             })
+
+        
         
     return render(request, 'history/history.html', {
         'user_history':user_history,

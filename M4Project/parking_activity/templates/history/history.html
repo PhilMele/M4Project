@@ -10,20 +10,24 @@
             <div class="col">{{ stay.parking_name.name }}</div>
         </div>
         <div class="row">
-            <div class="col-6">Arrived at: </div>
+            <div class="col-4">Arrived at: </div>
             {% for item in enter_parking_history %}
                 {% if stay.id == item.stay.id %}
-                    <div class="col-6">{{ item.entry.timestamp_enter }}</div>
+                    <div class="col-4">{{ item.entry.timestamp_enter }}</div>
                 {%endif%}
             {%endfor%}
         </div>
         <div class="row">
-            <div class="col-6">Left at: </div>
+            <div class="col-4">Left at: </div>
             {% for item in leave_parking_history %}
                 {%if stay.id == item.stay.id%}
-                    <div class="col-6">{{ item.leave.timestamp_leave }}</div>
+                    <div class="col-4">{{ item.leave.timestamp_leave }}</div>
                 {%endif%}
             {%endfor%}
+        </div>
+        <div class="row">
+            <div class="col-4">Paid: </div>
+            <div class="col-4">£10</div>
         </div>
     {% endfor %}
     
