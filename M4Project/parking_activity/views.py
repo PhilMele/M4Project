@@ -4,6 +4,7 @@ from django.contrib import messages
 from .forms import StayForm
 from .models import Stay, Fee, EnterParking, LeaveParking
 from parking_management.models import Rate
+from datetime import timedelta
 
 # Create your views here.
 @login_required
@@ -45,9 +46,29 @@ def leave(request, stay_id):
         messages.success(request, "Successfully left the parking.")
         #calculte fee relating to stay
         #calculate total user stay
-        
-        #retrive parking name user is checking out from
+
+        #retrieve enter timestamp
+        enter_time = EnterParking.objects.get(stay=stay_id)
+        print(f'enter_time = {enter_time.timestamp_enter}')
+
+        #retrieve leave timestamp
+        exit_time = LeaveParking.objects.get(stay=stay_id)
+        print(f'exit_time = {exit_time.timestamp_leave}')
+
+        #difference between enter and leave time
+        total_stay_time = exit_time.timestamp_leave - enter_time.timestamp_enter
+        print(f'total_stay_time = {total_stay_time}')
+
+        # Convert total_stay_time to hours
+        total_stay_time_hours = total_stay_time.total_seconds() / 3600
+        print(f'total_stay_time in hours = {total_stay_time_hours}')
+    
+
         #look for applicate rate for parking ID and total stay again rate.hour_range
+        rate_available = Rate.objects.filter(parking_name=stay.parking_name).order_by('hour_range')
+        
+        for rate in rate_available:
+            print(f'rate_available = Hour range:{rate.hour_range}; Rate:{rate.rate}')
         #return applicable fee
         #apply applicable fee against total user stay
 
