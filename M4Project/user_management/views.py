@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from parking_activity.models import Stay, Fee, EnterParking, LeaveParking
+from parking_activity.models import Stay, EnterParking, LeaveParking
 
 
 # Create your views here.

@@ -1,11 +1,12 @@
 from django.contrib import admin
-from .models import Stay, Fee, LeaveParking, EnterParking
+from .models import Stay, LeaveParking, EnterParking
 # Register your models here.
 
 class StayAdmin(admin.ModelAdmin):
     list_display = (
         'user',
-        'parking_name'
+        'parking_name',
+        'calculated_fee'
     )
 
 class LeaveParkingAdmin(admin.ModelAdmin):
@@ -32,6 +33,6 @@ class EnterParkingAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(Stay, StayAdmin)
-admin.site.register(Fee, FeeAdmin)
+
 admin.site.register(EnterParking, EnterParkingAdmin)
 admin.site.register(LeaveParking, LeaveParkingAdmin)

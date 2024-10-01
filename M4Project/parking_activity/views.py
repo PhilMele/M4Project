@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import StayForm
-from .models import Stay, Fee, EnterParking, LeaveParking
+from .models import Stay, EnterParking, LeaveParking
 from parking_management.models import Rate
 from datetime import timedelta
 from decimal import Decimal
@@ -33,6 +33,7 @@ def enter(request):
         stayform = StayForm()
 
     return render(request, 'stays/enter.html', {'stayform': stayform})
+
 
 # Mark user as leaving parking
 @login_required
@@ -71,50 +72,18 @@ def leave(request, stay_id):
 
         if applicable_fee:
             print(f'applicable_fee is {applicable_fee}')
+            fee_form(request, applicable_fee, stay_id)
         else:
             print(f'no applicable fee')
-    
-
-        #look for applicate rate for parking ID and total stay again rate.hour_range
-        # rate_available = Rate.objects.filter(parking_name=stay.parking_name).order_by('hour_range')
-        
-        #return applicable fee
-        #create variable to attach closest rate to it during loop
-        # closest_rate = None
-        # for rate in rate_available:
-        #     print(f'rate_available = Hour range:{rate.hour_range}; Rate:{rate.rate}')
-        #     if total_stay_time_hours <= Decimal(rate.hour_range):
-        #         closest_rate = rate
-        #         break 
-        
-        #if the user stayed longer than longest rate
-        #apply the latest rate on the list
-        # if closest_rate is None and rate_available.exists():
-        #     closest_rate = rate_available.last()
-
-        # if closest_rate:
-        #     print(f'closest rate is {closest_rate}')
-        # else:
-        #     print('Looks like there is a problem!')
-        
-        #apply applicable fee against total user stay
-        #round up stay to next hour value
-        # roundedup_total_stay_time_hours = math.ceil(total_stay_time_hours)
-        # print(f'rounded_total_stay_time_hours = {roundedup_total_stay_time_hours}')
-        # applicable_fee = closest_rate.rate * roundedup_total_stay_time_hours
-        # print(f'applicable_fee = {applicable_fee}')
-
-        #NEXT STEP: 
-        #look at moving logic to another function
-        #and return logic back to this point.
-
 
         return redirect('home')  
     except Stay.DoesNotExist:
         messages.error(request, "Stay does not exist.")
         return redirect('home') 
 
+
 # Fee calculation logic
+@login_required
 def calculate_user_fee(stay, total_stay_time_hours):
 
     #apply applicable fee against total user stay
@@ -147,11 +116,18 @@ def calculate_user_fee(stay, total_stay_time_hours):
     else:
         print('Looks like there is a problem!')
         return None
-        
 
 
-    
-    
+# Create new Fee model object agianst user name
+@login_required     
+def fee_form(request, applicable_fee,stay_id ):
+    try:
+        stay = Stay.objects.get(id=stay_id)
+        stay.calculated_fee = applicable_fee
+        stay.save()
+        print(f"Stay object {stay_id} updated with calculated_fee: {stay.calculated_fee}")
+    except Stay.DoesNotExist:
+        print('Stay object does not exist')
 
 
 @login_required
@@ -162,7 +138,7 @@ def history(request):
     #create empty list of enter and leave parking
     enter_parking_history = []
     leave_parking_history = []
-    Fee = None
+
 
     for stay in user_history:
         #I need to return timestamp of child EnterParking
