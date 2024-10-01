@@ -34,6 +34,7 @@ class LeaveParking(models.Model):
 
 class Fee (models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
+    stay = models.ForeignKey(Stay,on_delete=models.SET_NULL, null=True, blank=True)
     calculated_fee = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     parking_name = models.ForeignKey(Parking, on_delete=models.SET_NULL, null=True, blank=True)
 

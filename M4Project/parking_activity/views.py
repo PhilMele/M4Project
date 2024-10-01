@@ -9,6 +9,7 @@ from decimal import Decimal
 import math
 
 # Create your views here.
+# Mark user as entering parking
 @login_required
 def enter(request):
     if request.method == "POST":
@@ -33,6 +34,7 @@ def enter(request):
 
     return render(request, 'stays/enter.html', {'stayform': stayform})
 
+# Mark user as leaving parking
 @login_required
 def leave(request, stay_id):
     # Retrieve the existing Stay object
@@ -64,42 +66,93 @@ def leave(request, stay_id):
         # Convert total_stay_time to hours
         total_stay_time_hours = Decimal(total_stay_time.total_seconds()) / Decimal(3600)
         print(f'total_stay_time in hours = {total_stay_time_hours}')
+
+        applicable_fee = calculate_user_fee(stay, total_stay_time_hours)
+
+        if applicable_fee:
+            print(f'applicable_fee is {applicable_fee}')
+        else:
+            print(f'no applicable fee')
     
 
         #look for applicate rate for parking ID and total stay again rate.hour_range
-        rate_available = Rate.objects.filter(parking_name=stay.parking_name).order_by('hour_range')
+        # rate_available = Rate.objects.filter(parking_name=stay.parking_name).order_by('hour_range')
         
         #return applicable fee
         #create variable to attach closest rate to it during loop
-        closest_rate = None
-        for rate in rate_available:
-            print(f'rate_available = Hour range:{rate.hour_range}; Rate:{rate.rate}')
-            if total_stay_time_hours <= Decimal(rate.hour_range):
-                closest_rate = rate
-                break 
+        # closest_rate = None
+        # for rate in rate_available:
+        #     print(f'rate_available = Hour range:{rate.hour_range}; Rate:{rate.rate}')
+        #     if total_stay_time_hours <= Decimal(rate.hour_range):
+        #         closest_rate = rate
+        #         break 
         
         #if the user stayed longer than longest rate
         #apply the latest rate on the list
-        if closest_rate is None and rate_available.exists():
-            closest_rate = rate_available.last()
+        # if closest_rate is None and rate_available.exists():
+        #     closest_rate = rate_available.last()
 
-        if closest_rate:
-            print(f'closest rate is {closest_rate}')
-        else:
-            print('Looks like there is a problem!')
+        # if closest_rate:
+        #     print(f'closest rate is {closest_rate}')
+        # else:
+        #     print('Looks like there is a problem!')
         
         #apply applicable fee against total user stay
         #round up stay to next hour value
-        roundedup_total_stay_time_hours = math.ceil(total_stay_time_hours)
-        print(f'rounded_total_stay_time_hours = {roundedup_total_stay_time_hours}')
-        applicable_fee = closest_rate.rate * roundedup_total_stay_time_hours
-        print(f'applicable_fee = {applicable_fee}')
+        # roundedup_total_stay_time_hours = math.ceil(total_stay_time_hours)
+        # print(f'rounded_total_stay_time_hours = {roundedup_total_stay_time_hours}')
+        # applicable_fee = closest_rate.rate * roundedup_total_stay_time_hours
+        # print(f'applicable_fee = {applicable_fee}')
+
+        #NEXT STEP: 
+        #look at moving logic to another function
+        #and return logic back to this point.
 
 
         return redirect('home')  
     except Stay.DoesNotExist:
         messages.error(request, "Stay does not exist.")
         return redirect('home') 
+
+# Fee calculation logic
+def calculate_user_fee(stay, total_stay_time_hours):
+
+    #apply applicable fee against total user stay
+    #round up stay to next hour value
+    roundedup_total_stay_time_hours = math.ceil(total_stay_time_hours)
+    print(f'rounded_total_stay_time_hours = {roundedup_total_stay_time_hours}')
+
+    #look for applicate rate for parking ID and total stay again rate.hour_range
+    rate_available = Rate.objects.filter(parking_name=stay.parking_name).order_by('hour_range')
+
+    #return applicable fee
+    #create variable to attach closest rate to it during loop
+    closest_rate = None
+    for rate in rate_available:
+        print(f'rate_available = Hour range:{rate.hour_range}; Rate:{rate.rate}')
+        if total_stay_time_hours <= Decimal(rate.hour_range):
+            closest_rate = rate
+            break 
+    
+    #if the user stayed longer than longest rate
+    #apply the latest rate on the list
+    if closest_rate is None and rate_available.exists():
+        closest_rate = rate_available.last()
+
+    if closest_rate:
+        print(f'closest rate is {closest_rate}')
+        applicable_fee = closest_rate.rate * roundedup_total_stay_time_hours
+        print(f'applicable_fee = {applicable_fee}')
+        return (applicable_fee)
+    else:
+        print('Looks like there is a problem!')
+        return None
+        
+
+
+    
+    
+
 
 @login_required
 def history(request):
