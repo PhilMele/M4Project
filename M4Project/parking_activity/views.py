@@ -2,16 +2,20 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import StayForm
-from .models import Stay, EnterParking, LeaveParking
+from .models import Stay, EnterParking, LeaveParking, UserPayment
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from parking_management.models import Rate
 from datetime import timedelta
 from decimal import Decimal
 import math
 
 #stripe modul imports
+
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import stripe
+import time
 
 
 # Create your views here.
@@ -170,11 +174,32 @@ def payment_successful(request):
 
 @login_required
 def payment_cancelled(request):
-    pass
+    return render(request, 'payment_cancelled.html')
 
-@login_required
+@csrf_exempt
 def stripe_webhook(request):
-    pass
+    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    time.sleep(10) # time left to stripe to process payment
+    payload = request.body
+    signature_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, signature_header, settings.STRIPE_WEBHOOK_SECRET_TEST
+        )
+    except ValueError as e:
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        return HttpResponse(status=400)
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        session_id = session.get('id', None)
+        time.sleep(15)
+        user_payment = UserPayment.objects.get(stripe_checkout_id=session_id)
+        line_items = stripe.checkout.Session.list_line_items(session_id,limit=1)
+        user_payment.payment.bool = True
+        user_payment.save()
+    return HttpResponse(status=200)
 
 
 
