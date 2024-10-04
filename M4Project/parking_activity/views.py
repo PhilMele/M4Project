@@ -8,6 +8,12 @@ from datetime import timedelta
 from decimal import Decimal
 import math
 
+#stripe modul imports
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
+import stripe
+
+
 # Create your views here.
 # Mark user as entering parking
 @login_required
@@ -73,6 +79,7 @@ def leave(request, stay_id):
         if applicable_fee:
             print(f'applicable_fee is {applicable_fee}')
             fee_form(request, applicable_fee, stay_id)
+            payment(request,applicable_fee, stay_id)
         else:
             print(f'no applicable fee')
 
@@ -127,11 +134,39 @@ def fee_form(request, applicable_fee,stay_id ):
     except Stay.DoesNotExist:
         print('Stay object does not exist')
 
+@login_required 
+def payment(request,applicable_fee, stay_id):
+    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    if request.method == 'POST':
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types = ['cards'],
+            line_items =[
+                {
+                    'price':applicable_fee,
+                    'quantity':1,
+
+                },
+            ],
+            mode = 'payment',
+            customer_creation = 'always',
+            succesful_url = settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url = settings.REDIRECT_DOMAIN + '/payment_cancelled',
+        )
+        print(f'checkout_session = {checkout_session}')
+        return redirect(checkout_session.url, code=303)
 
 #stripe payment logic
 @login_required
 def payment_successful(request):
-    pass
+    stripe.api_key = stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    checkout_session_id = request.GET.get('session_id', None)
+    session = stripe.checkout.Session.retrieve(checkout_session_id)
+    customer = stripe.Customer.retrieve(session.customer)
+    user_id = request.user.userprofile.id
+    user_payment = UserPayment.objects.get(user=user_id)
+    user_payment.stripe_checkout_id = checkout_session_id
+    user_payment.save()
+    return render(request, 'payment_successful.html',{'customer':customer})
 
 @login_required
 def payment_cancelled(request):
