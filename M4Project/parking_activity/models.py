@@ -10,6 +10,7 @@ class Stay(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
     parking_name = models.ForeignKey(Parking, on_delete=models.SET_NULL, null=True, blank=True)
     calculated_fee = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    paid = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.id} -{self.user.user.username} - {self.parking_name.name}"

@@ -83,9 +83,7 @@ def leave(request, stay_id):
 
 
 # Fee calculation logic
-@login_required
 def calculate_user_fee(stay, total_stay_time_hours):
-
     #apply applicable fee against total user stay
     #round up stay to next hour value
     roundedup_total_stay_time_hours = math.ceil(total_stay_time_hours)
