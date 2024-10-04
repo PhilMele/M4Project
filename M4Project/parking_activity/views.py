@@ -128,6 +128,21 @@ def fee_form(request, applicable_fee,stay_id ):
         print('Stay object does not exist')
 
 
+#stripe payment logic
+@login_required
+def payment_successful(request):
+    pass
+
+@login_required
+def payment_cancelled(request):
+    pass
+
+@login_required
+def stripe_webhook(request):
+    pass
+
+
+
 @login_required
 def history(request):
     user_history = Stay.objects.filter(user=request.user.userprofile).order_by('-id')

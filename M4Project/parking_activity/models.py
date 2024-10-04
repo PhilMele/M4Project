@@ -2,6 +2,8 @@ from django.db import models
 from decimal import Decimal
 from user_management.models import UserProfile
 from parking_management.models import Parking
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 
 
@@ -33,3 +35,17 @@ class LeaveParking(models.Model):
 
     def __str__(self):
         return f"{self.id} -{self.user.user.username} - {self.stay}"
+
+
+class UserPayment(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    payment_bool= models.BooleanField(default=False)
+    stripe_checkout_id = models.CharField(max_length=500)
+
+@receiver(post_save,sender=UserProfile)
+def create_user_payment(sender, instance, created, **kwargs):
+    if created:
+        UserPayment.objects.create(user=instance)
+
+
+
