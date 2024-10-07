@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from parking_activity.models import Stay, EnterParking, LeaveParking
 
 
 
 # Create your views here.
+#register user
 def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -18,6 +19,10 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'account/signup.html', {'form': form})
 
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 
 @login_required

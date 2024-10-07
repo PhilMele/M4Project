@@ -26,6 +26,8 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
         print(f"User {instance.username} has been created with ID {instance.id}.")
         UserProfile.objects.create(user=instance)
     else:
+        #instead of creating a new userprofile
+        #if the userprofile already exists its gets updated.
         print(f"User {instance.username} already exists, updating profile.")
     # If the userprofile doesn't exist yet, this will raise an exception
     try:
