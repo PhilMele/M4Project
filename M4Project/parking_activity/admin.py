@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Stay, LeaveParking, EnterParking
+from .models import Stay, LeaveParking, EnterParking, UserPayment
 # Register your models here.
 
 class StayAdmin(admin.ModelAdmin):
@@ -32,7 +32,15 @@ class EnterParkingAdmin(admin.ModelAdmin):
         'timestamp_enter',
     )
 
+class UserPaymentAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'payment_bool',
+        'stripe_checkout_id',
+    )
+
 admin.site.register(Stay, StayAdmin)
 
 admin.site.register(EnterParking, EnterParkingAdmin)
 admin.site.register(LeaveParking, LeaveParkingAdmin)
+admin.site.register(UserPayment, UserPaymentAdmin)

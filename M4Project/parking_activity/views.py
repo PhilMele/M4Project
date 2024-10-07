@@ -138,26 +138,41 @@ def fee_form(request, applicable_fee,stay_id ):
     except Stay.DoesNotExist:
         print('Stay object does not exist')
 
-@login_required 
-def payment(request,applicable_fee, stay_id):
-    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
-    if request.method == 'POST':
-        checkout_session = stripe.checkout.Session.create(
-            payment_method_types = ['cards'],
-            line_items =[
-                {
-                    'price':applicable_fee,
-                    'quantity':1,
 
-                },
-            ],
-            mode = 'payment',
-            customer_creation = 'always',
-            succesful_url = settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
+
+@login_required
+def payment(request,applicable_fee,stay_id):
+    try:
+        #set API key the begining to avoid 
+        #"Error in payment process:No API key provided."
+        stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+        amount_int = int(applicable_fee*100)
+
+        #create a price object in stripe
+        price_object = stripe.Price.create(
+            unit_amount=amount_int,
+            currency="usd",
+            product_data={
+                "name":"Parking Fee"
+            }
+        )
+
+        #create chekcout session
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price':price_object.id,
+                'quantity':1,
+            },],
+            mode='payment',
+            success_url = settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
             cancel_url = settings.REDIRECT_DOMAIN + '/payment_cancelled',
         )
-        print(f'checkout_session = {checkout_session}')
-        return redirect(checkout_session.url, code=303)
+        #returns user to stripe checktout page
+        return redirect(checkout_session.url)
+    except Exception as e:
+        print(f'Error in payment process:{e}')
+        return HttpResponse("Error occured in payment processing")
 
 #stripe payment logic
 @login_required
@@ -170,28 +185,34 @@ def payment_successful(request):
     user_payment = UserPayment.objects.get(user=user_id)
     user_payment.stripe_checkout_id = checkout_session_id
     user_payment.save()
-    return render(request, 'payment_successful.html',{'customer':customer})
+    print("Payment sucessful!")
+    return render(request, 'payment/payment_successful.html',{'customer':customer})
 
 @login_required
 def payment_cancelled(request):
-    return render(request, 'payment_cancelled.html')
+    return render(request, 'payment/payment_cancelled.html')
 
 @csrf_exempt
 def stripe_webhook(request):
+    print("enter webhook")
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     time.sleep(10) # time left to stripe to process payment
     payload = request.body
-    signature_header = request.META['HTTP_STRIPE_SIGNATURE']
+    signature_header = request.META.get('HTTP_STRIPE_SIGNATURE')
+    webhook_secret = settings.STRIPE_WEBHOOK_SECRET_TEST
     event = None
     try:
         event = stripe.Webhook.construct_event(
-            payload, signature_header, settings.STRIPE_WEBHOOK_SECRET_TEST
+            payload, signature_header, webhook_secret
         )
     except ValueError as e:
+        print(f"Invalid payload: {str(e)}")  # Log the error for debugging
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError as e:
+        print(f"Signature verification failed: {str(e)}")  # Log the error for debugging
         return HttpResponse(status=400)
     if event['type'] == 'checkout.session.completed':
+        print("Webhook received: checkout.session.completed")
         session = event['data']['object']
         session_id = session.get('id', None)
         time.sleep(15)

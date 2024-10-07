@@ -36,7 +36,7 @@ class LeaveParking(models.Model):
     def __str__(self):
         return f"{self.id} -{self.user.user.username} - {self.stay}"
 
-
+#payment logic: credits: https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s
 class UserPayment(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     payment_bool= models.BooleanField(default=False)
