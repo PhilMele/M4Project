@@ -36,7 +36,11 @@ REDIRECT_DOMAIN = os.getenv('REDIRECT_DOMAIN', 'http://localhost:8000')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'geopay-12a0f6ced11c.herokuapp.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 # Application definition
 
