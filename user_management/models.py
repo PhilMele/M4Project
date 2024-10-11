@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class CardDetails(models.Model):
-    bank_number = models.CharField(max_length=80, null=True, blank=True)
+    card_number = models.CharField(max_length=80, null=True, blank=True)
     exp_month = models.CharField(max_length=2, null=True, blank=True)
     exp_year = models.CharField(max_length=4, null=True, blank=True)
     cvc = models.CharField(max_length=3, null=True, blank=True)
