@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-41ia^k8=rx6(!ai%w8mdv05cm*jfhkbg^q@^btd==c%ezqlx_o'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_PUBLIC_KEY_TEST')
 STRIPE_SECRET_KEY_TEST = os.getenv('STRIPE_SECRET_KEY_TEST')
 STRIPE_WEBHOOK_SECRET_TEST = os.getenv('STRIPE_WEBHOOK_SECRET_TEST')
