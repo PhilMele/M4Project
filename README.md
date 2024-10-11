@@ -171,3 +171,12 @@ Add to settings.py:
 * Log into heorku : `heroku login`
 * Add heroku remote : `git remote add heroku [Heroku Git URL]` (can be found in Heroku Settings)
 * Push code to Heroku: `git push heroku master`
+
+
+Problem encountered: the Procfile generated with command line from documentation echo web: gunicorn app:app > Procfile created an issue relating to encoding. The encoding defaulted to UTF-16 instead of UTF-8.
+
+To solve this problem: create a new Procfile through a Notepad, selected encoding UTF-8 and called it Procfile.txt in the same location as the actual Procfile. I then deleted the previous Procfile and renamed Procfile.txt to Procfile.
+
+Useful Link:
+
+Credits: https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
