@@ -74,7 +74,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-ROOT_URLCONF = 'M4Project.urls'
+ROOT_URLCONF = 'm4project.urls'
 
 TEMPLATES = [
     {
@@ -121,7 +121,7 @@ ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
-WSGI_APPLICATION = 'M4Project.wsgi.application'
+WSGI_APPLICATION = 'm4project.wsgi.application'
 
 
 # Database
