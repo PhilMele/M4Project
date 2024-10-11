@@ -171,7 +171,7 @@ Add to settings.py:
 * Log into heorku : `heroku login`
 * Add heroku remote : `git remote add heroku [Heroku Git URL]` (can be found in Heroku Settings)
 * Push code to Heroku: `git push heroku master`
-
+* Run first migration: `heroku run python manage.py migrate`
 
 Problem encountered: the Procfile generated with command line from documentation echo web: gunicorn app:app > Procfile created an issue relating to encoding. The encoding defaulted to UTF-16 instead of UTF-8.
 
