@@ -11,7 +11,7 @@ Django setup on local:
 
 GIt ignore setup credits: https://djangowaves.com/tips-tricks/gitignore-for-a-django-project/
 
-#Stripe
+## Stripe
 * Install Stripe `pip install stripe`
 * install Stripe CLI `winget install Stripe.StripeCLI` (for VS Code)
 * Get Stripe secret key + public key : create profile on stripe and find them on dashboard + add to .env file
@@ -65,6 +65,9 @@ This was fixed by adding initialising the API key at the begining of the logic:
             #set API key the begining to avoid 
             #"Error in payment process:No API key provided."
             stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+
+Problem make transaction automatic without having to enter card details everytime: 
+
 
 ## user authentication
 Leverage existing template provided by Django All-auth:

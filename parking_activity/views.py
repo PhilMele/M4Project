@@ -83,7 +83,7 @@ def leave(request, stay_id):
         if applicable_fee:
             print(f'applicable_fee is {applicable_fee}')
             fee_form(request, applicable_fee, stay_id)
-            payment(request,applicable_fee, stay_id)
+            return payment(request,applicable_fee, stay_id)
         else:
             print(f'no applicable fee')
 
@@ -139,7 +139,6 @@ def fee_form(request, applicable_fee,stay_id ):
         print('Stay object does not exist')
 
 
-
 @login_required
 def payment(request,applicable_fee,stay_id):
     try:
@@ -155,26 +154,6 @@ def payment(request,applicable_fee,stay_id):
             product_data={
                 "name":"Parking Fee"
             }
-        )
-
-        #add card prepopulated card details:
-        test_card_details = {
-            "number": "4242424242424242",  # Test Visa card number
-            "exp_month": 12,
-            "exp_year": 2025,
-            "cvc": "123",
-        }
-
-        # Create a PaymentIntent
-        payment_intent = stripe.PaymentIntent.create(
-            amount=amount_int,
-            currency="usd",
-            payment_method_data={
-                "type": "card",
-                "card": test_card_details,
-            },
-            confirmation_method='automatic',
-            confirm=True,  # Automatically confirm the payment
         )
 
         #create chekcout session

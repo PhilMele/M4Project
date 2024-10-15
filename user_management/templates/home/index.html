@@ -14,13 +14,17 @@
 
     <div class="row h-100">
         {%if existing_stay_obj %}
-     
-        <div class="col-12 col-md-12">
-            <form method="POST" class="form-group" action = "{% url 'leave' stay_id %}">
-                {% csrf_token %}
-                <button class="btn btn-success">Leave {{parking_name}}</button>
-            </form>
-        </div>
+
+        <div class="product">
+            <div class="description">
+              <h3>Leave {{parking_name}}</h3>
+              <h5>$20.00(TODO: Add price)</h5>
+            </div>
+          </div>
+          <form action="{% url 'leave' stay_id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" id="checkout-button">Checkout</button>
+          </form>
         {%else%}
         <div class="col-12 col-md-12">
             <a class="btn btn-success" href="{% url 'enter' %}">Enter Parking</a>
@@ -49,3 +53,4 @@
 </div>
 
 {%endblock%}
+
