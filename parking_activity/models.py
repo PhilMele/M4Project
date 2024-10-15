@@ -12,7 +12,7 @@ class Stay(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
     parking_name = models.ForeignKey(Parking, on_delete=models.SET_NULL, null=True, blank=True)
     calculated_fee = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    
+    stripe_checkout_id = models.CharField(max_length=500, default="")
     paid = models.BooleanField(default=False)
 
     def __str__(self):
