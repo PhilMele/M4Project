@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import StayForm
-from .models import Stay, EnterParking, LeaveParking, UserPayment
+from .models import Stay, EnterParking, LeaveParking
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from parking_management.models import Rate
@@ -175,8 +175,8 @@ def payment(request,applicable_fee,stay_id):
             },],
             mode='payment',
             customer=request.user.userprofile.stripe_customer_id,
-            success_url = settings.REDIRECT_DOMAIN + '/parking_activity/payment_successful?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url = settings.REDIRECT_DOMAIN + '/parking_activity/payment_cancelled',
+            success_url = settings.REDIRECT_DOMAIN + 'parking_activity/payment_successful?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url = settings.REDIRECT_DOMAIN + 'parking_activity/payment_cancelled',
         )
 
         #update stay model field with strip checkout id
