@@ -178,6 +178,12 @@ def payment(request,applicable_fee,stay_id):
             success_url = settings.REDIRECT_DOMAIN + '/parking_activity/payment_successful?session_id={CHECKOUT_SESSION_ID}',
             cancel_url = settings.REDIRECT_DOMAIN + '/parking_activity/payment_cancelled',
         )
+
+        #update stay model field with strip checkout id
+        stay = Stay.objects.get(id=stay_id)
+        stay.stripe_checkout_id = checkout_session.id
+        stay.save()
+
         #returns user to stripe checktout page
         return redirect(checkout_session.url)
     except Exception as e:
@@ -191,10 +197,11 @@ def payment_successful(request):
     checkout_session_id = request.GET.get('session_id', None)
     session = stripe.checkout.Session.retrieve(checkout_session_id)
     customer = stripe.Customer.retrieve(session.customer)
-    user_id = request.user.userprofile.id
-    user_payment = UserPayment.objects.get(user=user_id)
-    user_payment.stripe_checkout_id = checkout_session_id
-    user_payment.save()
+
+    #mark stay payment as successful (bool to Tue)
+    stay = Stay.objects.get(stripe_checkout_id=checkout_session_id)
+    stay.paid = True
+    stay.save()
     print("Payment sucessful!")
     return render(request, 'payment/payment_successful.html',{'customer':customer})
 

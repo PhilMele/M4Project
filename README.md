@@ -11,7 +11,14 @@ Django setup on local:
 
 GIt ignore setup credits: https://djangowaves.com/tips-tricks/gitignore-for-a-django-project/
 
-## Stripe
+## Stripe (credit #payment logic: credits: https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s)
+
+The tutorial provided by the course material wasnt adapted to what I was looking for. Instead I followed the tutorial from this video (https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s) and made a number of changes to suit my project.
+
+Improvement: I would like payment to be made without the user having to enter their bank details everytime. I initially wanted to code these in the database, but stripe advises against this. As I wantedt o focus on the geofencing element, I accepted this and left the action for future improvements.
+
+Steps:
+
 * Install Stripe `pip install stripe`
 * install Stripe CLI `winget install Stripe.StripeCLI` (for VS Code)
 * Get Stripe secret key + public key : create profile on stripe and find them on dashboard + add to .env file
@@ -68,6 +75,45 @@ This was fixed by adding initialising the API key at the begining of the logic:
 
 Problem make transaction automatic without having to enter card details everytime: 
 
+Error: `Customer instance has invalid ID: None`
+Add Stripe cutsomer ID in profile model:
+
+    customer = stripe.Customer.create(
+            email=request.user.email
+            # Additional customer fields can be added here if needed
+        )
+        request.user.userprofile.stripe_customer_id = customer.id
+        request.user.userprofile.save()
+
+Pass id in logic: 
+    customer=request.user.userprofile.stripe_customer_id,
+
+Keep track of payment:
+* When user is about to pay, stripe transaction is recorded
+
+    @login_required
+    def payment(request,applicable_fee,stay_id):
+        ...
+
+            #update stay model field with strip checkout id
+            stay = Stay.objects.get(id=stay_id)
+            stay.stripe_checkout_id = checkout_session.id
+            stay.save()
+
+* When user paid: stripe transaction is marked as true:
+
+    @login_required
+    def payment_successful(request):
+        stripe.api_key = stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+        checkout_session_id = request.GET.get('session_id', None)
+        session = stripe.checkout.Session.retrieve(checkout_session_id)
+        customer = stripe.Customer.retrieve(session.customer)
+        
+        #mark stay payment as successful (bool to Tue)
+        stay = Stay.objects.get(stripe_checkout_id=checkout_session_id)
+        stay.paid = True
+        stay.save()
+        print("Payment sucessful!")
 
 ## user authentication
 Leverage existing template provided by Django All-auth:
