@@ -23,6 +23,7 @@ class UserProfile(models.Model):
     country = CountryField(blank_label='Country', null=True, blank=True)
     card_details = models.ForeignKey(CardDetails, on_delete=models.SET_NULL, null=True, blank=True)
     car_registration = models.CharField(max_length=80, null=True, blank=True)
+    stripe_customer_id = models.CharField(max_length=250, null=True, blank=True)
 
     def __str__(self):
         return self.user.username

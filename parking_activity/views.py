@@ -142,10 +142,20 @@ def fee_form(request, applicable_fee,stay_id ):
 @login_required
 def payment(request,applicable_fee,stay_id):
     try:
+
         #set API key the begining to avoid 
         #"Error in payment process:No API key provided."
         stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
         amount_int = int(applicable_fee*100)
+
+        if not request.user.userprofile.stripe_customer_id:
+            # Create a customer if not already created
+            customer = stripe.Customer.create(
+                email=request.user.email
+                # Additional customer fields can be added here if needed
+            )
+            request.user.userprofile.stripe_customer_id = customer.id
+            request.user.userprofile.save()
 
         #create a price object in stripe
         price_object = stripe.Price.create(
@@ -164,8 +174,9 @@ def payment(request,applicable_fee,stay_id):
                 'quantity':1,
             },],
             mode='payment',
-            success_url = settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url = settings.REDIRECT_DOMAIN + '/payment_cancelled',
+            customer=request.user.userprofile.stripe_customer_id,
+            success_url = settings.REDIRECT_DOMAIN + '/parking_activity/payment_successful?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url = settings.REDIRECT_DOMAIN + '/parking_activity/payment_cancelled',
         )
         #returns user to stripe checktout page
         return redirect(checkout_session.url)

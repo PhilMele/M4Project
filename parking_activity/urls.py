@@ -7,7 +7,7 @@ urlpatterns = [
     path('history/', views.history, name='history'),
 
     #payment paths
-    path('payment_successful/',views.payment_successful, name='payment-succesful'),
+    path('payment_successful/', views.payment_successful, name='payment-successful'),
     path('payment_cancelled/',views.payment_cancelled, name='payment-cancelled'),
     path('stripe_webhook/', views.stripe_webhook, name='stripe_webhook')
 
