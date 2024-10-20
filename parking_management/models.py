@@ -14,6 +14,9 @@ class Parking (models.Model):
     county = models.CharField(max_length=80, null=True, blank=True)
     postcode = models.CharField(max_length=20, null=True, blank=True)
     country = CountryField(blank_label='Country', null=True, blank=True)
+    latitude = models.CharField(verbose_name="Latitude",max_length=50, null=True, blank=True)
+    longitude = models.CharField(verbose_name="Longitude",max_length=50, null=True, blank=True)
+    radius = models.CharField(verbose_name="Radius",max_length=50, null=True, blank=True)
     bank_details = models.CharField(max_length=80, null=True, blank=True)
 
 

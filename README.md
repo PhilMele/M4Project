@@ -232,5 +232,36 @@ Credits: https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
 
 ## geolocation
 
-https://www.w3schools.com/html/html5_geolocation.asp
-https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
+Credits: https://www.w3schools.com/html/html5_geolocation.asp
+
+
+In geolocation.js add:
+    const x = document.getElementById("userLocation");
+
+    function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+    }
+
+    function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude;
+    }
+
+add to base.html:
+
+    {% block postloadjs %}
+        <script src="{% static 'js/geolocation.js' %}"></script>
+    {% endblock %}
+
+Error encountered: `Uncaught TypeError: Cannot set properties of null (setting 'innerHTML')`. This as a result of the script being uploaded at the begining of the template, before the element exists.
+
+This problem was solved by moving this specific script to the bottom of the body of the template.
+
+
+
+Useful links:
+* https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
