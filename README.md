@@ -259,10 +259,67 @@ add to base.html:
         <script src="{% static 'js/geolocation.js' %}"></script>
     {% endblock %}
 
-Error encountered: `Uncaught TypeError: Cannot set properties of null (setting 'innerHTML')`. This as a result of the script being uploaded at the begining of the template, before the element exists.
+**Error encountered**: `Uncaught TypeError: Cannot set properties of null (setting 'innerHTML')`. This as a result of the script being uploaded at the begining of the template, before the element exists.
 
 This problem was solved by moving this specific script to the bottom of the body of the template.
 
+* add to index.html:
+
+    <button onclick="getLocation()">Try It</button>
+    <p id="userLocation"></p>
+
+Once this has proven to work. We can proceed by incorporating the user location in the logic of `enter()`.
+
+We add a few more variables to `getlocation()`, which will be used to feed some `hidden` input field in the Enter form in enter.html.
+
+* add to geolocation.js:
+
+    document.addEventListener('DOMContentLoaded', function(){
+    
+    const latitudeField = document.getElementById("userLatitude") # new
+    const longitudeField = document.getElementById("userLongitude") # new
+
+    function getLocation() {
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition); 
+        } else { 
+        alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        // adds value to hidden inputs in index.html
+        latitudeField.value = latitude; # new
+        longitudeField.value = longitude; # new
+
+    }
+    getLocation() # new
+    })
+
+* add to enter.html the hidden inputs:
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" id="userLatitude" name="latitude" value="">
+        <input type="hidden" id="userLongitude" name="longitude" value="">
+        {{stayform}}
+        <input type="submit" onclick="getLocation()" value="OK">
+    </form>
+
+* in views.py  in `enter()`:
+
+    @login_required
+    def enter(request):
+    
+        if request.method == "POST":
+            # capture user current location
+            latitude = request.POST.get('latitude')
+            longitude = request.POST.get('longitude')
+            print(f'{request.user.username}: latitude = {latitude} + longitude = {longitude}')
 
 
 Useful links:

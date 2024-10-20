@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function(){
-  const x = document.getElementById("userLocation");
+
 
   const latitudeField = document.getElementById("userLatitude")
   const longitudeField = document.getElementById("userLongitude")
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function(){
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else { 
-      x.innerHTML = "Geolocation is not supported by this browser.";
+      alert("Geolocation is not supported by this browser.");
     }
   }
 
@@ -22,10 +22,6 @@ document.addEventListener('DOMContentLoaded', function(){
     latitudeField.value = latitude;
     longitudeField.value = longitude;
 
-
-    // TODO: REMOVE THIS BEFORE SUBMISSION
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
   }
   getLocation()
 })
