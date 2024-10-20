@@ -229,3 +229,8 @@ To solve this problem: create a new Procfile through a Notepad, selected encodin
 Useful Link:
 
 Credits: https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
+
+## geolocation
+
+https://www.w3schools.com/html/html5_geolocation.asp
+https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API

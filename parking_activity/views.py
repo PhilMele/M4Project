@@ -148,11 +148,11 @@ def payment(request,applicable_fee,stay_id):
         stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
         amount_int = int(applicable_fee*100)
 
+        #check if userprofile already has a stripe id
+        # Create a customer if not already created
         if not request.user.userprofile.stripe_customer_id:
-            # Create a customer if not already created
             customer = stripe.Customer.create(
                 email=request.user.email
-                # Additional customer fields can be added here if needed
             )
             request.user.userprofile.stripe_customer_id = customer.id
             request.user.userprofile.save()
