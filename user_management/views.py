@@ -36,13 +36,19 @@ def index(request):
     # context even when `existing_stay_obj` does not exist
     parking_name = None
     stay_id = None
+    lat = None
+    long = None
     print(f'existing_stay_obj = {existing_stay_obj}')
     if existing_stay_obj.exists():
         for stay in existing_stay_obj:
             parking_name = stay.parking_name.name
+            lat = stay.parking_name.latitude
+            long = stay.parking_name.longitude
             stay_id = stay.id
     
     return render(request, 'home/index.html',{
         'existing_stay_obj':existing_stay_obj,
         'parking_name':parking_name,
-        'stay_id':stay_id})
+        'stay_id':stay_id,
+        'lat':lat,
+        'long':long})

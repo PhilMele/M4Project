@@ -21,7 +21,8 @@
         <div class="product">
             <div class="description">
               <h3>Leave {{parking_name}}</h3>
-              <h5>$20.00(TODO: Add price)</h5>
+              <h5>Latitude: {{lat}}</h5>
+              <h5>Longitude: {{long}}</h5>
             </div>
           </div>
           <form action="{% url 'leave' stay_id %}" method="POST">
@@ -30,7 +31,8 @@
           </form>
         {%else%}
         <div class="col-12 col-md-12">
-            <a class="btn btn-success" href="{% url 'enter' %}">Enter Parking</a>
+            <a class="submit btn btn-success" href="{% url 'enter' %}">Enter Parking</a>
+            <!-- Based on user location return parking within this radius -->
         </div>
         {%endif%}
 

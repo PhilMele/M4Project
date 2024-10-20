@@ -5,7 +5,9 @@
 THis is enter.html
 <form method="post">
     {% csrf_token %}
+    <input type="hidden" id="userLatitude" name="latitude" value="">
+    <input type="hidden" id="userLongitude" name="longitude" value="">
     {{stayform}}
-    <input type="submit" value="OK">
+    <input type="submit" onclick="getLocation()" value="OK">
 </form>
 {%endblock%}

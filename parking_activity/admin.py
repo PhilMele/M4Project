@@ -6,7 +6,9 @@ class StayAdmin(admin.ModelAdmin):
     list_display = (
         'user',
         'parking_name',
-        'calculated_fee'
+        'calculated_fee',
+        'paid',
+
     )
 
 class LeaveParkingAdmin(admin.ModelAdmin):

@@ -22,7 +22,17 @@ import time
 # Mark user as entering parking
 @login_required
 def enter(request):
+   
     if request.method == "POST":
+        # capture user current location
+        latitude = request.POST.get('latitude')
+        longitude = request.POST.get('longitude')
+        print(f'{request.user.username}: latitude = {latitude} + longitude = {longitude}')
+    
+    # match current user location to parking radius (if any)
+    # if parking location is found then 
+        # return parking_name value
+        # otherwise let the user select their parking
         stayform = StayForm(request.POST)
         if stayform.is_valid():
             print("for is valid")
