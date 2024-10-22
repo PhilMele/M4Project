@@ -321,6 +321,35 @@ We add a few more variables to `getlocation()`, which will be used to feed some 
             longitude = request.POST.get('longitude')
             print(f'{request.user.username}: latitude = {latitude} + longitude = {longitude}')
 
+Geolocation radius (
+* credits: https://stackoverflow.com/questions/42686300/how-to-check-if-coordinate-inside-certain-area-python
+* https://geopy.readthedocs.io/en/stable/#module-geopy.distance)
+
+* Install Geopy: `pip install geopy`
+* import geopy in views.py (parking_activity app):
+
+    from parking_management.models import Parking
+
+**Error encountered** `TypeError: float() argument must be a string or a real number, not 'set'`: following Igor-S answer on stackoverflow, I encountered this error.
+
+This is because of the use of `({})`, which in Python define a set, rather than parentheses `()`.
+
+To fix this error by converting the values into `float`:
+    
+    user_location = (float(user_latitude), float(user_longitude))
+
+`TypeError: '<=' not supported between instances of 'float' and 'str'`: following the above mentioned example provided on stackoverflow.
+
+This error happened because `parking.radius` is a string and `locations_distance` is a float.
+
+    if locations_distance <= parking.radius:
+        print(f'You are in {parking.name}')
+    else:
+        print(f'You are not in {parking.name}')
+
+Both values need to be in the same format:
+
+    parking_radius = float(parking.radius)
 
 Useful links:
 * https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API

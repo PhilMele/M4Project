@@ -5,7 +5,7 @@ from .forms import StayForm
 from .models import Stay, EnterParking, LeaveParking
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from parking_management.models import Rate
+from parking_management.models import Rate, Parking
 from datetime import timedelta
 from decimal import Decimal
 import math
@@ -17,6 +17,8 @@ from django.conf import settings
 import stripe
 import time
 
+#geolocation module
+from geopy import distance
 
 # Create your views here.
 # Mark user as entering parking
@@ -25,13 +27,48 @@ def enter(request):
    
     if request.method == "POST":
         # capture user current location
-        latitude = request.POST.get('latitude')
-        longitude = request.POST.get('longitude')
-        print(f'{request.user.username}: latitude = {latitude} + longitude = {longitude}')
-    
-    # match current user location to parking radius (if any)
-    # if parking location is found then 
-        # return parking_name value
+        user_latitude = request.POST.get('latitude')
+        user_longitude = request.POST.get('longitude')
+        print(f'user_latitude = {user_latitude}')
+        print(f'user_longitude = {user_longitude}')
+
+        # set user location in tuple
+        user_location = [{'lat': {user_latitude}, 'lng': {user_longitude}}]
+
+        user_location_tuple = (float(user_latitude), float(user_longitude))
+        print(f'user_location = {user_location}')
+        print(f'user_location_tuple = {user_location_tuple}')
+
+        # match current user location to parking radius (if any)
+        parkings = Parking.objects.all()
+        
+        # create for loop of parkings
+        for parking in parkings:
+
+            parking_radius = float(parking.radius)
+            
+            # set parking location in tuple
+            parking_location_tuple = (float(parking.latitude), float(parking.longitude))
+            print(f'user_location_tuple = {user_location_tuple}')
+            print(f'{parking.name} location = {parking_location_tuple}')
+
+            #measure distance between user location and parking location
+            locations_distance = distance.distance(
+                user_location_tuple,
+                parking_location_tuple).meters
+               
+            print("Distance: {}".format(locations_distance))
+
+            if locations_distance <= parking_radius:
+                print(f'You are in {parking.name}')
+            else:
+                print(f'You are not in {parking.name}')
+
+
+        # look into all geolocation
+        # return parking geolocation is macthing radius
+        # if parking location is found then 
+            # return parking_name value
         # otherwise let the user select their parking
         stayform = StayForm(request.POST)
         if stayform.is_valid():
