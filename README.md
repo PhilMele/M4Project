@@ -330,6 +330,42 @@ Geolocation radius (
 
     from parking_management.models import Parking
 
+* add distance calculation logic between user and parkings `enter()`:
+
+    @login_required
+    def enter(request):
+    
+        if request.method == "POST":
+            ...
+
+            # set user location in tuple
+            user_location = [{'lat': {user_latitude}, 'lng': {user_longitude}}]
+            user_location_tuple = (float(user_latitude), float(user_longitude))
+          
+            # match current user location to parking radius (if any)
+            parkings = Parking.objects.all()
+            
+            # create for loop of parkings
+            for parking in parkings:
+
+                parking_radius = float(parking.radius)
+                
+                # set parking location in tuple
+                parking_location_tuple = (float(parking.latitude), float(parking.longitude))
+
+                #measure distance between user location and parking location
+                locations_distance = distance.distance(
+                    user_location_tuple,
+                    parking_location_tuple).meters
+                
+                print("Distance: {}".format(locations_distance))
+
+                if locations_distance <= parking_radius:
+                    print(f'You are in {parking.name}')
+                else:
+                    print(f'You are not in {parking.name}')
+
+
 **Error encountered** `TypeError: float() argument must be a string or a real number, not 'set'`: following Igor-S answer on stackoverflow, I encountered this error.
 
 This is because of the use of `({})`, which in Python define a set, rather than parentheses `()`.
@@ -338,11 +374,11 @@ To fix this error by converting the values into `float`:
     
     user_location = (float(user_latitude), float(user_longitude))
 
-`TypeError: '<=' not supported between instances of 'float' and 'str'`: following the above mentioned example provided on stackoverflow.
+**Error encountered** `TypeError: '<=' not supported between instances of 'float' and 'str'`: following the above mentioned example provided on stackoverflow.
 
 This error happened because `parking.radius` is a string and `locations_distance` is a float.
 
-    if locations_distance <= parking.radius:
+    if locations_distance <= parking_radius:
         print(f'You are in {parking.name}')
     else:
         print(f'You are not in {parking.name}')
@@ -353,3 +389,5 @@ Both values need to be in the same format:
 
 Useful links:
 * https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
+* https://stackoverflow.com/questions/42686300/how-to-check-if-coordinate-inside-certain-area-python
+* https://geopy.readthedocs.io/en/stable/#module-geopy.distance

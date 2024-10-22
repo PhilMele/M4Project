@@ -60,7 +60,30 @@ def enter(request):
             print("Distance: {}".format(locations_distance))
 
             if locations_distance <= parking_radius:
-                print(f'You are in {parking.name}')
+                parking_name = parking
+                print(f'parking_name (Parking object) = {parking_name.name}')
+                
+                # parking_name = EnterParking.objects.filter(parking_name = parking).first()
+                # print(f'parking_name = {parking_name}')
+
+                stayform = StayForm(request.POST)
+                if stayform.is_valid():
+                    print("form is valid")
+                    staydata = stayform.save(commit=False)
+                    staydata.user = request.user.userprofile
+                    staydata.parking_name = parking_name
+                    staydata.save()
+                    messages.success(request, "Stay data saved successfully.")
+                    enter_parking_obj = EnterParking.objects.create(
+                        user=request.user.userprofile,
+                        parking_name =parking_name,
+                        stay=staydata)
+                    return redirect('home')
+
+                else:
+                    for error in list(stayform.errors.values()):
+                        messages.error(request, error)
+
             else:
                 print(f'You are not in {parking.name}')
 
@@ -70,22 +93,7 @@ def enter(request):
         # if parking location is found then 
             # return parking_name value
         # otherwise let the user select their parking
-        stayform = StayForm(request.POST)
-        if stayform.is_valid():
-            print("for is valid")
-            staydata = stayform.save(commit=False)
-            staydata.user = request.user.userprofile
-            staydata.save()
-            messages.success(request, "Stay data saved successfully.")
-            enter_parking_obj = EnterParking.objects.create(
-                user=request.user.userprofile,
-                parking_name=staydata.parking_name,
-                stay=staydata)
-            return redirect('home')
-
-        else:
-            for error in list(stayform.errors.values()):
-                messages.error(request, error)
+   
     else:
         stayform = StayForm()
 
