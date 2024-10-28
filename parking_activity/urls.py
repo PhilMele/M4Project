@@ -5,6 +5,7 @@ urlpatterns = [
     path('enter/', views.enter, name='enter'),
     path('leave/<int:stay_id>/', views.leave, name='leave'),
     path('history/', views.history, name='history'),
+    path('get-parking-location/', views.get_parking_location, name='get_parking_location'),
 
     #payment paths
     path('payment_successful/', views.payment_successful, name='payment-successful'),

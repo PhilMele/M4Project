@@ -31,8 +31,16 @@
           </form>
         {%else%}
         <div class="col-12 col-md-12">
-            <a class="submit btn btn-success" href="{% url 'enter' %}">Enter Parking</a>
-            <!-- Based on user location return parking within this radius -->
+
+            <form action="{% url 'get_parking_location' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="userLatitude" name="latitude" value="">
+                <input type="hidden" id="userLongitude" name="longitude" value="">
+                <button type="submit" class="submit btn btn-success" onclick="getLocation()">Enter Parking</button>
+            </form>
+            
+            <!-- <a class="submit btn btn-success" href="{% url 'enter' %}">Enter Parking</a>
+            Based on user location return parking within this radius -->
         </div>
         {%endif%}
 

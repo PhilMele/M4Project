@@ -362,6 +362,9 @@ Geolocation radius (
 
                 if locations_distance <= parking_radius:
                     print(f'You are in {parking.name}')
+
+                    ...
+
                 else:
                     print(f'You are not in {parking.name}')
 
@@ -386,6 +389,10 @@ This error happened because `parking.radius` is a string and `locations_distance
 Both values need to be in the same format:
 
     parking_radius = float(parking.radius)
+
+**Error encountered** User geolocation innacuracy: in order to deal with lack of accuracy of the user location (which seems to be between 3m to 888m range based on various test), the minimum parking radius has been set to 1km (1000m).
+
+In future development, this radius could be drastically reduced by using GPS location. This would require using native features of the phone. Either through a mobile app, or using Django's progressive web app.
 
 Useful links:
 * https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API

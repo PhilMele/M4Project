@@ -21,6 +21,55 @@ import time
 from geopy import distance
 
 # Create your views here.
+
+def get_parking_location(request):
+    if request.method == "POST":
+
+        # capture user current location
+        user_latitude = request.POST.get('latitude')
+        user_longitude = request.POST.get('longitude')
+        print(f'user_latitude = {user_latitude}')
+        print(f'user_longitude = {user_longitude}')
+
+        if user_latitude and user_longitude:
+            user_location_tuple = (float(user_latitude), float(user_longitude))
+
+            print(f'user_location_tuple = {user_location_tuple}')
+
+            # match current user location to parking radius (if any)
+            parkings = Parking.objects.all()
+            
+            # create for loop of parkings
+            for parking in parkings:
+
+                parking_radius = float(parking.radius)
+                
+                # set parking location in tuple
+                parking_location_tuple = (float(parking.latitude), float(parking.longitude))
+                print(f'user_location_tuple = {user_location_tuple}')
+                print(f'{parking.name} location = {parking_location_tuple}')
+
+                #measure distance between user location and parking location
+                locations_distance = distance.distance(
+                    user_location_tuple,
+                    parking_location_tuple).meters
+                
+                print("Distance: {}".format(locations_distance))
+
+                if locations_distance <= parking_radius:
+                    parking_name = parking
+                    print(f'parking_name (Parking object) = {parking_name.name}')
+                    #return redirect to enter page with parking ID
+                    
+                    # parking_name = EnterParking.objects.filter(parking_name = parking).first()
+                    # print(f'parking_name = {parking_name}')
+
+                else:
+                    print(f'You are not in {parking.name}')
+                    #return redirect to enter page without parking ID
+    messages.error(request, "THere somehting wrong. the request is not POST")
+    return redirect ('home')
+
 # Mark user as entering parking
 @login_required
 def enter(request):
@@ -152,11 +201,13 @@ def leave(request, stay_id):
 def calculate_user_fee(stay, total_stay_time_hours):
     #apply applicable fee against total user stay
     #round up stay to next hour value
+    #PROBLEM TO FIX: AFTER LONG TIME WITHOUT CHECKING OUT THE MAX RATE IS NOT PCIKED UP
     roundedup_total_stay_time_hours = math.ceil(total_stay_time_hours)
     print(f'rounded_total_stay_time_hours = {roundedup_total_stay_time_hours}')
 
     #look for applicate rate for parking ID and total stay again rate.hour_range
     rate_available = Rate.objects.filter(parking_name=stay.parking_name).order_by('hour_range')
+    print(f'rate_available = {rate_available}')
 
     #return applicable fee
     #create variable to attach closest rate to it during loop
