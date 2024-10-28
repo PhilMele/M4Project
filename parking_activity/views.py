@@ -21,7 +21,7 @@ import time
 from geopy import distance
 
 # Create your views here.
-
+@login_required
 def get_parking_location(request):
     if request.method == "POST":
 
@@ -60,93 +60,65 @@ def get_parking_location(request):
                     parking_name = parking
                     print(f'parking_name (Parking object) = {parking_name.name}')
                     #return redirect to enter page with parking ID
+                    return redirect('enter_with_parking_id', parking_id=parking_name.id)
                     
                     # parking_name = EnterParking.objects.filter(parking_name = parking).first()
                     # print(f'parking_name = {parking_name}')
 
                 else:
                     print(f'You are not in {parking.name}')
-                    #return redirect to enter page without parking ID
+                    # #return redirect to enter page without parking ID
+                    # return redirect('enter')
+
+            messages.error(request, "Redirecting to enter wih no id page")
+            return redirect('enter')  
+            
     messages.error(request, "THere somehting wrong. the request is not POST")
     return redirect ('home')
 
 # Mark user as entering parking
 @login_required
-def enter(request):
+def enter(request, parking_id=None):
+
+    parking_id = parking_id
+    print(f' parking_id = {parking_id}')
+
+    
+  
+    #     stayform = StayForm(request.POST)
+    #     if stayform.is_valid():
+    #         print("form is valid")
+    #         staydata = stayform.save(commit=False)
+    #         staydata.user = request.user.userprofile
+    #         staydata.parking_name = parking_name
+    #         staydata.save()
+    #         messages.success(request, "Stay data saved successfully.")
+    #         enter_parking_obj = EnterParking.objects.create(
+    #             user=request.user.userprofile,
+    #             parking_name =parking_name,
+    #             stay=staydata)
+    #         return redirect('home')
+
+    #     else:
+    #         for error in list(stayform.errors.values()):
+    #             messages.error(request, error)
+
+    #         # else:
+    #         #     print(f'You are not in {parking.name}')
+
+
+    #     # look into all geolocation
+    #     # return parking geolocation is macthing radius
+    #     # if parking location is found then 
+    #         # return parking_name value
+    #     # otherwise let the user select their parking
    
-    if request.method == "POST":
-        # capture user current location
-        user_latitude = request.POST.get('latitude')
-        user_longitude = request.POST.get('longitude')
-        print(f'user_latitude = {user_latitude}')
-        print(f'user_longitude = {user_longitude}')
+    # else:
+    #     stayform = StayForm()
 
-        # set user location in tuple
-        user_location = [{'lat': {user_latitude}, 'lng': {user_longitude}}]
-
-        user_location_tuple = (float(user_latitude), float(user_longitude))
-        print(f'user_location = {user_location}')
-        print(f'user_location_tuple = {user_location_tuple}')
-
-        # match current user location to parking radius (if any)
-        parkings = Parking.objects.all()
-        
-        # create for loop of parkings
-        for parking in parkings:
-
-            parking_radius = float(parking.radius)
-            
-            # set parking location in tuple
-            parking_location_tuple = (float(parking.latitude), float(parking.longitude))
-            print(f'user_location_tuple = {user_location_tuple}')
-            print(f'{parking.name} location = {parking_location_tuple}')
-
-            #measure distance between user location and parking location
-            locations_distance = distance.distance(
-                user_location_tuple,
-                parking_location_tuple).meters
-               
-            print("Distance: {}".format(locations_distance))
-
-            if locations_distance <= parking_radius:
-                parking_name = parking
-                print(f'parking_name (Parking object) = {parking_name.name}')
-                
-                # parking_name = EnterParking.objects.filter(parking_name = parking).first()
-                # print(f'parking_name = {parking_name}')
-
-                stayform = StayForm(request.POST)
-                if stayform.is_valid():
-                    print("form is valid")
-                    staydata = stayform.save(commit=False)
-                    staydata.user = request.user.userprofile
-                    staydata.parking_name = parking_name
-                    staydata.save()
-                    messages.success(request, "Stay data saved successfully.")
-                    enter_parking_obj = EnterParking.objects.create(
-                        user=request.user.userprofile,
-                        parking_name =parking_name,
-                        stay=staydata)
-                    return redirect('home')
-
-                else:
-                    for error in list(stayform.errors.values()):
-                        messages.error(request, error)
-
-            else:
-                print(f'You are not in {parking.name}')
-
-
-        # look into all geolocation
-        # return parking geolocation is macthing radius
-        # if parking location is found then 
-            # return parking_name value
-        # otherwise let the user select their parking
-   
-    else:
-        stayform = StayForm()
-
-    return render(request, 'stays/enter.html', {'stayform': stayform})
+    return render(request, 'stays/enter.html', {
+        # 'stayform': stayform,
+        'parking_id':parking_id})
 
 
 # Mark user as leaving parking

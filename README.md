@@ -394,6 +394,28 @@ Both values need to be in the same format:
 
 In future development, this radius could be drastically reduced by using GPS location. This would require using native features of the phone. Either through a mobile app, or using Django's progressive web app.
 
+* handle redirect to identified parking_id or not
+
+Due to potential innacuracy in geolocation, `get_parking_location()` might not return a parking ID.
+
+Depending on the scenario, `get_parking_location()` will redirect the user with out without the `parking id` as a parameter:
+
+    return redirect('enter_with_parking_id', parking_id=parking_name.id)
+
+    or
+
+    return redirect('enter') 
+
+To handle these two scenarios, two paths leading to the same view were made available:
+
+    path('enter/', views.enter, name='enter'),
+    path('enter/<int:parking_id>/', views.enter, name='enter_with_parking_id'),
+
+The parameter is then returned in `enter()` and is given a default value of `None`:
+
+    def enter(request, parking_id=None):
+
+
 Useful links:
 * https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
 * https://stackoverflow.com/questions/42686300/how-to-check-if-coordinate-inside-certain-area-python
