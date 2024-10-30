@@ -19,10 +19,8 @@ THis is enter.html
     <!-- If parking ID is None -->
     <form method="post">
         {% csrf_token %}
-        <input type="hidden" id="userLatitude" name="latitude" value="">
-        <input type="hidden" id="userLongitude" name="longitude" value="">
         {{stayform}}
-        <input type="submit" onclick="getLocation()" value="OK">
+        <input type="submit" value="Submit the form">
     </form>
 {%endif%}
 {%endblock%}

@@ -84,33 +84,54 @@ def enter(request, parking_id=None):
         parking_name = get_object_or_404(Parking, id = parking_id)
         print(f'parking_name = {parking_name}')
 
-    #if parking id is not null
-    if request.method == "POST":
-        print(f'parking_name = {parking_name}')
-        stayform = StayForm(request.POST)
-        if stayform.is_valid():
-            staydata = stayform.save(commit = False)
-            staydata.user = request.user.userprofile
-            staydata.parking_name = parking_name #attach it to parking_id
-            staydata.save()
-            messages.success(request,"Stay data saved successfully.")
-            enter_parking_obj = EnterParking.objects.create(
-                user = request.user.userprofile,
-                parking_name = parking_name,
-                stay = staydata
-                )
-            return redirect('home')
+        #if parking id is not null
+        if request.method == "POST":
+            print(f'parking_name = {parking_name}')
+            stayform = StayForm(request.POST)
+            if stayform.is_valid():
+                staydata = stayform.save(commit = False)
+                staydata.user = request.user.userprofile
+                staydata.parking_name = parking_name #attach it to parking_id
+                staydata.save()
+                messages.success(request,"Stay data saved successfully.")
+                enter_parking_obj = EnterParking.objects.create(
+                    user = request.user.userprofile,
+                    parking_name = parking_name,
+                    stay = staydata
+                    )
+                return redirect('home')
+            else:
+                for error in list(stayform.errors.values()):
+                    messages.error(request, error)
+
+        #if null
         else:
-            for error in list(stayform.errors.values()):
-                messages.error(request, error)
-
-    #if null
+            stayform = StayForm()
+            
     else:
-        stayform = StayForm()
         print("Paring Id is none. Do this parrt later")
-
+        if request.method == "POST":
+            print(f'parking_name = {parking_name}')
+            stayform = StayForm(request.POST)
+            if stayform.is_valid():
+                staydata = stayform.save(commit = False)
+                staydata.user = request.user.userprofile
+                staydata.save()
+                messages.success(request,"Stay data saved successfully.")
+                enter_parking_obj = EnterParking.objects.create(
+                    user = request.user.userprofile,
+                    parking_name = parking_name,
+                    stay = staydata
+                    )
+                return redirect('home')
+            else:
+                for error in list(stayform.errors.values()):
+                    messages.error(request, error)
+        else:
+            stayform = StayForm()
+            
     return render(request, 'stays/enter.html', {
-        # 'stayform': stayform,
+        'stayform': stayform,
         'parking_id':parking_id})
 
 
