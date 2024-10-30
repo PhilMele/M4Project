@@ -5,11 +5,24 @@
 THis is enter.html
 
 {{parking_id}}
-<form method="post">
-    {% csrf_token %}
-    <input type="hidden" id="userLatitude" name="latitude" value="">
-    <input type="hidden" id="userLongitude" name="longitude" value="">
-    {{stayform}}
-    <input type="submit" onclick="getLocation()" value="OK">
-</form>
+{% if parking_id %}
+    <!-- If parking ID is not None -->
+     There is parking id
+     <form method="post">
+        {% csrf_token %}
+        {{stayform}}
+        <input type="submit" action="Submit button">
+    </form>
+
+    {%else%}
+    There is no parking id
+    <!-- If parking ID is None -->
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" id="userLatitude" name="latitude" value="">
+        <input type="hidden" id="userLongitude" name="longitude" value="">
+        {{stayform}}
+        <input type="submit" onclick="getLocation()" value="OK">
+    </form>
+{%endif%}
 {%endblock%}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import StayForm
@@ -79,42 +79,35 @@ def get_parking_location(request):
 # Mark user as entering parking
 @login_required
 def enter(request, parking_id=None):
+    parking_name = None
+    if parking_id:
+        parking_name = get_object_or_404(Parking, id = parking_id)
+        print(f'parking_name = {parking_name}')
 
-    parking_id = parking_id
-    print(f' parking_id = {parking_id}')
+    #if parking id is not null
+    if request.method == "POST":
+        print(f'parking_name = {parking_name}')
+        stayform = StayForm(request.POST)
+        if stayform.is_valid():
+            staydata = stayform.save(commit = False)
+            staydata.user = request.user.userprofile
+            staydata.parking_name = parking_name #attach it to parking_id
+            staydata.save()
+            messages.success(request,"Stay data saved successfully.")
+            enter_parking_obj = EnterParking.objects.create(
+                user = request.user.userprofile,
+                parking_name = parking_name,
+                stay = staydata
+                )
+            return redirect('home')
+        else:
+            for error in list(stayform.errors.values()):
+                messages.error(request, error)
 
-    
-  
-    #     stayform = StayForm(request.POST)
-    #     if stayform.is_valid():
-    #         print("form is valid")
-    #         staydata = stayform.save(commit=False)
-    #         staydata.user = request.user.userprofile
-    #         staydata.parking_name = parking_name
-    #         staydata.save()
-    #         messages.success(request, "Stay data saved successfully.")
-    #         enter_parking_obj = EnterParking.objects.create(
-    #             user=request.user.userprofile,
-    #             parking_name =parking_name,
-    #             stay=staydata)
-    #         return redirect('home')
-
-    #     else:
-    #         for error in list(stayform.errors.values()):
-    #             messages.error(request, error)
-
-    #         # else:
-    #         #     print(f'You are not in {parking.name}')
-
-
-    #     # look into all geolocation
-    #     # return parking geolocation is macthing radius
-    #     # if parking location is found then 
-    #         # return parking_name value
-    #     # otherwise let the user select their parking
-   
-    # else:
-    #     stayform = StayForm()
+    #if null
+    else:
+        stayform = StayForm()
+        print("Paring Id is none. Do this parrt later")
 
     return render(request, 'stays/enter.html', {
         # 'stayform': stayform,
