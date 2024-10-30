@@ -415,6 +415,17 @@ The parameter is then returned in `enter()` and is given a default value of `Non
 
     def enter(request, parking_id=None):
 
+* StayForm() handling and submission
+
+This part is handled by `enter()` and considers two scenarios through a form:
+* if parking_id is provided as an argument, the user is asked to confirm they are happy to be marked as having entered `parking_id`
+* if parking_id is None, the user is asked to select the parking name from a drop down menu.
+
+Upon submission of the form, a Stay object is created, together with an Enter Object, both are linked via a foreign Key.
+
+* rendering of parking fees (javascript)
+
+
 
 Useful links:
 * https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API

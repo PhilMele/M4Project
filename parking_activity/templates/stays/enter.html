@@ -4,10 +4,22 @@
 {%block content%}
 THis is enter.html
 
-{{parking_id}}
+
+<!-- Render table that shows tarrif for selected parking -->
+<table>
+    <thead>
+        <tr>
+            <th>Rate Name</th>
+            <th>Hour Range</th>
+            <th>Rate</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<!-- Form -->
 {% if parking_id %}
     <!-- If parking ID is not None -->
-     There is parking id
+     
      <form method="post">
         {% csrf_token %}
         {{stayform}}
@@ -15,7 +27,7 @@ THis is enter.html
     </form>
 
     {%else%}
-    There is no parking id
+    
     <!-- If parking ID is None -->
     <form method="post">
         {% csrf_token %}
@@ -23,4 +35,5 @@ THis is enter.html
         <input type="submit" value="Submit the form">
     </form>
 {%endif%}
+
 {%endblock%}
