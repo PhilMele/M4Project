@@ -1,6 +1,7 @@
 TODO:
 add that if the transaction is not paid, button leave should still show.
 Problem: Once a transaction was made and paid. Somehow the user got loggedout during payment and the model didnt get updated with `paid = true`
+Error: when I click on Enter, the console shows a brief error message and then disapear
 
 Django setup on local:
 * Create `m4project`

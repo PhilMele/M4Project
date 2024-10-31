@@ -6,7 +6,7 @@ THis is enter.html
 
 
 <!-- Render table that shows tarrif for selected parking -->
-<table id="ratesTable" border="1" style="display: none;">
+<table>
     <thead>
         <tr>
             <th>Rate Name</th>
@@ -36,4 +36,8 @@ THis is enter.html
     </form>
 {%endif%}
 
+
 {%endblock%}
+{% block postloadjs %}
+<script src="{% static 'js/parking_fee.js' %}"></script>
+{% endblock %}
