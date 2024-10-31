@@ -76,6 +76,17 @@ def get_parking_location(request):
     messages.error(request, "THere somehting wrong. the request is not POST")
     return redirect ('home')
 
+#used to get parking rates through API (dynamically generated with js)
+#note: safe = False allows to return a list instead of a dictonnary
+# this is because Json expect a dict by default (add error to log of errors encourntered)
+def get_parking_rates(request, parking_id):
+    rates = Rates.object.filter(parking_name_id = parking_id).values(
+        'rate name',
+        'hour_range',
+        'rate',
+    )
+    return JsonResponse(list(rates), safe=False)
+
 # Mark user as entering parking
 @login_required
 def enter(request, parking_id=None):
@@ -133,6 +144,8 @@ def enter(request, parking_id=None):
     return render(request, 'stays/enter.html', {
         'stayform': stayform,
         'parking_id':parking_id})
+
+
 
 
 # Mark user as leaving parking
