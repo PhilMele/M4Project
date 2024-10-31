@@ -148,9 +148,6 @@ def enter(request, parking_id=None):
         'stayform': stayform,
         'parking_id':parking_id})
 
-
-
-
 # Mark user as leaving parking
 @login_required
 def leave(request, stay_id):

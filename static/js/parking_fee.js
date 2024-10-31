@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function(){
     let parkingId = "null";
     // captures parameter from url (if any)
     const path = window.location.pathname;
-    const pathSplit = path.split('/');
-    const parkingIdFromParam = pathSplit[pathSplit.length -2]
+    const match = path.match(/\/enter\/(\d+)\//);
+    const parkingIdFromParam = match ? match[1] : null;
     console.log(`parking id is ${parkingIdFromParam}`);
 
     // Collect rates from `get_parking_rates()`
