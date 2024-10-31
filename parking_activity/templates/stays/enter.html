@@ -18,11 +18,11 @@ THis is enter.html
 </table>
 <!-- Form -->
 {% if parking_id %}
+
     <!-- If parking ID is not None -->
      
      <form method="post">
         {% csrf_token %}
-        {{stayform}}
         <input type="submit" action="Submit button">
     </form>
 

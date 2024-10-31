@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import stripe
 import time
+from django.http import JsonResponse
 
 #geolocation module
 from geopy import distance
@@ -79,9 +80,11 @@ def get_parking_location(request):
 #used to get parking rates through API (dynamically generated with js)
 #note: safe = False allows to return a list instead of a dictonnary
 # this is because Json expect a dict by default (add error to log of errors encourntered)
+# credits: https://dev.to/chryzcode/django-json-response-safe-false-4f9i
 def get_parking_rates(request, parking_id):
-    rates = Rates.object.filter(parking_name_id = parking_id).values(
-        'rate name',
+    print(f'get_parking_rates parking id = {get_parking_rates}')
+    rates = Rate.objects.filter(parking_name_id = parking_id).values(
+        'rate_name',
         'hour_range',
         'rate',
     )
