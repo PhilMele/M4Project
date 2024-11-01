@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function(){
             console.log("this is getting accessed")
             parkingId = this.value || "null";
             console.log(`Updated parking id is ${parkingId}`);
+            // only trigger fetchRates() if parking_id is not null
+            // to avoid 404 error in console
             if (parkingId !== "null"){
                 fetchRates();
             }
@@ -46,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         // get the body of the table
         const tbody = document.querySelector("table tbody")
-        tbody.inner = "";
+        tbody.innerHTML = "";
 
         // Adds data to table rwos
         data.forEach(rate=>{
@@ -59,10 +61,9 @@ document.addEventListener('DOMContentLoaded', function(){
             tbody.appendChild(tableRow);
         });
     }
-
     
-        // if there is a parameter change Parking ID
-        // if user has selected a parking name 
+    // only trigger fetchRates() if parking_id is not null
+    // to avoid 404 error in console
     if (parkingId !== "null"){
         fetchRates()
     }
