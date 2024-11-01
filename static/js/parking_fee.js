@@ -47,19 +47,30 @@ document.addEventListener('DOMContentLoaded', function(){
     function renderRatesTable(data){
 
         // get the body of the table
+        const table = document.getElementById("ratesTable");
         const tbody = document.querySelector("table tbody")
         tbody.innerHTML = "";
 
-        // Adds data to table rwos
-        data.forEach(rate=>{
-            const tableRow = document.createElement('tr');
-            tableRow.innerHTML = `
-                <tb>${rate.rate_name}</tb>
-                <tb>${rate.hour_range}</tb>
-                <tb>${rate.rate}</tb>
-            `;
-            tbody.appendChild(tableRow);
-        });
+        if(data.length>0){
+            
+            // shows table
+            table.style.display ="table"
+            // Adds data to table rwos
+
+            data.forEach(rate=>{
+                const tableRow = document.createElement('tr');
+                tableRow.innerHTML = `
+                <tr>
+                    <td>${rate.rate_name}</td>
+                    <td>${rate.hour_range}</td>
+                    <td>${rate.rate}</td>
+                </tr>
+                `;
+                tbody.appendChild(tableRow);
+            });
+        }else{
+            table.style.display = "none"
+        }
     }
     
     // only trigger fetchRates() if parking_id is not null
