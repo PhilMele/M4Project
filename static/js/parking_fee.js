@@ -21,7 +21,10 @@ document.addEventListener('DOMContentLoaded', function(){
             console.log("this is getting accessed")
             parkingId = this.value || "null";
             console.log(`Updated parking id is ${parkingId}`);
-            fetchRates();
+            if (parkingId !== "null"){
+                fetchRates();
+            }
+            
         })
 
     }
@@ -60,5 +63,7 @@ document.addEventListener('DOMContentLoaded', function(){
     
         // if there is a parameter change Parking ID
         // if user has selected a parking name 
-    fetchRates()
+    if (parkingId !== "null"){
+        fetchRates()
+    }
   })
