@@ -21,30 +21,22 @@ document.addEventListener('DOMContentLoaded', function(){
             console.log("this is getting accessed")
             parkingId = this.value || "null";
             console.log(`Updated parking id is ${parkingId}`);
-
+            fetchRates();
         })
 
     }
-
-    // Collect rates from `get_parking_rates()`
+    
     function fetchRates(){
-        if (parkingIdFromParam == "null") {
-            parkingId = "null";
-        } else {
-            parkingId = parkingIdFromParam;
-        }
-
-        console.log(`parking id = ${parkingId} `)
-        
-        if (parkingId){
+        console.log(`ParkindId in fetchRates= ${parkingId}`);
+        if(parkingId){
             fetch(`/parking_activity/get_parking_rates/${parkingId}/`)
             .then(response => response.json())
-            .then(data => {
-                console.log("Fetched rates:", data);
+            .then(data =>{
+                console.log("Fetched rates", data);
                 renderRatesTable(data);
-        })
-        .catch(error => console.error("theres an error when getting the rates", error))
-        }
+            })
+            .catch(error => console.error("theres an error when getting the rates", error))
+        }   
     }
 
     function renderRatesTable(data){
