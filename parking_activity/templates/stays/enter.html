@@ -31,7 +31,13 @@ THis is enter.html
     <!-- If parking ID is None -->
     <form method="post">
         {% csrf_token %}
-        {{stayform}}
+        <label for="parking-select">Select Parking:</label>
+        <select id="parking-select" name="parking_name">
+            <option value="">Select parking</option>
+            {% for parking in parking_list %}
+                <option value="{{ parking.id }}" {% if parking_id == parking.id %}selected{% endif %}>{{ parking.name }}</option>
+            {% endfor %}
+        </select>
         <input type="submit" value="Submit the form">
     </form>
 {%endif%}

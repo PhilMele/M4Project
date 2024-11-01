@@ -94,6 +94,8 @@ def get_parking_rates(request, parking_id):
 @login_required
 def enter(request, parking_id=None):
     parking_name = None
+    parking_list = Parking.objects.all()
+
     if parking_id:
         parking_name = get_object_or_404(Parking, id = parking_id)
         print(f'parking_name = {parking_name}')
@@ -130,6 +132,9 @@ def enter(request, parking_id=None):
             if stayform.is_valid():
                 staydata = stayform.save(commit = False)
                 staydata.user = request.user.userprofile
+                #staydata.parking_name = parking_name
+                #nextstep: I need to attach the selected parking name in 
+                #enter.html to the enter parking object
                 staydata.save()
                 messages.success(request,"Stay data saved successfully.")
                 enter_parking_obj = EnterParking.objects.create(
@@ -146,7 +151,8 @@ def enter(request, parking_id=None):
             
     return render(request, 'stays/enter.html', {
         'stayform': stayform,
-        'parking_id':parking_id})
+        'parking_id':parking_id,
+        'parking_list':parking_list})
 
 # Mark user as leaving parking
 @login_required

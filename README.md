@@ -426,6 +426,70 @@ Upon submission of the form, a Stay object is created, together with an Enter Ob
 
 * rendering of parking fees (javascript)
 
+Within the javascript document, the following logic is applied:
+
+First implement a logic that collects the `parking_id`:
+
+If provided as a parameter, the logic picks up the parking_id from the url
+
+    // sets parking id as null by default
+    let parkingId = "null";
+    // captures parameter from url (if any)
+    const path = window.location.pathname;
+    const match = path.match(/\/enter\/(\d+)\//);
+    const parkingIdFromParam = match ? match[1] : null;
+    console.log(`parking id is ${parkingIdFromParam}`);
+
+If not provided a parameter
+
+
+Once `parking_id` is retrieved, the logic calls `get_parking_rates()` to return the parking rates. The function dynamically returns parking fees based on the parking selected.
+
+    #used to get parking rates through API (dynamically generated with js)
+    #note: safe = False allows to return a list instead of a dictonnary
+    # this is because Json expect a dict by default (add error to log of errors encourntered)
+    # credits: https://dev.to/chryzcode/django-json-response-safe-false-4f9i
+    def get_parking_rates(request, parking_id):
+        print(f'get_parking_rates parking id = {get_parking_rates}')
+        rates = Rate.objects.filter(parking_name_id = parking_id).values(
+            'rate_name',
+            'hour_range',
+            'rate',
+        )
+        return JsonResponse(list(rates), safe=False)
+
+`get_parking_rates()` is called from parking_fee.js at the bottom of template : `enter.html`
+    
+**enter.html**
+
+    {% block postloadjs %}
+    <script src="{% static 'js/parking_fee.js' %}"></script>
+    {% endblock %}
+
+**parking_fee.js**
+
+        if (parkingId){
+            fetch(`/parking_activity/get_parking_rates/${parkingId}/`)
+            .then(response => response.json())
+            .then(data => {
+                console.log("Fetched rates:", data);
+                renderRatesTable(data);
+        })
+        .catch(error => console.error("theres an error when getting the rates", error))
+        }
+
+Once the data is collected, it can then be rendered in `enter.html` template with `renderRatesTable()`.
+
+    <table>
+        <thead>
+            <tr>
+                <th>Rate Name</th>
+                <th>Hour Range</th>
+                <th>Rate</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 
 
 Useful links:

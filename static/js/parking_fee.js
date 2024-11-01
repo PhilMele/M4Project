@@ -8,7 +8,23 @@ document.addEventListener('DOMContentLoaded', function(){
     const path = window.location.pathname;
     const match = path.match(/\/enter\/(\d+)\//);
     const parkingIdFromParam = match ? match[1] : null;
+    // sets parking id with either of value or null
+    parkingId = parkingIdFromParam || "null";
     console.log(`parking id is ${parkingIdFromParam}`);
+    
+    // look for changes if the user has selected a parking manually
+    const manuallySelectedParking = document.getElementById('parking-select');
+    console.log("manuallySelectedParking=", manuallySelectedParking);
+
+    if(manuallySelectedParking){
+        manuallySelectedParking.addEventListener('change', function(){
+            console.log("this is getting accessed")
+            parkingId = this.value || "null";
+            console.log(`Updated parking id is ${parkingId}`);
+
+        })
+
+    }
 
     // Collect rates from `get_parking_rates()`
     function fetchRates(){
