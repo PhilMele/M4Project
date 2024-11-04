@@ -13,6 +13,15 @@ THis is parking manager dashboard
         <div class="col">Space Available</div>
         <div class="col">See Details</div>
     </div>
+    {%for parking in user_parking_list %}
+    <div class="row">
+        <div class="col">{{parking.name}}</div>
+        <div class="col"></div>
+        <div class="col">
+            <a href="{% url 'parking-info' parking_id=parking.id %}">Button</a>
+        </div>
+    </div>
+    {% endfor %}
 </div>
 
 
