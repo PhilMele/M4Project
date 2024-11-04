@@ -2,6 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    #path('', views.activity_list, name='activity_list'),
+    path('parking_manager_dashboard', views.parking_manager_dashboard, name='parking-manager-dashboard'),
 
 ]
