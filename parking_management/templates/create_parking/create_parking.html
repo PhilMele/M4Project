@@ -1,0 +1,16 @@
+{%extends 'base.html' %}
+{%load static %}
+
+{%block content%}
+Create parking
+
+<form method="post">
+    {% csrf_token %}
+    {{parkingform}}
+    <input type="submit" action="Submit button">
+</form>
+
+{%endblock%}
+{% block postloadjs %}
+
+{% endblock %}

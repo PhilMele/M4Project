@@ -571,3 +571,17 @@ Useful links:
 * https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
 * https://stackoverflow.com/questions/42686300/how-to-check-if-coordinate-inside-certain-area-python
 * https://geopy.readthedocs.io/en/stable/#module-geopy.distance
+
+# Parking Management App
+
+## Parking Manager Dashboard
+
+## Create New Parking (form)
+
+This feature is managed by `create_parking()`. 
+
+To enable this `ParkingForm` is created in forms.py, allowing to create Parking model objects.
+
+Upon successful submission, the newly created object passes its id, as a parameter to redirect the user to `parking_info()`
+
+## See Parking Details
