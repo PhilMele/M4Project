@@ -440,7 +440,43 @@ If provided as a parameter, the logic picks up the parking_id from the url
     const parkingIdFromParam = match ? match[1] : null;
     console.log(`parking id is ${parkingIdFromParam}`);
 
-If not provided a parameter
+If not provided as parameter, a drop down menu needs to be added to the html template looping over the different parking names available.
+
+    <!-- If parking ID is None -->
+    <form method="post">
+        {% csrf_token %}
+        <label for="parking-select">Select Parking:</label>
+        <select id="parking-select" name="parking_name">
+            <option value="">Select parking</option>
+            {% for parking in parking_list %}
+                <option value="{{ parking.id }}" 
+                    {% if parking_id == parking.id %}
+                        selected
+                    {% endif %}>
+                    {{ parking.name }}
+                </option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Submit the form">
+    </form>
+
+Once a parking name is selected, variable `manuallySelectedParking` collects the chosen parking name, which in turn give `parkingId` the id of the parking selected.
+
+    const manuallySelectedParking = document.getElementById('parking-select');
+        console.log("manuallySelectedParking=", manuallySelectedParking);
+
+    if(manuallySelectedParking){
+        manuallySelectedParking.addEventListener('change', function(){
+            console.log("this is getting accessed")
+            parkingId = this.value || "null";
+            console.log(`Updated parking id is ${parkingId}`);
+            // only trigger fetchRates() if parking_id is not null
+            // to avoid 404 error in console
+            if (parkingId !== "null"){
+                fetchRates();
+            }
+                
+            })
 
 
 Once `parking_id` is retrieved, the logic calls `get_parking_rates()` to return the parking rates. The function dynamically returns parking fees based on the parking selected.
@@ -468,17 +504,51 @@ Once `parking_id` is retrieved, the logic calls `get_parking_rates()` to return 
 
 **parking_fee.js**
 
-        if (parkingId){
+Create function `fetchRates()` to dynamically collect applicables rates from selected parking form the database.
+
+    function fetchRates(){
+        console.log(`ParkindId in fetchRates= ${parkingId}`);
+        if(parkingId){
             fetch(`/parking_activity/get_parking_rates/${parkingId}/`)
             .then(response => response.json())
-            .then(data => {
-                console.log("Fetched rates:", data);
+            .then(data =>{
+                console.log("Fetched rates", data);
                 renderRatesTable(data);
-        })
-        .catch(error => console.error("theres an error when getting the rates", error))
-        }
+            })
+            .catch(error => console.error("theres an error when getting the rates", error))
+        }   
+    }
 
 Once the data is collected, it can then be rendered in `enter.html` template with `renderRatesTable()`.
+
+    function renderRatesTable(data){
+
+        // get the body of the table
+        const table = document.getElementById("ratesTable");
+        const tbody = document.querySelector("table tbody")
+        tbody.innerHTML = "";
+
+        if(data.length>0){
+            
+            // shows table
+            table.style.display ="table"
+            // Adds data to table rwos
+
+            data.forEach(rate=>{
+                const tableRow = document.createElement('tr');
+                tableRow.innerHTML = `
+                <tr>
+                    <td>${rate.rate_name}</td>
+                    <td>${rate.hour_range}</td>
+                    <td>${rate.rate}</td>
+                </tr>
+                `;
+                tbody.appendChild(tableRow);
+            });
+        }else{
+            table.style.display = "none"
+        }
+    }
 
     <table>
         <thead>
@@ -491,6 +561,11 @@ Once the data is collected, it can then be rendered in `enter.html` template wit
         <tbody></tbody>
     </table>
 
+Problem encountered: error generated in the console `404 Page Not Found` when parkingId is null. To cover this, `fetchRates()` in wrapped within an if statement that checks if parkingId is null before triggering `fetchRates()`
+
+    if (parkingId !== "null"){
+        fetchRates()
+    }
 
 Useful links:
 * https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
