@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from user_management.models import UserProfile
-from .models import Parking
+from .models import Parking, Rate
 from .forms import ParkingForm
 
 from django.contrib.auth.decorators import login_required
@@ -38,5 +38,10 @@ def create_parking(request):
 
 @login_required
 def parking_info(request, parking_id):
-    print(f"parking_info()")
-    return render(request, 'parking_info/parking_info.html',{})
+    print({parking_id})
+    parking = get_object_or_404(Parking, id=parking_id)
+    rates = Rate.objects.filter(parking_name=parking)
+    return render(request, 'parking_info/parking_info.html',{
+        'parking':parking,
+        'rates':rates,
+    })

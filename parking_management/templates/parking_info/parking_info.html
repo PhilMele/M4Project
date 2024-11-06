@@ -2,9 +2,77 @@
 {%load static %}
 
 {%block content%}
-THis is parking info page
+THis is parking info 
+<!-- Inspection -->
+ <!-- TODO: ADD INSPECTION BUTTONS THAT SHOWS ALL REGS IN CAR PARK -->
+<!-- Parking Info -->
+<div class="container">
+    <h1 class="text-center">Parking List</h1>
+    
+    <div class="row">
+        <div class="col">Parking</div>
+        <div class="col">{{parking.name}}</div>
+    </div>
+    <div class="row">
+        <div class="col">Phone Number</div>
+        <div class="col">{{parking.phone_number}}</div>
+    </div>
+    <div class="row">
+        <div class="col">Addess: 1st Line</div>
+        <div class="col">{{parking.street_address1}}</div>
+    </div>
+    <div class="row">
+        <div class="col">Addess: 2nd Line</div>
+        <div class="col">{{parking.street_address2}}</div>
+    </div>
+    <div class="row">
+        <div class="col">City</div>
+        <div class="col">{{parking.city}}</div>
+    </div>
+    <div class="row">
+        <div class="col">County</div>
+        <div class="col">{{parking.county}}</div>
+    </div>
+    <div class="row">
+        <div class="col">Postcode</div>
+        <div class="col">{{parking.postcode}}</div>
+    </div>
+    <div class="row">
+        <div class="col">Country</div>
+        <div class="col">{{parking.country}}</div>
+    </div>
+    <div class="row">
+        <div class="col">Latitude</div>
+        <div class="col">{{parking.latitude}}</div>
+    </div>
+    <div class="row">
+        <div class="col">Longitude</div>
+        <div class="col">{{parking.longitude}}</div>
+    </div>
+    <div class="row">
+        <div class="col">Radius</div>
+        <div class="col">{{parking.radius}}</div>
+    </div>
 
+</div>
 
+<!-- Parking Rates -->
+<div class="container">
+    <h1 class="text-center">Applicable Rates</h1>
+    <div class="row">
+        <div class="col">Description</div>
+        <div class="col">Multiplier</div>
+        <div class="col">Applicable Rates</div>
+    </div>
+    {%for rate in rates %}
+    <div class="row">
+        <div class="col">{{rate.rate_name}}</div>
+        <div class="col">{{rate.hour_range}}</div>
+        <div class="col">{{rate.rate}}</div>
+    </div>
+    {%endfor%}
+
+</div>
 {%endblock%}
 {% block postloadjs %}
 
