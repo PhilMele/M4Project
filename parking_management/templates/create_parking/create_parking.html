@@ -1,4 +1,5 @@
 {%extends 'base.html' %}
+{% load crispy_forms_tags %}
 {%load static %}
 
 {%block content%}
@@ -6,8 +7,62 @@ Create parking
 
 <form method="post">
     {% csrf_token %}
-    {{parkingform}}
-    <input type="submit" action="Submit button">
+    <div class="create-parking-form-group">
+        {{ parkingform.name.label_tag }} 
+        {{ parkingform.name|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ parkingform.phone_number.label_tag }}
+        {{ parkingform.phone_number|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ parkingform.street_address1.label_tag }}
+        {{ parkingform.street_address1|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ parkingform.street_address2.label_tag }}
+        {{ parkingform.street_address2|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ parkingform.city.label_tag }}
+        {{ parkingform.city|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ parkingform.county.label_tag }}
+        {{ parkingform.county|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ parkingform.postcode.label_tag }}
+        {{ parkingform.postcode|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ parkingform.country.label_tag }}
+        {{ parkingform.country|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ parkingform.latitude.label_tag }}
+        {{ parkingform.latitude|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ parkingform.longitude.label_tag }}
+        {{ parkingform.longitude|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ parkingform.radius.label_tag }}
+        {{ parkingform.radius|as_crispy_field }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 {%endblock%}

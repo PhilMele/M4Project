@@ -13,7 +13,7 @@ class Parking (models.Model):
     city = models.CharField(max_length=40, null=True, blank=True)
     county = models.CharField(max_length=80, null=True, blank=True)
     postcode = models.CharField(max_length=20, null=True, blank=True)
-    country = CountryField(blank_label='Country', null=True, blank=True)
+    country = CountryField(default='GB')
     latitude = models.CharField(verbose_name="Latitude",max_length=50, null=True, blank=True)
     longitude = models.CharField(verbose_name="Longitude",max_length=50, null=True, blank=True)
     radius = models.CharField(verbose_name="Radius",max_length=50, null=True, blank=True)

@@ -584,4 +584,23 @@ To enable this `ParkingForm` is created in forms.py, allowing to create Parking 
 
 Upon successful submission, the newly created object passes its id, as a parameter to redirect the user to `parking_info()`
 
+Use Crispy Forms:
+* Run `pip install django-crispy-forms`
+* Run `pip install crispy-bootstrap5`
+* Run `pip install django-countries`
+
+* In Installed_apps (Settings.py) add:
+
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        ...
+        #crispy form packages
+        'crispy_forms',
+        'crispy_bootstrap5',
+
+    ]
+* In Settings.py, add:
+
+    CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
 ## See Parking Details
