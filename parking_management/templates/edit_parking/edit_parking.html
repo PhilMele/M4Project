@@ -1,0 +1,71 @@
+{%extends 'base.html' %}
+{% load crispy_forms_tags %}
+{%load static %}
+
+{%block content%}
+Create parking
+
+<form method="post">
+    {% csrf_token %}
+    <div class="create-parking-form-group">
+        {{ editparkingform.name.label_tag }} 
+        {{ editparkingform.name|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ editparkingform.phone_number.label_tag }}
+        {{ editparkingform.phone_number|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ editparkingform.street_address1.label_tag }}
+        {{ editparkingform.street_address1|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ editparkingform.street_address2.label_tag }}
+        {{ editparkingform.street_address2|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ editparkingform.city.label_tag }}
+        {{ editparkingform.city|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ editparkingform.county.label_tag }}
+        {{ editparkingform.county|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ editparkingform.postcode.label_tag }}
+        {{ editparkingform.postcode|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ editparkingform.country.label_tag }}
+        {{ editparkingform.country|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ editparkingform.latitude.label_tag }}
+        {{ editparkingform.latitude|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ editparkingform.longitude.label_tag }}
+        {{ editparkingform.longitude|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ editparkingform.radius.label_tag }}
+        {{ editparkingform.radius|as_crispy_field }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{%endblock%}
+{% block postloadjs %}
+
+{% endblock %}

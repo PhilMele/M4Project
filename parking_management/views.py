@@ -38,10 +38,34 @@ def create_parking(request):
 
 @login_required
 def parking_info(request, parking_id):
+
     print({parking_id})
     parking = get_object_or_404(Parking, id=parking_id)
     rates = Rate.objects.filter(parking_name=parking)
     return render(request, 'parking_info/parking_info.html',{
         'parking':parking,
         'rates':rates,
+    })
+
+@login_required
+def edit_parking(request, parking_id):
+    parking = get_object_or_404(Parking, id=parking_id)
+    
+    if request.method == "POST":
+        editparkingform = ParkingForm(request.POST, instance=parking)
+       
+        if editparkingform.is_valid():
+            
+            editparkingform.save()
+            messages.success(request, "Parking details updated successfully.")
+            return redirect('parking-info', parking_id=parking.id)
+        else:
+        
+            messages.error(request, "There was an issue updating the parking details.")
+    else:
+        
+        editparkingform = ParkingForm(instance=parking)
+
+    return render(request, 'edit_parking/edit_parking.html', {
+        'editparkingform': editparkingform,
     })

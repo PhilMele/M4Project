@@ -63,12 +63,17 @@ THis is parking info
         <div class="col">Description</div>
         <div class="col">Multiplier</div>
         <div class="col">Applicable Rates</div>
+        <div class="col"></div>
     </div>
     {%for rate in rates %}
     <div class="row">
         <div class="col">{{rate.rate_name}}</div>
         <div class="col">{{rate.hour_range}}</div>
         <div class="col">{{rate.rate}}</div>
+        <div class="col">
+            <a class="btn btn-success" href="{% url 'edit-parking' parking_id=parking.id %}">Button</a>
+
+        </div>
     </div>
     {%endfor%}
 
