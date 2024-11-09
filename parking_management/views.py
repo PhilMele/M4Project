@@ -93,3 +93,29 @@ def add_rate(request, parking_id):
         'rateform':rateform,
         
     })
+
+
+@login_required
+def edit_rate(request, parking_id, rate_id):
+
+    rate = get_object_or_404(Rate, id=rate_id)
+    parking = get_object_or_404(Parking, id=parking_id)
+    parking_id = parking.id
+    print(f'parking_id = {parking_id}')
+
+    if request.method == "POST":
+        editrateform = RateForm(request.POST, instance=rate) 
+        if editrateform.is_valid():
+            editrateform.save()
+            messages.success(request, "Parking details updated successfully.")
+            return redirect('parking-info', parking_id=parking_id)
+        else:
+        
+            messages.error(request, "There was an issue updating the parking details.")
+    else:
+        
+        editrateform = RateForm(instance=rate)
+
+    return render(request, 'rate/edit_rate/edit_rate.html', {
+        'editrateform': editrateform,
+    })

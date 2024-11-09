@@ -82,8 +82,7 @@
         <div class="col">{{rate.hour_range}}</div>
         <div class="col">{{rate.rate}}</div>
         <div class="col">
-            <a class="btn btn-success" href="">Button</a>
-
+            <a class="btn btn-success" href="{% url 'edit-rate' rate_id=rate.id parking_id=parking.id %}">Edit Rate</a>
         </div>
     </div>
     {%endfor%}
