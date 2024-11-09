@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from user_management.models import UserProfile
 from .models import Parking, Rate
-from .forms import ParkingForm
+from .forms import ParkingForm, RateForm
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -74,8 +74,22 @@ def edit_parking(request, parking_id):
 
 @login_required
 def add_rate(request, parking_id):
-
+    parking = get_object_or_404(Parking, id=parking_id)
+    if request.method == "POST":
+        rateform = RateForm(request.POST)
+        if rateform.is_valid():
+            ratedata = rateform.save(commit = False)
+            ratedata.user = request.user.userprofile
+            ratedata.parking_name = parking
+            ratedata.save()
+            messages.success(request,"New rate created successfully.")
+            return redirect('parking-info', parking_id=parking_id)
+        else:
+            messages.success(request,"Oops. Something did not work")
+    else:
+        rateform = RateForm()
 
     return render(request, 'rate/add_rate/add_rate.html', {
+        'rateform':rateform,
         
     })

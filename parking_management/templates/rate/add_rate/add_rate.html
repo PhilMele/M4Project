@@ -1,0 +1,33 @@
+{%extends 'base.html' %}
+{% load crispy_forms_tags %}
+{%load static %}
+
+{%block content%}
+<h1>Set new rate</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="create-parking-form-group">
+        {{ rateform.rate_name.label_tag }} 
+        {{ rateform.rate_name|as_crispy_field }}
+    </div>
+
+    note: add more explaination on how to set parking hour ranges
+    
+    <div class="create-parking-form-group">
+        {{ rateform.hour_range.label_tag }}
+        {{ rateform.hour_range|as_crispy_field }}
+    </div>
+    
+    <div class="create-parking-form-group">
+        {{ rateform.rate.label_tag }}
+        {{ rateform.rate|as_crispy_field }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{%endblock%}
+{% block postloadjs %}
+
+{% endblock %}
