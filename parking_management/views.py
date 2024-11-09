@@ -32,7 +32,7 @@ def create_parking(request):
             messages.success(request,"Oops. Something did not work")
     else:
         parkingform = ParkingForm()
-    return render(request, 'create_parking/create_parking.html',{
+    return render(request, 'parking/create_parking/create_parking.html',{
         'parkingform':parkingform
     })
 
@@ -49,6 +49,7 @@ def parking_info(request, parking_id):
 
 @login_required
 def edit_parking(request, parking_id):
+
     parking = get_object_or_404(Parking, id=parking_id)
     
     if request.method == "POST":
@@ -66,6 +67,15 @@ def edit_parking(request, parking_id):
         
         editparkingform = ParkingForm(instance=parking)
 
-    return render(request, 'edit_parking/edit_parking.html', {
+    return render(request, 'parking/edit_parking/edit_parking.html', {
         'editparkingform': editparkingform,
+    })
+
+
+@login_required
+def add_rate(request, parking_id):
+
+
+    return render(request, 'rate/add_rate/add_rate.html', {
+        
     })

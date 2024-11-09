@@ -1,9 +1,10 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Parking
+from .models import Parking, Rate
 from django_countries.fields import CountryField
 
 class ParkingForm(ModelForm):
+
     name = forms.CharField(
         required=True, 
         label='', 
@@ -70,4 +71,30 @@ class ParkingForm(ModelForm):
             'latitude',
             'longitude',
             'radius'
+        )
+
+
+class RateForm(ModelForm):
+
+    rate_name = forms.CharField(
+        required=True, 
+        label='', 
+        widget=forms.TextInput(attrs={'placeholder': 'Enter rate title'})
+    )
+    hour_range = forms.IntegerField(
+        required=True, 
+        label='', 
+        widget=forms.NumberInput(attrs={'placeholder': 'Maximum hour until which rate is applicable'})
+    )
+    rate = forms.DecimalField(
+        required=True, 
+        label='', 
+        widget=forms.TextInput(attrs={'placeholder': 'Enter applicable rate'})
+    )
+    class Meta:
+        model = Rate
+        fields = (
+            'rate_name',
+            'hour_range',
+            'rate',
         )

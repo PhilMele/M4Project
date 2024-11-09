@@ -2,16 +2,19 @@
 {%load static %}
 
 {%block content%}
-THis is parking info 
+
 <!-- Inspection -->
  <!-- TODO: ADD INSPECTION BUTTONS THAT SHOWS ALL REGS IN CAR PARK -->
 <!-- Parking Info -->
 <div class="container">
-    <h1 class="text-center">Parking List</h1>
+
+    <h1 class="text-center">Parking Informations</h1>
     
     <div class="row">
-        <div class="col">Parking</div>
         <div class="col">{{parking.name}}</div>
+        <div class="col">
+            <a class="btn btn-success" href="{% url 'edit-parking' parking_id=parking.id %}">Button</a>
+        </div>
     </div>
     <div class="row">
         <div class="col">Phone Number</div>
@@ -58,7 +61,15 @@ THis is parking info
 
 <!-- Parking Rates -->
 <div class="container">
-    <h1 class="text-center">Applicable Rates</h1>
+    
+    <div class="row">
+        <div class="col">
+            <h2 class="">Applicable Rates</h2>
+        </div>
+        <div class="col">
+            <a class="btn btn-success" href="{% url 'add-rate' parking_id=parking.id %}">Add Rate</a>
+        </div>
+    </div>
     <div class="row">
         <div class="col">Description</div>
         <div class="col">Multiplier</div>
@@ -71,7 +82,7 @@ THis is parking info
         <div class="col">{{rate.hour_range}}</div>
         <div class="col">{{rate.rate}}</div>
         <div class="col">
-            <a class="btn btn-success" href="{% url 'edit-parking' parking_id=parking.id %}">Button</a>
+            <a class="btn btn-success" href="">Button</a>
 
         </div>
     </div>
