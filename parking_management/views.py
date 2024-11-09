@@ -73,6 +73,14 @@ def edit_parking(request, parking_id):
 
 
 @login_required
+def delete_parking(request, parking_id):
+    parking = get_object_or_404(Parking, id=parking_id, user=request.user.userprofile)
+    parking.delete()
+    messages.success(request, "Parking deleted.")
+    return redirect('parking-manager-dashboard')
+
+
+@login_required
 def add_rate(request, parking_id):
     parking = get_object_or_404(Parking, id=parking_id)
     if request.method == "POST":

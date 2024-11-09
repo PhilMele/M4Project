@@ -33,6 +33,11 @@ THis is parking manager dashboard
             <a href="{% url 'parking-info' parking_id=parking.id %}">Button</a>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <a href="{% url 'delete-parking' parking_id=parking.id %}">Delete Parking</a>
+        </div>
+    </div>
     {% endfor %}
 </div>
 
