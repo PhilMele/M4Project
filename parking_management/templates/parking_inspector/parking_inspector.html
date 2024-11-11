@@ -1,0 +1,18 @@
+{%extends 'base.html' %}
+{%load static %}
+
+{%block content%}
+
+<div class="container">
+    <div class="row">Car Registration</div>
+    {% for stay in parking_users %}
+    <div class="row">{{stay.user.car_registration}}</div>
+    {% endfor %}
+
+</div>
+
+{%endblock%}
+
+{% block postloadjs %}
+
+{% endblock %}

@@ -17,7 +17,7 @@
         <div class="col">{{parking.active}}</div>
         <div class="col">{{stay_objects_count}}/{{parking.max_capacity}}</div>
         <div class="col">
-            <a class="btn btn-success" href="">Inspection Button</a>
+            <a class="btn btn-success" href="{% url 'parking-inspector' parking_id=parking.id %}">Parking Inspector</a>
         </div>
     </div>
 </div>

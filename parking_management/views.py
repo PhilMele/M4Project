@@ -17,6 +17,23 @@ def parking_manager_dashboard(request):
         'user_parking_list':user_parking_list,
     })
 
+def parking_inspector(request,parking_id):
+    parking_users = Stay.objects.filter(
+        parking_name=parking_id,
+        paid = False,
+        )
+        # TODO : return list of all cars parked in parking ID
+        #TODO : create  form for inspector to enter list of cars parked illegally
+        #TODO: make this list available in another page
+        # TODO: Implement email system + forgot password
+        # TODO: implement static stuff
+        # TODO: Front end
+    
+
+    return render(request, 'parking_inspector/parking_inspector.html',{ 
+        'parking_users':parking_users,
+    })
+
 # Parking objects
 @login_required
 def create_parking(request):
@@ -54,14 +71,12 @@ def parking_info(request, parking_id):
 def parking_space_available(parking_id):
     # identify parking
     parking = get_object_or_404(Parking, id=parking_id)
-    print(f'parking = {parking}')
-
+    
     # count of stay objects with paid = false
     stay_objects_count = Stay.objects.filter(
         parking_name= parking,
         paid = False).count()
-    print(f'stay_objects_count = {stay_objects_count}')
-
+    
     return stay_objects_count
 
 @login_required
