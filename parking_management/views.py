@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from user_management.models import UserProfile
+from parking_activity.models import Stay
 from .models import Parking, Rate
 from .forms import ParkingForm, RateForm
 
@@ -15,6 +16,7 @@ def parking_manager_dashboard(request):
     return render(request, 'dashboard/parking_manager_dashboard.html',{
         'user_parking_list':user_parking_list,
     })
+
 # Parking objects
 @login_required
 def create_parking(request):
@@ -40,12 +42,27 @@ def create_parking(request):
 def parking_info(request, parking_id):
 
     print({parking_id})
+    stay_objects_count = parking_space_available(parking_id)
     parking = get_object_or_404(Parking, id=parking_id)
     rates = Rate.objects.filter(parking_name=parking)
     return render(request, 'parking_info/parking_info.html',{
         'parking':parking,
         'rates':rates,
+        'stay_objects_count':stay_objects_count
     })
+
+def parking_space_available(parking_id):
+    # identify parking
+    parking = get_object_or_404(Parking, id=parking_id)
+    print(f'parking = {parking}')
+
+    # count of stay objects with paid = false
+    stay_objects_count = Stay.objects.filter(
+        parking_name= parking,
+        paid = False).count()
+    print(f'stay_objects_count = {stay_objects_count}')
+
+    return stay_objects_count
 
 @login_required
 def edit_parking(request, parking_id):
@@ -101,7 +118,6 @@ def add_rate(request, parking_id):
         'rateform':rateform,
         
     })
-
 
 @login_required
 def edit_rate(request, parking_id, rate_id):

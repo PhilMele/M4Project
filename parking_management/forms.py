@@ -10,6 +10,11 @@ class ParkingForm(ModelForm):
         label='', 
         widget=forms.TextInput(attrs={'placeholder': 'Enter parking name'})
     )
+    max_capacity = forms.IntegerField(
+        required=True, 
+        label='', 
+        widget=forms.TextInput(attrs={'placeholder': 'Parking Maximum Capacity'})
+    )
     phone_number = forms.CharField(
         required=True, 
         label='', 
@@ -61,6 +66,7 @@ class ParkingForm(ModelForm):
         model = Parking
         fields = (
             'name',
+            'max_capacity',
             'phone_number',
             'street_address1',
             'street_address2',
