@@ -74,15 +74,21 @@
         <div class="col">Description</div>
         <div class="col">Multiplier</div>
         <div class="col">Applicable Rates</div>
-        <div class="col"></div>
+
     </div>
     {%for rate in rates %}
     <div class="row">
         <div class="col">{{rate.rate_name}}</div>
         <div class="col">{{rate.hour_range}}</div>
         <div class="col">{{rate.rate}}</div>
+
+    </div>
+    <div class="row">
         <div class="col">
-            <a class="btn btn-success" href="{% url 'edit-rate' rate_id=rate.id parking_id=parking.id %}">Edit Rate</a>
+            <a class="btn btn-success" href="{% url 'delete-rate' rate_id=rate.id parking_id=parking.id %}">Delete</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-success" href="{% url 'edit-rate' rate_id=rate.id parking_id=parking.id %}">Edit</a>
         </div>
     </div>
     {%endfor%}

@@ -15,7 +15,7 @@ def parking_manager_dashboard(request):
     return render(request, 'dashboard/parking_manager_dashboard.html',{
         'user_parking_list':user_parking_list,
     })
-
+# Parking objects
 @login_required
 def create_parking(request):
     if request.method == "POST":
@@ -79,7 +79,7 @@ def delete_parking(request, parking_id):
     messages.success(request, "Parking deleted.")
     return redirect('parking-manager-dashboard')
 
-
+# Rate objects
 @login_required
 def add_rate(request, parking_id):
     parking = get_object_or_404(Parking, id=parking_id)
@@ -105,7 +105,6 @@ def add_rate(request, parking_id):
 
 @login_required
 def edit_rate(request, parking_id, rate_id):
-
     rate = get_object_or_404(Rate, id=rate_id)
     parking = get_object_or_404(Parking, id=parking_id)
     parking_id = parking.id
@@ -127,3 +126,10 @@ def edit_rate(request, parking_id, rate_id):
     return render(request, 'rate/edit_rate/edit_rate.html', {
         'editrateform': editrateform,
     })
+
+@login_required
+def delete_rate(request, parking_id, rate_id):
+    rate = get_object_or_404(Rate, id=rate_id)
+    rate.delete()
+    messages.success(request, "Rate deleted.")
+    return redirect('parking-info', parking_id=parking_id)

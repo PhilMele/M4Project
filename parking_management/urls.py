@@ -10,7 +10,8 @@ urlpatterns = [
     path('delete_parking/<int:parking_id>/', views.delete_parking, name='delete-parking'),
     # rate objects
     path('add_rate/<int:parking_id>/', views.add_rate, name='add-rate'),
-    path('edit_rate/<int:rate_id>/<int:parking_id>/', views.edit_rate, name='edit-rate')
+    path('edit_rate/<int:rate_id>/<int:parking_id>/', views.edit_rate, name='edit-rate'),
+    path('delete_rate/<int:rate_id>/<int:parking_id>/', views.delete_rate, name='delete-rate'),
 
 
 ]
