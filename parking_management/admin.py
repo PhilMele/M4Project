@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Parking, Rate
+from .models import Parking, Rate, IllegalParking
 
 # Register your models here.
 class ParkingAdmin(admin.ModelAdmin):
@@ -18,6 +18,13 @@ class RateAdmin(admin.ModelAdmin):
     'rate'
     )
 
+class IllegalParkingAdmin(admin.ModelAdmin):
+    list_display =(
+    'inspector',
+    'parking_name',
+    'car_reg',
+      )
 
 admin.site.register(Parking, ParkingAdmin)
 admin.site.register(Rate, RateAdmin)
+admin.site.register(IllegalParking, IllegalParkingAdmin)

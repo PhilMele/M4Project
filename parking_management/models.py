@@ -34,3 +34,12 @@ class Rate (models.Model):
 
     def __str__(self):
         return self.rate_name
+
+class IllegalParking(models.Model):
+    inspector = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
+    parking_name = models.ForeignKey(Parking, on_delete=models.SET_NULL, null=True, blank=True)
+    car_reg = models.CharField(max_length=80)
+
+    def __str__(self):
+        return self.parking_name
+

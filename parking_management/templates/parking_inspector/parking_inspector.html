@@ -4,11 +4,19 @@
 {%block content%}
 
 <div class="container">
+    <h1>Car illegally parked</h1>
+    <div class="row">Enter registration</div>
+        {% for stay in parking_users %}
+        <div class="row">{{stay.user.car_registration}}</div>
+        {% endfor %}
+</div>
+
+<div class="container">
+    <h1>List of Car Registrations Parked</h1>
     <div class="row">Car Registration</div>
     {% for stay in parking_users %}
     <div class="row">{{stay.user.car_registration}}</div>
     {% endfor %}
-
 </div>
 
 {%endblock%}

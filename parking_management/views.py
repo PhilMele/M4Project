@@ -22,14 +22,13 @@ def parking_inspector(request,parking_id):
         parking_name=parking_id,
         paid = False,
         )
-        # TODO : return list of all cars parked in parking ID
-        #TODO : create  form for inspector to enter list of cars parked illegally
-        #TODO: make this list available in another page
+        # TODO : return list of all cars parked in parking ID + handle front end if None
+        # TODO : create  form for inspector to enter list of cars parked illegally
+        # TODO: make this list available in another page
         # TODO: Implement email system + forgot password
         # TODO: implement static stuff
         # TODO: Front end
     
-
     return render(request, 'parking_inspector/parking_inspector.html',{ 
         'parking_users':parking_users,
     })

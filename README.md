@@ -603,4 +603,8 @@ Use Crispy Forms:
 
     CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
-## See Parking Details
+## See Parking Details (CRUD)
+
+# Parking Rates (CRUD)
+
+# Parking Inspector (see registration, take note of those not registered)
