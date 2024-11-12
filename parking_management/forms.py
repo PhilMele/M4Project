@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Parking, Rate
+from .models import Parking, Rate, IllegalParking
 from django_countries.fields import CountryField
 
 class ParkingForm(ModelForm):
@@ -103,4 +103,16 @@ class RateForm(ModelForm):
             'rate_name',
             'hour_range',
             'rate',
+        )
+
+class IllegalParkingForm(ModelForm):
+    car_reg = forms.CharField(
+        required=True, 
+        label='', 
+        widget=forms.TextInput(attrs={'placeholder': 'Enter car registration'})
+    )
+    class Meta:
+        model = IllegalParking
+        fields = (
+            'car_reg',
         )

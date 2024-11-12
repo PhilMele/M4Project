@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from user_management.models import UserProfile
 from parking_activity.models import Stay
-from .models import Parking, Rate
-from .forms import ParkingForm, RateForm
+from .models import Parking, Rate, IllegalParking
+from .forms import ParkingForm, RateForm, IllegalParkingForm
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -10,8 +10,6 @@ from django.contrib import messages
 @login_required
 def parking_manager_dashboard(request):
     user_parking_list = Parking.objects.filter(user = request.user.userprofile)
-    print(f"user_parking_list = {user_parking_list}")
-
 
     return render(request, 'dashboard/parking_manager_dashboard.html',{
         'user_parking_list':user_parking_list,
@@ -22,6 +20,27 @@ def parking_inspector(request,parking_id):
         parking_name=parking_id,
         paid = False,
         )
+    illegal_users = IllegalParking.objects.filter(
+        parking_name=parking_id,
+    )
+
+    parking = get_object_or_404(Parking, id = parking_id)
+    
+    # record list of cars illegally parked
+    if request.method == "POST":
+        illegalparkingform = IllegalParkingForm(request.POST)
+        if illegalparkingform.is_valid():
+            illegalparkingformdata = illegalparkingform.save(commit=False)
+            illegalparkingformdata.inspector = request.user.userprofile
+            illegalparkingformdata.parking_name = parking
+            illegalparkingformdata.save()
+            print(f'illegalparkingformdata.save = {illegalparkingformdata.save}')
+            messages.success(request,"Illegal Registration saved.")
+            return redirect('parking-inspector', parking_id=parking_id)
+        else:
+            messages.success(request,"Oops. Something did not work")
+    else:
+        illegalparkingform = IllegalParkingForm()
         # TODO : return list of all cars parked in parking ID + handle front end if None
         # TODO : create  form for inspector to enter list of cars parked illegally
         # TODO: make this list available in another page
@@ -31,7 +50,9 @@ def parking_inspector(request,parking_id):
     
     return render(request, 'parking_inspector/parking_inspector.html',{ 
         'parking_users':parking_users,
-    })
+        'illegal_users':illegal_users,
+        'illegalparkingform':illegalparkingform,
+    }) 
 
 # Parking objects
 @login_required

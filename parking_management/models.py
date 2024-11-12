@@ -43,3 +43,7 @@ class IllegalParking(models.Model):
     def __str__(self):
         return self.parking_name
 
+    def __str__(self):
+            # Return a string representation that handles potential None values
+            parking_name_str = self.parking_name.name if self.parking_name else "Unknown Parking"
+            return f"{parking_name_str} - {self.car_reg}"

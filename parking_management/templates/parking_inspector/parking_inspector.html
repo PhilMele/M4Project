@@ -1,21 +1,39 @@
 {%extends 'base.html' %}
 {%load static %}
-
+{% load crispy_forms_tags %}
 {%block content%}
 
+<!-- DO SOMETIHG IN CSS TO HAVE BUTTON AND FIELD AT SAME LEVEL IN MOBILE VIEW -->
 <div class="container">
     <h1>Car illegally parked</h1>
-    <div class="row">Enter registration</div>
-        {% for stay in parking_users %}
-        <div class="row">{{stay.user.car_registration}}</div>
-        {% endfor %}
+    <form action="" method="POST">
+        <div class="row d-flex align-items-center">
+            {% csrf_token %}
+            <div class="col-auto">
+                {{ illegalparkingform.car_reg.label_tag }}
+                {{ illegalparkingform.car_reg|as_crispy_field }}
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="">Add Registration</button>
+            </div>
+        </div>
+    </form>
 </div>
 
+<!-- Toggle displaying either illegal regs or current cars -->
 <div class="container">
     <h1>List of Car Registrations Parked</h1>
     <div class="row">Car Registration</div>
     {% for stay in parking_users %}
     <div class="row">{{stay.user.car_registration}}</div>
+    {% endfor %}
+</div>
+
+<div class="container">
+    <h1>List Illegally Parked Cars</h1>
+    <div class="row">Car Registration</div>
+    {% for illegalparking in illegal_users %}
+    <div class="row">{{illegalparking.car_reg}}</div>
     {% endfor %}
 </div>
 

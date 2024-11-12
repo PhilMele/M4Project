@@ -23,7 +23,7 @@ class IllegalParkingAdmin(admin.ModelAdmin):
     'inspector',
     'parking_name',
     'car_reg',
-      )
+    )
 
 admin.site.register(Parking, ParkingAdmin)
 admin.site.register(Rate, RateAdmin)
