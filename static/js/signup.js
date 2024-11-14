@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // fields to validate
     const emailField = form.querySelector('input[name="email"]');
+    const confirmEmailField= form.querySelector('input[name="email2"]')
 
     // email check credits: https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
     emailField.addEventListener('input', () => {
@@ -20,6 +21,15 @@ document.addEventListener('DOMContentLoaded', function() {
             displayError(emailField, "Email address is not valid.");
         }
     });
+
+    // confirm email field
+    confirmEmailField.addEventListener('input',()=>{
+        const confirmEmail = confirmEmailField.value;
+
+        if(confirmEmail !== emailField.value){
+            displayError(confirmEmailField, "Email addresses do not match");
+        }
+    })
 
     const genError = (message) => {
         const error = document.createElement('div');
