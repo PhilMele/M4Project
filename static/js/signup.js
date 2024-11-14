@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailField = form.querySelector('input[name="email"]');
     const confirmEmailField= form.querySelector('input[name="email2"]')
     const checkUsernamerField = form.querySelector('input[name="username"]')
+    const checkPasswordField = form.querySelector('input[name="password1"]')
 
     // email check credits: https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
     emailField.addEventListener('input', () => {
@@ -42,11 +43,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
         hideError(checkUsernamerField)
 
-        hideError(checkUsernamerField)
         if(username.length < minChar || username.length > maxChar ){
             displayError(checkUsernamerField,"Your username needs to be between 4 to 150 characters")
         }
     })
+
+    // checks if password meets requirements:
+    // Your password can’t be too similar to your other personal information: missing
+    // Your password must contain at least 8 characters.
+    // Your password can’t be a commonly used password.
+    // Your password can’t be entirely numeric.
+    checkPasswordField.addEventListener('input',()=>{
+        password = checkPasswordField.value;
+        const minChar = 8;
+
+        hideError(checkPasswordField);
+
+        if(password.length < minChar){
+            displayError(checkPasswordField,"Your password must contain at least 8 characters.")
+        }
+
+        // credits: https://stackoverflow.com/questions/12090077/javascript-regular-expression-password-validation-having-special-characters
+        if (!/[0-9]/.test(password)) {
+            displayError(checkPasswordField, "Password must contain at least one digit.");
+        }
+
+        if (!/[a-zA-Z!#$%&?]/.test(password)) {
+            displayError(checkPasswordField, "Your password must contain at least one letter and one special character.");
+        }
+    })
+
     
     const genError = (message) => {
         const error = document.createElement('div');
