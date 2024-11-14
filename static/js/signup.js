@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // fields to validate
     const emailField = form.querySelector('input[name="email"]');
     const confirmEmailField= form.querySelector('input[name="email2"]')
+    const checkUsernamerField = form.querySelector('input[name="username"]')
 
     // email check credits: https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
     emailField.addEventListener('input', () => {
@@ -33,6 +34,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     })
 
+    // checks if username is within 4 to 150 char
+    checkUsernamerField.addEventListener('input',()=>{
+        const username = checkUsernamerField.value;
+        const minChar = 4;
+        const maxChar = 150;
+
+        hideError(checkUsernamerField)
+
+        hideError(checkUsernamerField)
+        if(username.length < minChar || username.length > maxChar ){
+            displayError(checkUsernamerField,"Your username needs to be between 4 to 150 characters")
+        }
+    })
+    
     const genError = (message) => {
         const error = document.createElement('div');
         error.className = 'error-message';

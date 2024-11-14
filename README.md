@@ -608,3 +608,5 @@ Use Crispy Forms:
 # Parking Rates (CRUD)
 
 # Parking Inspector (see registration, take note of those not registered)
+
+## JS Validators on signup
