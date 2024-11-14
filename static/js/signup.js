@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
     confirmEmailField.addEventListener('input',()=>{
         const confirmEmail = confirmEmailField.value;
 
+        hideError(confirmEmailField)
+
         if(confirmEmail !== emailField.value){
             displayError(confirmEmailField, "Email addresses do not match");
         }
