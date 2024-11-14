@@ -26,6 +26,8 @@
     <div class="row">Car Registration</div>
     {% for stay in parking_users %}
     <div class="row">{{stay.user.car_registration}}</div>
+    {% empty %}
+        <div class="row">No cars parked currently.</div>
     {% endfor %}
 </div>
 
@@ -33,9 +35,14 @@
     <h1>List Illegally Parked Cars</h1>
     <div class="row">Car Registration</div>
     {% for illegalparking in illegal_users %}
-    <div class="row">{{illegalparking.car_reg}}</div>
+        <div class="row">{{illegalparking.car_reg}}</div>
+        {% empty %}
+            <div class="row">This list is empty.</div>
     {% endfor %}
+    
 </div>
+
+
 
 {%endblock%}
 
