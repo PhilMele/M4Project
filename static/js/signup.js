@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const confirmEmailField= form.querySelector('input[name="email2"]')
     const checkUsernamerField = form.querySelector('input[name="username"]')
     const checkPasswordField = form.querySelector('input[name="password1"]')
+    const confirmPasswordField = form.querySelector('input[name="password2"]')
 
     // email check credits: https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
     emailField.addEventListener('input', () => {
@@ -56,6 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
     checkPasswordField.addEventListener('input',()=>{
         password = checkPasswordField.value;
         const minChar = 8;
+            // 
+        console.log(`password ${password}`)
 
         hideError(checkPasswordField);
 
@@ -72,6 +75,18 @@ document.addEventListener('DOMContentLoaded', function() {
             displayError(checkPasswordField, "Your password must contain at least one letter and one special character.");
         }
     })
+
+
+    confirmPasswordField.addEventListener('input',()=>{
+        const confirmPassword = confirmPasswordField.value;
+        console.log(`confirmPassword ${confirmPassword}`)
+         hideError(confirmPasswordField)
+         if(confirmPassword !== password){
+            displayError(confirmPasswordField,"Your passwords do not match!")
+         }
+
+    })
+
 
     
     const genError = (message) => {
