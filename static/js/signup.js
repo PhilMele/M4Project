@@ -84,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
          if(confirmPassword !== password){
             displayError(confirmPasswordField,"Your passwords do not match!")
          }
-
     })
 
 
