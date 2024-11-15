@@ -1,29 +1,71 @@
 {% extends "socialaccount/base_entrance.html" %}
 {% load i18n %}
 {% load allauth %}
+{% load static %} <!-- Load static files -->
+
 {% block head_title %}
-    {% trans "Signup" %}
+    {% trans "Sign Up" %}
 {% endblock head_title %}
+{%block extra_js%}
+<script src="{% static 'js/signup.js' %}"></script>
+{%endblock%}
+
 {% block content %}
-    {% element h1 %}
-        {% trans "Sign Up" %}
-    {% endelement %}
-    {% element p %}
-        {% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
-{{site_name}}. As a final step, please complete the following form:{% endblocktrans %}
-    {% endelement %}
-    {% url 'socialaccount_signup' as action_url %}
-    {% element form form=form method="post" action=action_url %}
-        {% slot body %}
+    <div class="signup-container">
+        <!-- Logo -->
+        <div class="logo-container">
+            <img src="{% static 'path/to/logo.png' %}" alt="Logo">
+        </div>
+
+        <!-- Title -->
+        {% element h1 %}
+            {% trans "Sign Up" %}
+        {% endelement %}
+
+        <!-- Description -->
+        <p>
+            {% blocktrans with provider_name=account.get_provider.name site_name=site.name %}
+                You are about to use your {{ provider_name }} account to sign up for {{ site_name }}.
+                Please complete the following form:
+            {% endblocktrans %}
+        </p>
+
+        <!-- Signup Form -->
+        {% url 'socialaccount_signup' as action_url %}
+        <form method="post" action="{{ action_url }}">
             {% csrf_token %}
-            {% element fields form=form unlabeled=True %}
-            {% endelement %}
+
+            <!-- Form Fields -->
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-danger">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
             {{ redirect_field }}
-        {% endslot %}
-        {% slot actions %}
-            {% element button type="submit" %}
-                {% trans "Sign Up" %}
-            {% endelement %}
-        {% endslot %}
-    {% endelement %}
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">
+                    {% trans "Sign Up" %}
+                </button>
+            </div>
+        </form>
+
+        <!-- signin -->
+        <p class="text-center mt-3">
+            {% trans "Already have an account? " %}
+            <a href="{{ login_url }}">{% trans "Sign In" %}</a>
+        </p>
+    </div>
+
+    <!-- Google -->
+    {% if SOCIALACCOUNT_ENABLED %}
+        <div class="social-login-container">
+            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+        </div>
+    {% endif %}
 {% endblock content %}

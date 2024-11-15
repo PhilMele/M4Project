@@ -1,7 +1,7 @@
 {% extends "account/base_entrance.html" %}
 {% load i18n %}
 {% load allauth account %}
-{% load static %} <!-- Add this line -->
+{% load static %}
 
 {% block head_title %}
     {% trans "Sign In" %}
@@ -18,23 +18,35 @@
             {% trans "Sign In" %}
         {% endelement %}
 
-        {% if not SOCIALACCOUNT_ONLY %}
+       
             <!-- Login Form -->
-            {% url 'account_login' as login_url %}
-            <form method="post" action="{{ login_url }}">
+            
+            <form method="post" action="{% url 'account_login' %}">
                 {% csrf_token %}
                 
                 <!-- Form Fields -->
-                {% for field in form.visible_fields %}
-                    <div>
-                        {{ field.label_tag }}
-                        {{ field }}
-                        {% if field.errors %}
-                            <div class="text-danger">{{ field.errors }}</div>
-                        {% endif %}
+                {% if redirect_field_value %}
+            <!-- Hidden field to store redirect information if available -->
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-6 col-lg-6 col-md-8 col-10">
+                        <!-- Username input field with icon -->
+                        <div class="mb-3">
+                            <label for="id_login" class="form-label"><i class="fas fa-user"></i> Username</label>
+                            <input type="text" class="form-control" id="id_login" name="login" placeholder="Enter your username" required>
+                        </div>
+
+                        <!-- Password input field with icon -->
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label"><i class="fas fa-lock"></i> Password</label>
+                            <input type="password" class="form-control" id="id_password" name="password" placeholder="Enter your password" required>
+                        </div>
                     </div>
-                {% endfor %}
-                {{ redirect_field }}
+                </div>
+            </div>
 
                 <!-- Sign In Button -->
                 <div>
@@ -50,18 +62,5 @@
                 <a href="{{ signup_url }}">{% trans "sign up" %}</a>
                 {% trans " first." %}
             </p>
-        {% endif %}
-
-        <!-- Google Sign-Up Button -->
-        {% if SOCIALACCOUNT_ENABLED %}
-            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-        {% endif %}
     </div>
 {% endblock content %}
-
-{% block extra_body %}
-    {{ block.super }}
-    {% if PASSKEY_LOGIN_ENABLED %}
-        {% include "mfa/webauthn/snippets/login_script.html" with button_id="passkey_login" %}
-    {% endif %}
-{% endblock %}
