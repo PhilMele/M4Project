@@ -7,9 +7,19 @@ from .forms import ParkingForm, RateForm, IllegalParkingForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # Create your views here.
+def is_parking_manager(request):
+    print(f'request.user.userprofile.user_type: {request.user.userprofile.user_type}')
+    if request.user.userprofile.user_type != 2:
+        return False
+    return True
+
 @login_required
 def parking_manager_dashboard(request):
+    if not is_parking_manager(request):
+        return redirect('home')
+    
     user_parking_list = Parking.objects.filter(user = request.user.userprofile)
+
 
     return render(request, 'dashboard/parking_manager_dashboard.html',{
         'user_parking_list':user_parking_list,
