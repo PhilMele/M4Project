@@ -223,6 +223,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+# see error logs
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
