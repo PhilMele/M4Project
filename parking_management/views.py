@@ -26,6 +26,9 @@ def parking_manager_dashboard(request):
     })
 
 def parking_inspector(request,parking_id):
+    if not is_parking_manager(request):
+        return redirect('home')
+
     parking_users = Stay.objects.filter(
         parking_name=parking_id,
         paid = False,
@@ -65,6 +68,9 @@ def parking_inspector(request,parking_id):
 # Parking objects
 @login_required
 def create_parking(request):
+    if not is_parking_manager(request):
+        return redirect('home')
+
     if request.method == "POST":
         parkingform = ParkingForm(request.POST)
         if parkingform.is_valid():
@@ -85,6 +91,8 @@ def create_parking(request):
 
 @login_required
 def parking_info(request, parking_id):
+    if not is_parking_manager(request):
+        return redirect('home')
 
     print({parking_id})
     stay_objects_count = parking_space_available(parking_id)
@@ -97,6 +105,9 @@ def parking_info(request, parking_id):
     })
 
 def parking_space_available(parking_id):
+    if not is_parking_manager(request):
+        return redirect('home')
+
     # identify parking
     parking = get_object_or_404(Parking, id=parking_id)
     
@@ -109,6 +120,8 @@ def parking_space_available(parking_id):
 
 @login_required
 def edit_parking(request, parking_id):
+    if not is_parking_manager(request):
+        return redirect('home')
 
     parking = get_object_or_404(Parking, id=parking_id)
     
@@ -134,6 +147,9 @@ def edit_parking(request, parking_id):
 
 @login_required
 def delete_parking(request, parking_id):
+    if not is_parking_manager(request):
+        return redirect('home')
+
     parking = get_object_or_404(Parking, id=parking_id, user=request.user.userprofile)
     parking.delete()
     messages.success(request, "Parking deleted.")
@@ -142,6 +158,9 @@ def delete_parking(request, parking_id):
 # Rate objects
 @login_required
 def add_rate(request, parking_id):
+    if not is_parking_manager(request):
+        return redirect('home')
+
     parking = get_object_or_404(Parking, id=parking_id)
     if request.method == "POST":
         rateform = RateForm(request.POST)
@@ -164,6 +183,9 @@ def add_rate(request, parking_id):
 
 @login_required
 def edit_rate(request, parking_id, rate_id):
+    if not is_parking_manager(request):
+        return redirect('home')
+
     rate = get_object_or_404(Rate, id=rate_id)
     parking = get_object_or_404(Parking, id=parking_id)
     parking_id = parking.id
@@ -188,6 +210,9 @@ def edit_rate(request, parking_id, rate_id):
 
 @login_required
 def delete_rate(request, parking_id, rate_id):
+    if not is_parking_manager(request):
+        return redirect('home')
+        
     rate = get_object_or_404(Rate, id=rate_id)
     rate.delete()
     messages.success(request, "Rate deleted.")
