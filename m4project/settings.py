@@ -33,8 +33,8 @@ STRIPE_WEBHOOK_SECRET_TEST = os.getenv('STRIPE_WEBHOOK_SECRET_TEST')
 REDIRECT_DOMAIN = os.getenv('REDIRECT_DOMAIN', 'http://localhost:8000/')
 
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Credits : https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = [
     'geopay-12a0f6ced11c.herokuapp.com',
