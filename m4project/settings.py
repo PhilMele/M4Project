@@ -81,6 +81,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #All auth package:
     'allauth.account.middleware.AccountMiddleware',
+    #whitenoise package : used for production
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'm4project.urls'
@@ -199,6 +201,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Directory where collectstatic will gather all static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Static file storage for production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
