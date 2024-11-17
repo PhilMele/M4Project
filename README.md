@@ -2,6 +2,8 @@ TODO:
 add that if the transaction is not paid, button leave should still show.
 Problem: Once a transaction was made and paid. Somehow the user got loggedout during payment and the model didnt get updated with `paid = true`. Only seem to happen on local after I havent connected in a while.
 Error: when I click on Enter, the console shows a brief error message and then disapear
+Correct 500 error when normal user clicks on parking manager dashboard : if user doesnt have permission, redirect to home
+
 
 Django setup on local:
 * Create `m4project`
@@ -228,6 +230,18 @@ Add to settings.py:
 Problem encountered: the Procfile generated with command line from documentation echo web: gunicorn app:app > Procfile created an issue relating to encoding. The encoding defaulted to UTF-16 instead of UTF-8.
 
 To solve this problem: create a new Procfile through a Notepad, selected encoding UTF-8 and called it Procfile.txt in the same location as the actual Procfile. I then deleted the previous Procfile and renamed Procfile.txt to Procfile.
+
+### 
+
+setup Debug = False
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+crdiits: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
+
+Add whitenoise in settings.py to middleware list
+
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+Error encountered: `MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.`. whitenoise wasnot installed. Adding whitenoise corrected the error.
 
 Useful Link:
 
@@ -610,3 +624,30 @@ Use Crispy Forms:
 # Parking Inspector (see registration, take note of those not registered)
 
 ## JS Validators on signup
+
+## django logging to see logs in production
+
+import os
+
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+            },
+        },
+        "root": {
+            "handlers": ["console"],
+            "level": "WARNING",
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["console"],
+                "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+                "propagate": False,
+            },
+        },
+    }
+
+ciredits: https://docs.djangoproject.com/en/5.1/topics/logging/
