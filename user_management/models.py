@@ -10,10 +10,15 @@ class CardDetails(models.Model):
     exp_year = models.CharField(max_length=4, null=True, blank=True)
     cvc = models.CharField(max_length=3, null=True, blank=True)
 
+USER_TYPE=(
+    (1,'User'),
+    (2,'Parking Manager'),
+)
 
 # Create your models here.
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_type = models.IntegerField(choices=USER_TYPE, default = 1)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     street_address1 = models.CharField(max_length=80, null=True, blank=True)
     street_address2 = models.CharField(max_length=80, null=True, blank=True)
