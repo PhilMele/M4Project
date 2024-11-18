@@ -7,28 +7,38 @@
 <div class="container">
     {% for stay in user_history %}   
         <div class="row">
-            <div class="col">{{ stay.parking_name.name }}</div>
+            <div class="col"><b>Parking: {{ stay.parking_name.name }}</b></div>
         </div>
         <div class="row">
             <div class="col-4">Arrived at: </div>
             {% for item in enter_parking_history %}
                 {% if stay.id == item.stay.id %}
-                    <div class="col-4">{{ item.entry.timestamp_enter }}</div>
+                    <div class="col-8">{{ item.entry.timestamp_enter }}</div>
                 {%endif%}
             {%endfor%}
         </div>
+
         <div class="row">
+
             <div class="col-4">Left at: </div>
             {% for item in leave_parking_history %}
                 {%if stay.id == item.stay.id%}
-                    <div class="col-4">{{ item.leave.timestamp_leave }}</div>
+                    <div class="col-8">{{ item.leave.timestamp_leave }}</div>
+                {% else %}
+                    <div class="col-8"></div>
                 {%endif%}
             {%endfor%}
         </div>
+
         <div class="row">
             <div class="col-4">Paid: </div>
-            <div class="col-4">£{{stay.calculated_fee}}</div>
+            {% if stay.calculated_fee %}
+                <div class="col-8">£{{stay.calculated_fee}}</div>
+            {% else %}
+                <div class="col-8">You haven't left.</div>
+            {% endif %}
         </div>
+        <hr>
     {% endfor %}
     
 </div>

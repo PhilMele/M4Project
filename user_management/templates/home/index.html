@@ -18,7 +18,7 @@
                 {%if existing_stay_obj %}
                   <form action="{% url 'leave' stay_id %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit" id="checkout-button">Checkout</button>
+                    <button type="submit" class="btn button-1" id="checkout-button">Checkout Parking</button>
                   </form>
                 {%else%}
                 <div class="col-12 col-md-12">
