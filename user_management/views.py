@@ -26,7 +26,6 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-
 @login_required
 def index(request):
     # look up if user has already an existing Stay object

@@ -6,61 +6,36 @@
 
     <div class="row h-100">
         <div class="col-7 col-md-6 my-auto">
-            <h1>Hello {{request.user}}, welcome to your dashboard!</h1>
+            <h1>Dashboard</h1>
         </div>
     </div>
 
-    
-    <button onclick="getLocation()">Try It</button>
-    <p id="userLocation"></p>
-
-
-    <div class="row h-100">
-        {%if existing_stay_obj %}
-
-        <div class="product">
-            <div class="description">
-              <h3>Leave {{parking_name}}</h3>
-              <h5>Latitude: {{lat}}</h5>
-              <h5>Longitude: {{long}}</h5>
+    <span>Today, I want to:</span>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <div class="row h-100">
+                {%if existing_stay_obj %}
+                  <form action="{% url 'leave' stay_id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" id="checkout-button">Checkout</button>
+                  </form>
+                {%else%}
+                <div class="col-12 col-md-12">
+        
+                    <form action="{% url 'get_parking_location' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" id="userLatitude" name="latitude" value="">
+                        <input type="hidden" id="userLongitude" name="longitude" value="">
+                        <button type="submit" class="submit btn button-1" onclick="getLocation()">Enter A Parking</button>
+                    </form>
+                </div>
+                {%endif%}
             </div>
-          </div>
-          <form action="{% url 'leave' stay_id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" id="checkout-button">Checkout</button>
-          </form>
-        {%else%}
-        <div class="col-12 col-md-12">
 
-            <form action="{% url 'get_parking_location' %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" id="userLatitude" name="latitude" value="">
-                <input type="hidden" id="userLongitude" name="longitude" value="">
-                <button type="submit" class="submit btn btn-success" onclick="getLocation()">Enter Parking</button>
-            </form>
-            
-            <!-- <a class="submit btn btn-success" href="{% url 'enter' %}">Enter Parking</a>
-            Based on user location return parking within this radius -->
         </div>
-        {%endif%}
-
-
-    </div>
-
-    <div class="row h-100">
-        <div class="col-6 col-md-6 my-auto">
-            <h2>My Account</h2>
-        </div>
-        <div class="col-6 col-md-6 my-auto">
-            <a class="btn btn-success">Button</a>
-        </div>
-    </div>
-    <div class="row h-100">
-        <div class="col-6 col-md-6 my-auto">
-            <h2>History</h2>
-        </div>
-        <div class="col-6 col-md-6 my-auto">
-            <a class="btn btn-success" href="{% url 'history' %}">Button</a>
+        <div class="col">
+            <a class="btn button-2" href="{% url 'history' %}">Usage History</a>
         </div>
     </div>
 </div>
