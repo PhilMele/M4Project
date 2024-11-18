@@ -2,7 +2,17 @@
 {%load static %}
 
 {%block content%}
+<h1>Your Account</h1>
 
+<div class="container">
+    <h1>Hello {{request.user.username}}</h1>
+    <h2>These are you account details, feel free to amend them as and when needed</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
 
 {%endblock%}
 

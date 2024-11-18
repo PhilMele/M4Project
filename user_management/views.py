@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from parking_activity.models import Stay, EnterParking, LeaveParking
-
+from parking_activity.models import (Stay,
+                                    EnterParking,
+                                    LeaveParking,
+                                    UserProfile)
+from .forms import UserProfileForm
 
 
 # Create your views here.
@@ -18,7 +21,6 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'account/signup.html', {'form': form})
-
 
 def logout_view(request):
     logout(request)
@@ -54,4 +56,12 @@ def index(request):
         'long':long})
 
 def user_account(request):
-    return render(request, 'account/user_account.html', {})
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user_profile)
+        if form.is_valid():  
+            form.save()
+            return redirect('user-account')  
+    else:
+        form = UserProfileForm(instance=user_profile)
+    return render(request, 'account/user_account.html', {'form': form})
