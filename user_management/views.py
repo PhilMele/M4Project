@@ -52,3 +52,6 @@ def index(request):
         'stay_id':stay_id,
         'lat':lat,
         'long':long})
+
+def user_account(request):
+    return render(request, 'account/user_account.html', {})

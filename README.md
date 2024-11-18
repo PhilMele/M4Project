@@ -4,6 +4,7 @@ Problem: Once a transaction was made and paid. Somehow the user got loggedout du
 Error: when I click on Enter, the console shows a brief error message and then disapear
 javascript error on index page due to geolocation
 Correct 500 error when normal user clicks on parking manager dashboard : if user doesnt have permission, redirect to home
+user cannot enter parking if car registration is not populated + userprofile as a whole
 
 
 Django setup on local:
