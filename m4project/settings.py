@@ -68,6 +68,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
 
+    #S3 bucket
+    'storages'
+
 
 ]
 

@@ -58,6 +58,7 @@ def parking_inspector(request,parking_id):
         # TODO: Implement email system + forgot password
         # TODO: implement static stuff
         # TODO: Front end
+        # TODO: add function to edit userprofile and add car registration number
     
     return render(request, 'parking_inspector/parking_inspector.html',{ 
         'parking_users':parking_users,

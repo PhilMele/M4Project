@@ -2,6 +2,7 @@ TODO:
 add that if the transaction is not paid, button leave should still show.
 Problem: Once a transaction was made and paid. Somehow the user got loggedout during payment and the model didnt get updated with `paid = true`. Only seem to happen on local after I havent connected in a while.
 Error: when I click on Enter, the console shows a brief error message and then disapear
+javascript error on index page due to geolocation
 Correct 500 error when normal user clicks on parking manager dashboard : if user doesnt have permission, redirect to home
 
 
@@ -220,6 +221,36 @@ Add to settings.py:
     # Serve media files during development
     if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+## Setup AWS S3 Bucket
+The project does not have any media files, with the exception of the logo and favicon.
+
+As a result, it felt that time should not be invested into a full integration of the S3 bucket.
+
+The steps below cover the initial steps followed to setup an AWS account and host the logo file on S3.
+* Create an account
+* Create an S3 Bucket (untick `Block all public access`)
+* Click on newly created bucket and go to Permissions
+* write JSON bucket policy:
+* Click `Policy Generator` and entert he following: 
+    Type:`S3 Bucket Policy`
+    Select `Allow`
+    Principal: `*`
+    Actions: `GetObject`
+    ARN: `[enter ARN number from Properties tab]/*`
+* Copy/Paste policy generated into the policy bucket.
+* In terminal run:
+    `pip install django-storages`
+    `pip install boto3`
+* In setting.py:
+
+    INSTALLED_APPS = [
+    
+        #S3 bucket
+        'storages',
+    ]
+
+
 
 ## Heroku Setup (Production)
 * Log into heorku : `heroku login`
@@ -651,3 +682,26 @@ import os
     }
 
 ciredits: https://docs.djangoproject.com/en/5.1/topics/logging/
+
+## is_parking_manager()
+Used to prevent non `parking_manager` user types to access parking_management app functions.
+
+    class UserProfile(models.Model):
+        user = models.OneToOneField(User, on_delete=models.CASCADE)
+        user_type = models.IntegerField(choices=USER_TYPE, default = 1)
+    
+
+    def is_parking_manager(request):
+        print(f'request.user.userprofile.user_type: {request.user.userprofile.user_type}')
+        if request.user.userprofile.user_type != 2:
+            return False
+        return True
+
+        @login_required
+    def parking_manager_dashboard(request):
+        if not is_parking_manager(request):
+            return redirect('home')
+        
+        ...
+
+If the user_type is not '2' (parking manager), return user to home page.
