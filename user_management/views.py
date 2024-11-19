@@ -7,6 +7,7 @@ from parking_activity.models import (Stay,
                                     LeaveParking,
                                     UserProfile)
 from .forms import UserProfileForm
+from django.contrib import messages
 
 
 # Create your views here.
@@ -60,6 +61,7 @@ def user_account(request):
         form = UserProfileForm(request.POST, instance=user_profile)
         if form.is_valid():  
             form.save()
+            messages.success(request, "Updated.")
             return redirect('user-account')  
     else:
         form = UserProfileForm(instance=user_profile)

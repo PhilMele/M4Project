@@ -87,7 +87,13 @@
     </header>
 
     {% if messages %}
-        <div class="message-container"></div>
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
 
     {% block page_header %}

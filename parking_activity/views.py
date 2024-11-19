@@ -71,7 +71,7 @@ def get_parking_location(request):
                     # #return redirect to enter page without parking ID
                     # return redirect('enter')
 
-            messages.error(request, "Redirecting to enter wih no id page")
+            messages.error(request, "We could not locate you. Please select parking.")
             return redirect('enter')  
             
     messages.error(request, "THere somehting wrong. the request is not POST")

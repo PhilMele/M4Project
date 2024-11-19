@@ -276,7 +276,15 @@ Add whitenoise in settings.py to middleware list
 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-Error encountered: `MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.`. whitenoise wasnot installed. Adding whitenoise corrected the error.
+**Error encountered**: `MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.`. whitenoise wasnot installed. Adding whitenoise corrected the error.
+
+**Error encountered**: css file not loading in production. This problem was solved by moving `'whitenoise.middleware.WhiteNoiseMiddleware',` to the top.
+
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        #whitenoise package : used for production to be set at the top
+        'whitenoise.middleware.WhiteNoiseMiddleware',    
+    ]
 
 Useful Link:
 

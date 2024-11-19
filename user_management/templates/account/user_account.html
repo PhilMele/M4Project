@@ -1,19 +1,66 @@
-{%extends 'base.html' %}
-{%load static %}
+{% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 
-{%block content%}
+{% block content %}
 <h1>Your Account</h1>
 
-<div class="container">
-    <h1>Hello {{request.user.username}}</h1>
-    <h2>These are you account details, feel free to amend them as and when needed</h2>
+<div class="container" style="">
+
     <form method="post" novalidate>
         {% csrf_token %}
-        {{ form|crispy }}
+
+        <div class="row">
+            <div class="">
+                Username: {{request.user.username}}
+            </div><br>
+            <hr>
+
+            <div class="form-group">
+                <label for="id_phone_number">Phone Number</label><br>
+                {{ form.phone_number }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_car_registration">Car Registration</label><br>
+                {{ form.car_registration }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="id_street_address1">Street Address 1</label><br>
+                {{ form.street_address1 }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_street_address2">Street Address 2</label><br>
+                {{ form.street_address2 }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_city">City</label><br>
+                {{ form.city }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_county">County</label><br>
+                {{ form.county }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_postcode">Postcode</label><br>
+                {{ form.postcode }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_country">Country</label><br>
+                {{ form.country }}
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>
 
-{%endblock%}
-
+{% endblock %}

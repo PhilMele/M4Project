@@ -13,13 +13,13 @@ class UserProfileForm(ModelForm):
     street_address1 = forms.CharField(
         required=True, 
         label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter first line of address'})
+        widget=forms.TextInput(attrs={'placeholder': 'Enter 1st line of address'})
     )
 
     street_address2 = forms.CharField(
         required=False, 
         label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter second line of address'})
+        widget=forms.TextInput(attrs={'placeholder': 'Enter 2nd line of address'})
     )
 
     city = forms.CharField(
