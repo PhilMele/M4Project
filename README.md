@@ -7,6 +7,9 @@ Correct 500 error when normal user clicks on parking manager dashboard : if user
 user cannot enter parking if car registration is not populated + userprofile as a whole
 
 
+# colour palette
+
+
 Django setup on local:
 * Create `m4project`
 * Open to `m4project` folder from terminal
