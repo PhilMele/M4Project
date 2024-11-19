@@ -74,7 +74,6 @@ def get_parking_location(request):
             messages.error(request, "We could not locate you. Please select parking.")
             return redirect('enter')  
             
-    messages.error(request, "THere somehting wrong. the request is not POST")
     return redirect ('home')
 
 #used to get parking rates through API (dynamically generated with js)
@@ -152,7 +151,8 @@ def enter(request, parking_id=None):
     return render(request, 'stays/enter.html', {
         'stayform': stayform,
         'parking_id':parking_id,
-        'parking_list':parking_list})
+        'parking_list':parking_list,
+        'parking_name':parking_name})
 
 # Mark user as leaving parking
 @login_required

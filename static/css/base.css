@@ -5,9 +5,8 @@ html {
 
 body {
     height: 100%; 
-    margin: 0;
-    padding: 0; 
-    background-color: black;
+    margin: 10px; 
+    background-color: #344E5C;
     color: white;
     font-family: "Poppins", sans-serif;
     display: flex;
@@ -28,18 +27,32 @@ body {
 /* Buttons */
 
 .button-1{
-    background: #12B8FF;
+    background: #4AB19D;
     color: black;
 }
 
 .button-2{
-    background: #FFE62D;
+    background: #EFC958;
     color: black;
 }
 
 .button-3{
-    background: #00D0FF;
+    background: #E17A47;
     color: white;
+}
+
+.button-3{
+    background: #EF3D59;
+    color: white;
+}
+
+/* Custom Messages */
+.alert {
+    background-color: #EF3D59; 
+    color: white; 
+    border: 1px solid #f5c6cb; 
+    border-radius: 20px; 
+    padding: 15px; 
 }
 
 /* Tables */

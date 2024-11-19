@@ -2,8 +2,13 @@
 {%load static %}
 
 {%block content%}
-THis is enter.html
+{% if parking_name %}
+    <p>Your are about to check-in : <b>{{parking_name}}</b></p>
+    <hr>
+    <p>Please acknowledge the applicable rates to your stay, below:</p>
+{% endif %}
 
+<hr>
 
 <!-- Render table that shows tarrif for selected parking -->
 <table id="ratesTable">
@@ -23,7 +28,8 @@ THis is enter.html
      
      <form method="post">
         {% csrf_token %}
-        <input type="submit" action="Submit button">
+        <hr>
+        <input type="submit" class="btn button-1" action="Check-In">
     </form>
 
     {%else%}
@@ -31,19 +37,24 @@ THis is enter.html
     <!-- If parking ID is None -->
     <form method="post">
         {% csrf_token %}
-        <label for="parking-select">Select Parking:</label>
-        <select id="parking-select" name="parking_name">
-            <option value="">Select parking</option>
-            {% for parking in parking_list %}
-                <option value="{{ parking.id }}" 
-                    {% if parking_id == parking.id %}
-                        selected
-                    {% endif %}>
-                    {{ parking.name }}
-                </option>
-            {% endfor %}
-        </select>
-        <input type="submit" value="Submit the form">
+        <div class="enter-form">
+            <label for="parking-select">Select Parking:</label><br>
+            <select id="parking-select" name="parking_name">
+                <option value="">Select parking</option>
+                {% for parking in parking_list %}
+                    <option value="{{ parking.id }}" 
+                        {% if parking_id == parking.id %}
+                            selected
+                        {% endif %}>
+                        {{ parking.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <hr>
+        <div class="enter-submit-button">
+            <input class="button-1 btn" type="submit" value="Check-In">
+        </div>
     </form>
 {%endif%}
 
