@@ -1,13 +1,24 @@
 /* General */
-html{
+html {
     height: 100%; 
 }
 
 body {
-    background-color: black;
+    height: 100%; 
+    margin: 10px; 
+    background-color: #344E5C;
     color: white;
     font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column; 
+    box-sizing: border-box; 
+}
 
+.form-group select, /* Target the select dropdown */
+.form-group input { /* Target input fields */
+    width: 100%; /* Set the width to match the container */
+    
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
 
 /* Navbar */
@@ -16,18 +27,32 @@ body {
 /* Buttons */
 
 .button-1{
-    background: #12B8FF;
+    background: #4AB19D;
     color: black;
 }
 
 .button-2{
-    background: #FFE62D;
+    background: #EFC958;
     color: black;
 }
 
 .button-3{
-    background: #00D0FF;
+    background: #E17A47;
     color: white;
+}
+
+.button-3{
+    background: #EF3D59;
+    color: white;
+}
+
+/* Custom Messages */
+.alert {
+    background-color: #EF3D59; 
+    color: white; 
+    border: 1px solid #f5c6cb; 
+    border-radius: 20px; 
+    padding: 15px; 
 }
 
 /* Tables */
