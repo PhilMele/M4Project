@@ -14,6 +14,10 @@ body {
     box-sizing: border-box; 
 }
 
+.center{
+    text-align: center;
+}
+
 .form-group select, /* Target the select dropdown */
 .form-group input { /* Target input fields */
     width: 100%; /* Set the width to match the container */
@@ -48,11 +52,18 @@ body {
 
 /* Custom Messages */
 .alert {
-    background-color: #EF3D59; 
-    color: white; 
-    border: 1px solid #f5c6cb; 
     border-radius: 20px; 
     padding: 15px; 
+}
+
+.alert-success{
+    background-color: #4AB19D;
+    color: white;
+}
+
+.alert-danger{
+    background-color:#EF3D59;
+    color: white;
 }
 
 /* Tables */
@@ -71,7 +82,7 @@ th, td {
 }
 
 th {
-    background-color: blue;
+    background-color: #EF3D59;
     color: white;
     font-weight: bold;
 }

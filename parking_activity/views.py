@@ -108,7 +108,7 @@ def enter(request, parking_id=None):
                 staydata.user = request.user.userprofile
                 staydata.parking_name = parking_name #attach it to parking_id
                 staydata.save()
-                messages.success(request,"Stay data saved successfully.")
+                messages.success(request,f"You have successfully checked-in at {parking_name}")
                 enter_parking_obj = EnterParking.objects.create(
                     user = request.user.userprofile,
                     parking_name = parking_name,
@@ -135,7 +135,7 @@ def enter(request, parking_id=None):
                 #nextstep: I need to attach the selected parking name in 
                 #enter.html to the enter parking object
                 staydata.save()
-                messages.success(request,"Stay data saved successfully.")
+                messages.success(request,f'You have successfully checked-in at {parking_name}')
                 enter_parking_obj = EnterParking.objects.create(
                     user = request.user.userprofile,
                     parking_name = parking_name,
@@ -167,7 +167,7 @@ def leave(request, stay_id):
             parking_name=stay.parking_name,
             stay=stay,
         )
-        messages.success(request, "Successfully left the parking.")
+        messages.success(request, "Payment successfull!")
         #calculte fee relating to stay
         #calculate total user stay
 
@@ -313,7 +313,6 @@ def payment_successful(request):
     stay = Stay.objects.get(stripe_checkout_id=checkout_session_id)
     stay.paid = True
     stay.save()
-    print("Payment sucessful!")
     return render(request, 'payment/payment_successful.html',{'customer':customer})
 
 @login_required

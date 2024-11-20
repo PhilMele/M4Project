@@ -6,6 +6,10 @@
     <p>Your are about to check-in : <b>{{parking_name}}</b></p>
     <hr>
     <p>Please acknowledge the applicable rates to your stay, below:</p>
+{% else %}
+
+    <p>Take the time to acknowledge the applicable rates to your stay.</p>
+
 {% endif %}
 
 <hr>
@@ -29,7 +33,9 @@
      <form method="post">
         {% csrf_token %}
         <hr>
-        <input type="submit" class="btn button-1" action="Check-In">
+        <div class="center">
+            <input type="submit" value="Check-In" class="btn button-1" action="">
+        </div>
     </form>
 
     {%else%}
@@ -37,7 +43,7 @@
     <!-- If parking ID is None -->
     <form method="post">
         {% csrf_token %}
-        <div class="enter-form">
+        <div class="enter-form center">
             <label for="parking-select">Select Parking:</label><br>
             <select id="parking-select" name="parking_name">
                 <option value="">Select parking</option>
@@ -52,8 +58,8 @@
             </select>
         </div>
         <hr>
-        <div class="enter-submit-button">
-            <input class="button-1 btn" type="submit" value="Check-In">
+        <div class="enter-submit-button center">
+            <input class="button-1 btn " type="submit" value="Check-In">
         </div>
     </form>
 {%endif%}

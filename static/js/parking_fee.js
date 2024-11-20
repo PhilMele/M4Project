@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 <tr>
                     <td>${rate.rate_name}</td>
                     <td>${rate.hour_range}</td>
-                    <td>${rate.rate}</td>
+                    <td>£${rate.rate}</td>
                 </tr>
                 `;
                 tbody.appendChild(tableRow);

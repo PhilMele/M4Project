@@ -1,1 +1,9 @@
-payment successful page
+{%extends 'base.html' %}
+{%load static %}
+
+{%block content%}
+    <div class="center">
+        <p>Click the button below to return to your dashboard.</p>
+        <a class="btn button-2" href="{% url 'home' %}">Dashboard</a>
+    </div>
+{%endblock%}
