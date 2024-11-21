@@ -16,6 +16,9 @@ import os
 #stripe modul import
 from dotenv import load_dotenv
 
+# to display custom alert messages
+from django.contrib.messages import constants as messages
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -248,4 +251,10 @@ LOGGING = {
             "propagate": False,
         },
     },
+}
+
+# custom alert messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'error',
+    messages.SUCCESS: 'success',
 }
