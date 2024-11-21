@@ -21,12 +21,20 @@ def parking_manager_dashboard(request):
     user_parking_list = Parking.objects.filter(user = request.user.userprofile)
 
     # calculates parking capacity
+    parking_space_data =[]
     for parking in user_parking_list:
         # return cpunt of all car registration parked in parking id
-        pass
+        parking_spaces_used = parking_space_available(request, parking_id=parking.id)
+        print(f'parking_spaces_left = {parking_spaces_used}')
+        parking_space_data.append({
+            'parking': parking,
+            'spaces_used': parking_spaces_used,
+        })
+
 
     return render(request, 'dashboard/parking_manager_dashboard.html',{
         'user_parking_list':user_parking_list,
+        'parking_space_data':parking_space_data,
     })
 
 def parking_inspector(request,parking_id):
