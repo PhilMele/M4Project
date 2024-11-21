@@ -38,6 +38,12 @@
                 <div class="col-8">You haven't left.</div>
             {% endif %}
         </div>
+        {% if stay.paid %}
+        <div class="row">
+            <div class="col-4">Transaction id: </div>
+            <div class="col-8">£{{stay.stripe_checkout_id}}</div>
+        </div>
+        {% endif %}
         <hr>
     {% endfor %}
     

@@ -20,6 +20,10 @@ def parking_manager_dashboard(request):
     
     user_parking_list = Parking.objects.filter(user = request.user.userprofile)
 
+    # calculates parking capacity
+    for parking in user_parking_list:
+        # return cpunt of all car registration parked in parking id
+        pass
 
     return render(request, 'dashboard/parking_manager_dashboard.html',{
         'user_parking_list':user_parking_list,
@@ -96,7 +100,7 @@ def parking_info(request, parking_id):
         return redirect('home')
 
     print({parking_id})
-    stay_objects_count = parking_space_available(parking_id)
+    stay_objects_count = parking_space_available(request, parking_id)
     parking = get_object_or_404(Parking, id=parking_id)
     rates = Rate.objects.filter(parking_name=parking)
     return render(request, 'parking_info/parking_info.html',{
@@ -105,7 +109,7 @@ def parking_info(request, parking_id):
         'stay_objects_count':stay_objects_count
     })
 
-def parking_space_available(parking_id):
+def parking_space_available(request, parking_id):
     if not is_parking_manager(request):
         return redirect('home')
 

@@ -5,7 +5,7 @@ Error: when I click on Enter, the console shows a brief error message and then d
 javascript error on index page due to geolocation
 Correct 500 error when normal user clicks on parking manager dashboard : if user doesnt have permission, redirect to home
 user cannot enter parking if car registration is not populated + userprofile as a whole
-
+Add back button to all pages
 
 # colour palette
 

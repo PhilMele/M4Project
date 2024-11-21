@@ -9,7 +9,7 @@ THis is parking manager dashboard
     <div class="row">
         <div class="col">Add New Parking</div>
         <div class="col">
-            <a href="{% url 'create-parking'%}">Add Parking</a>
+            <a class="btn button-1" href="{% url 'create-parking'%}">Add Parking</a>
         </div>
     </div>
 </div>
@@ -27,15 +27,15 @@ THis is parking manager dashboard
     {%for parking in user_parking_list %}
     <div class="row">
         <div class="col">{{parking.name}}</div>
-        <div class="col">10/200</div>
+        <div class="col">10/{{parking.max_capacity}}</div>
         <div class="col">AddRates</div>
         <div class="col">
-            <a href="{% url 'parking-info' parking_id=parking.id %}">Button</a>
+            <a class="btn button-2" href="{% url 'parking-info' parking_id=parking.id %}">Button</a>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <a href="{% url 'delete-parking' parking_id=parking.id %}">Delete Parking</a>
+            <a class="btn button-3" href="{% url 'delete-parking' parking_id=parking.id %}">Delete Parking</a>
         </div>
     </div>
     {% endfor %}
