@@ -25,6 +25,24 @@ body {
     box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
 
+.right-align {
+    display: block;
+    text-align: right;
+    margin-left: 0;
+}
+
+/* Small text */
+.small-text{
+    font-size: smaller;
+}
+
+/* Icons */
+
+#toggle-help {
+    color: #EFC958;
+    margin-left: 5px;
+}
+
 /* Rows */
 .padding-bottom{
     padding-bottom: 10px;
