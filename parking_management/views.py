@@ -63,6 +63,7 @@ def activate_parking(request, parking_id):
     messages.success(request, f"{parking.name} has been {'activated' if parking.active else 'deactivated'}.")
     return redirect('parking-info', parking_id=parking_id)
 
+@login_required
 def parking_inspector(request,parking_id):
     if not is_parking_manager(request):
         return redirect('home')
@@ -102,8 +103,18 @@ def parking_inspector(request,parking_id):
         'parking_users':parking_users,
         'illegal_users':illegal_users,
         'illegalparkingform':illegalparkingform,
+        'parking':parking,
     }) 
 
+@login_required
+def delete_car_reg(request, illegalparking_id, parking_id):
+    if not is_parking_manager(request):
+        return redirect('home')
+    car_reg_obj = get_object_or_404(IllegalParking, id=illegalparking_id)
+    print(f'car_reg_obj = {car_reg_obj}')
+    car_reg_obj.delete()
+    messages.success(request, "Car reg. deleted.")
+    return redirect('parking-inspector', parking_id = parking_id)
 
 # Parking objects
 @login_required
