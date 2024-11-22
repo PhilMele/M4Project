@@ -19,7 +19,7 @@ def parking_manager_dashboard(request):
     if not is_parking_manager(request):
         return redirect('home')
     
-    user_parking_list = Parking.objects.filter(user = request.user.userprofile)
+    user_parking_list = Parking.objects.filter(user = request.user.userprofile).order_by('name')
 
     # calculates parking capacity
     parking_space_data =[]

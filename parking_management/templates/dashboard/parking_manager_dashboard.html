@@ -2,7 +2,7 @@
 {%load static %}
 
 {%block content%}
-THis is parking manager dashboard
+<h1>Dashboard</h1>
 
 <!-- Create / Edit / Delete Parking -->
 <div class="create-parking-div">
@@ -18,16 +18,12 @@ THis is parking manager dashboard
 
 <!-- Parking Dashboard -->
 <div class="manager-dashboard">
-    <div class="row">
-        <div class="col">Parking Name</div>
-        <div class="col">Space Available</div>
-        <div class="col">Active</div>
-        <div class="col">See Details</div>
-    </div>
     <!-- Loop through parking id -->
     {% for item in parking_space_data %}
     <div class="row">
-        <div class="col">{{ item.parking.name }}</div>
+        <div class="col"><b>{{ item.parking.name }}</b></div>
+    </div>
+    <div class="row">
         <div class="col">{{ item.spaces_used }}/{{item.parking.max_capacity}}</div>
         <div class="col">
             {% if item.parking.active %}
@@ -47,12 +43,7 @@ THis is parking manager dashboard
             {%endif%}
         </div>
         <div class="col">
-            <a class="btn button-2" href="{% url 'parking-info' parking_id=item.parking.id %}">See Details</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <a class="btn button-3" href="{% url 'delete-parking' parking_id=item.parking.id %}">Delete Parking</a>
+            <a class="btn button-2" href="{% url 'parking-info' parking_id=item.parking.id %}">Info</a>
         </div>
     </div>
     {% endfor %}
