@@ -3,7 +3,7 @@
 {%load static %}
 
 {%block content%}
-<h1>Edit new rate</h1>
+<h1>Edit Rate</h1>
 
 <form method="post">
     {% csrf_token %}
@@ -12,11 +12,17 @@
         {{ editrateform.rate_name|as_crispy_field }}
     </div>
 
-    note: add more explaination on how to set parking hour ranges
-    
     <div class="create-parking-form-group">
         {{ editrateform.hour_range.label_tag }}
         {{ editrateform.hour_range|as_crispy_field }}
+    </div>
+    <span class="small-text right-align">What is this? <i id="toggle-help" class="fa-solid fa-circle-info"></i></span>
+    
+    <div id="help-parking-during-rate" style="display: none;">
+        <p class="small-text">In this field, you apply the duration (in hour) this rate will apply until.</p>
+        <p class="small-text">Example: If you want a rate to apply for the first 1 hour, then add "1", if you want this rate to apply for the first 2 hours add "2"</p>
+        <p class="small-text">This rate will then serve as a multiplier. If a user stayed 2 hours, they will be charged the rate attached to 2 hours.</p>
+        <p class="small-text">The highest duration will be used for any duration exceeding this timeframe: if 2 hours is the maximum rate range, the hourly fee applicable to 2 hours will be applied to fee calculation for 3 or 4 hours.</p>
     </div>
     
     <div class="create-parking-form-group">
@@ -29,5 +35,5 @@
 
 {%endblock%}
 {% block postloadjs %}
-
+<script src="{% static 'js/add_rate.js' %}"></script>
 {% endblock %}
