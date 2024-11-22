@@ -9,17 +9,19 @@
 
 <div class="container">
     <!-- Parking status -->
-    <div class="row table-row">
-        <div class="col">Status</div>
-        <div class="col">
-            {% if parking.active %}
-            <span>Active</span>
-            {% else %}
-            <span>Non Active</span>
-            {% endif %}
+    <div class="table-row-div">
+        <div class="row padding-bottom">
+            <div class="col">Status</div>
+            <div class="col">
+                {% if parking.active %}
+                <span>Active</span>
+                {% else %}
+                <span class="parking-nonactive">Non Active</span>
+                {% endif %}
+            </div>
         </div>
-        
-        <div class="col">
+
+        <div class="row justify-content-center">
             {% if parking.active %}
                 <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
                     {% csrf_token %}
@@ -36,6 +38,7 @@
                 </form>
             {% endif %}
         </div>
+
     </div> 
     <hr>
     <!-- Space available -->
@@ -117,31 +120,31 @@
 <div class="container">
     
     <div class="row">
-            <h2 class="center">Applicable Rates</h2>
+        <h2 class="center">Applicable Rates</h2>
     </div>
     <div class="row justify-content-center">
-        <a class="btn button-1 " href="{% url 'add-rate' parking_id=parking.id %}">Add New Rate</a>
+        <a class="btn button-1" href="{% url 'add-rate' parking_id=parking.id %}">Add New Rate</a>
     </div>
     <hr>
 
     {%for rate in rates %}
     <div class="table-row-div">
-    <div class="row">
-        <div class="col"><b>{{rate.rate_name}}</b></div>
-    </div>
-    <div class="row">
-        <div class="col">Multiplier: {{rate.hour_range}}</div>
-        <div class="col">Rate: £{{rate.rate}}</div>
+        <div class="row">
+            <div class="col"><b>{{rate.rate_name}}</b></div>
+        </div>
+        <div class="row">
+            <div class="col">Multiplier: {{rate.hour_range}}</div>
+            <div class="col">Rate: £{{rate.rate}}</div>
 
-    </div>
-    <div class="row padding-bottom">
-        <div class="col">
-            <a class="btn button-3 full-width" href="{% url 'delete-rate' rate_id=rate.id parking_id=parking.id %}">Delete</a>
         </div>
-        <div class="col">
-            <a class="btn button-2 full-width" href="{% url 'edit-rate' rate_id=rate.id parking_id=parking.id %}">Edit</a>
+        <div class="row padding-bottom">
+            <div class="col">
+                <a class="btn button-3 full-width" href="{% url 'delete-rate' rate_id=rate.id parking_id=parking.id %}">Delete</a>
+            </div>
+            <div class="col">
+                <a class="btn button-2 full-width" href="{% url 'edit-rate' rate_id=rate.id parking_id=parking.id %}">Edit</a>
+            </div>
         </div>
-    </div>
     </div>
     {%endfor%}
 

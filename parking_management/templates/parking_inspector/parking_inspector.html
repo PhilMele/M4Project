@@ -3,42 +3,42 @@
 {% load crispy_forms_tags %}
 {%block content%}
 
-<!-- DO SOMETIHG IN CSS TO HAVE BUTTON AND FIELD AT SAME LEVEL IN MOBILE VIEW -->
+<h1>Parking Inspector</h1>
 <div class="container">
-    <h1>Car illegally parked</h1>
+    
+    <h2>Register Illegal cars</h2>
     <form action="" method="POST">
-        <div class="row d-flex align-items-center">
+        <div class="table-row-div">
             {% csrf_token %}
-            <div class="col-auto">
+            <div class="row justify-content-center">
                 {{ illegalparkingform.car_reg.label_tag }}
                 {{ illegalparkingform.car_reg|as_crispy_field }}
             </div>
-            <div class="col-auto">
-                <button type="submit" class="">Add Registration</button>
+            <div class="row justify-content-center"> 
+                <button type="submit" class="btn button-1">Add Registration</button>
             </div>
         </div>
     </form>
 </div>
-
+<hr>
 <!-- Toggle displaying either illegal regs or current cars -->
 <div class="container">
-    <h1>List of Car Registrations Parked</h1>
-    <div class="row">Car Registration</div>
+    <h2>List of Car Registrations Parked</h2>
     {% for stay in parking_users %}
-    <div class="row">{{stay.user.car_registration}}</div>
+    <div class="row table-row-div">{{stay.user.car_registration}}</div>
     {% empty %}
-        <div class="row">No cars parked currently.</div>
+        <div class="row table-row-div">No cars parked currently.</div>
     {% endfor %}
 </div>
-
+<hr>
 <div class="container">
-    <h1>List Illegally Parked Cars</h1>
-    <div class="row">Car Registration</div>
+    <h2>Car Registration To Issue Tickets</h2>
     {% for illegalparking in illegal_users %}
-        <div class="row">{{illegalparking.car_reg}}</div>
+        <div class="row table-row-div">{{illegalparking.car_reg}}</div>
         {% empty %}
-            <div class="row">This list is empty.</div>
+        <div class="row table-row-div">This list is empty.</div>
     {% endfor %}
+
     
 </div>
 

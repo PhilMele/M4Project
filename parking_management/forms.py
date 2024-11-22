@@ -109,7 +109,7 @@ class IllegalParkingForm(ModelForm):
     car_reg = forms.CharField(
         required=True, 
         label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter car registration'})
+        widget=forms.TextInput(attrs={'placeholder': 'Enter reg.'})
     )
     class Meta:
         model = IllegalParking

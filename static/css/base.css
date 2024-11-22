@@ -45,7 +45,11 @@ body {
     border-radius: 5px; ;
 }
 
+/* Status */
 
+.parking-nonactive{
+    color: #EF3D59;
+}
 
 /* Navbar */
 

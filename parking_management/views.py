@@ -104,6 +104,7 @@ def parking_inspector(request,parking_id):
         'illegalparkingform':illegalparkingform,
     }) 
 
+
 # Parking objects
 @login_required
 def create_parking(request):
