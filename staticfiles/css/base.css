@@ -25,6 +25,11 @@ body {
     box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
 
+/* Rows */
+.padding-bottom{
+    padding-bottom: 10px;
+}
+
 /* Navbar */
 
 
@@ -50,6 +55,9 @@ body {
     color: white;
 }
 
+.full-width{
+    width: 100%;
+}
 /* Custom Messages */
 .alert {
     border-radius: 20px; 
@@ -61,8 +69,8 @@ body {
     color: white;
 }
 
-.alert-danger{
-    background-color:#EF3D59;
+.alert-error { 
+    background-color: #EF3D59;
     color: white;
 }
 

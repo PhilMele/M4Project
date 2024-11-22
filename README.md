@@ -9,6 +9,7 @@ Add back button to all pages
 create filtr that only shows activated parkings to user
 create a button to tell the parking managert o activate parking
 parking can only be activiated with rates have been populated and cannot be 0.
+add footer
 
 # colour palette
 

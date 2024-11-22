@@ -61,7 +61,7 @@ def activate_parking(request, parking_id):
         parking.save()
 
     messages.success(request, f"{parking.name} has been {'activated' if parking.active else 'deactivated'}.")
-    return redirect('parking-manager-dashboard')
+    return redirect('parking-info', parking_id=parking_id)
 
 def parking_inspector(request,parking_id):
     if not is_parking_manager(request):

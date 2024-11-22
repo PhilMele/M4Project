@@ -3,119 +3,148 @@
 
 {%block content%}
 
-<!-- Inspection -->
- <!-- TODO: ADD INSPECTION BUTTONS THAT SHOWS ALL REGS IN CAR PARK -->
 <!-- Parking Info -->
 <h1 class="text-center">Parking Informations</h1>
+
+
 <div class="container">
-    <div class="row">
+    <!-- Parking status -->
+    <div class="row table-row">
         <div class="col">Status</div>
-        <div class="col">Space Available</div>
-        <div class="col">Inspection</div>
-    </div>
-    <div class="row">
-        <div class="col">{{parking.active}}</div>
-        <div class="col">{{stay_objects_count}}/{{parking.max_capacity}}</div>
         <div class="col">
-            <a class="btn btn-success" href="{% url 'parking-inspector' parking_id=parking.id %}">Parking Inspector</a>
+            {% if parking.active %}
+            <span>Active</span>
+            {% else %}
+            <span>Non Active</span>
+            {% endif %}
         </div>
+        
+        <div class="col">
+            {% if parking.active %}
+                <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn button-3">
+                        Deactivate
+                    </button>
+                </form>
+            {% else %}
+                <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn button-1">
+                        Activate
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+    </div> 
+    <hr>
+    <!-- Space available -->
+    <div class="row table-row">
+        <div class="col">Space Available</div>
+        <div class="col"></div>
+        <div class="col">{{stay_objects_count}}/{{parking.max_capacity}}</div>
     </div>
+    <hr>
+    <!-- Parking Inspector -->
+    <div class="row justify-content-center">
+        <a class="btn button-1 center" href="{% url 'parking-inspector' parking_id=parking.id %}">Parking Inspector</a>
+    </div>
+    <hr>
 </div>
 
 <!-- Parking Location -->
 <div class="container">
 
-    <h1 class="text-center">Parking Informations</h1>
+    <h2 class="text-center">Parking Details</h2>
     
-    <div class="row">
+    <div class="row table-row">
         <div class="col">{{parking.name}}</div>
         <div class="col">
-            <a class="btn btn-success" href="{% url 'edit-parking' parking_id=parking.id %}">Button</a>
+            <a class="btn button-2 full-width" href="{% url 'edit-parking' parking_id=parking.id %}">Edit</a>
         </div>
     </div>
-    <div class="row">
+    <div class="row table-row">
         <div class="col">Phone Number</div>
         <div class="col">{{parking.phone_number}}</div>
     </div>
-    <div class="row">
+    <div class="row table-row">
         <div class="col">Addess: 1st Line</div>
         <div class="col">{{parking.street_address1}}</div>
     </div>
-    <div class="row">
+    <div class="row table-row">
         <div class="col">Addess: 2nd Line</div>
         <div class="col">{{parking.street_address2}}</div>
     </div>
-    <div class="row">
+    <div class="row table-row">
         <div class="col">City</div>
         <div class="col">{{parking.city}}</div>
     </div>
-    <div class="row">
+    <div class="row table-row">
         <div class="col">County</div>
         <div class="col">{{parking.county}}</div>
     </div>
-    <div class="row">
+    <div class="row table-row">
         <div class="col">Postcode</div>
         <div class="col">{{parking.postcode}}</div>
     </div>
-    <div class="row">
+    <div class="row table-row">
         <div class="col">Country</div>
         <div class="col">{{parking.country}}</div>
     </div>
-    <div class="row">
+    <div class="row table-row">
         <div class="col">Latitude</div>
         <div class="col">{{parking.latitude}}</div>
     </div>
-    <div class="row">
+    <div class="row table-row">
         <div class="col">Longitude</div>
         <div class="col">{{parking.longitude}}</div>
     </div>
-    <div class="row">
+    <div class="row table-row">
         <div class="col">Radius</div>
         <div class="col">{{parking.radius}}</div>
     </div>
+    <hr>
+    <!-- Delete parking -->
+    <div class="row justify-content-center">
+        <a class="btn button-3" href="{% url 'delete-parking' parking_id=parking.id %}">Delete Parking</a>
+    </div>
 
 </div>
-<!-- Delete Parking -->
-<div class="row center">
-    <a class="btn button-3" href="{% url 'delete-parking' parking_id=parking.id %}">Delete Parking</a>
-</div>
+<hr>
+
 
 <!-- Parking Rates -->
 <div class="container">
     
     <div class="row">
-        <div class="col">
-            <h2 class="">Applicable Rates</h2>
-        </div>
-        <div class="col">
-            <a class="btn btn-success" href="{% url 'add-rate' parking_id=parking.id %}">Add Rate</a>
-        </div>
+            <h2 class="center">Applicable Rates</h2>
     </div>
-    <div class="row">
-        <div class="col">Description</div>
-        <div class="col">Multiplier</div>
-        <div class="col">Applicable Rates</div>
+    <div class="row justify-content-center">
+        <a class="btn button-1 " href="{% url 'add-rate' parking_id=parking.id %}">Add New Rate</a>
+    </div>
+    <hr>
 
-    </div>
     {%for rate in rates %}
+    <div class="table-row-div">
     <div class="row">
-        <div class="col">{{rate.rate_name}}</div>
-        <div class="col">{{rate.hour_range}}</div>
-        <div class="col">{{rate.rate}}</div>
-
+        <div class="col"><b>{{rate.rate_name}}</b></div>
     </div>
     <div class="row">
+        <div class="col">Multiplier: {{rate.hour_range}}</div>
+        <div class="col">Rate: £{{rate.rate}}</div>
+
+    </div>
+    <div class="row padding-bottom">
         <div class="col">
-            <a class="btn btn-success" href="">Delete</a>
+            <a class="btn button-3 full-width" href="{% url 'delete-rate' rate_id=rate.id parking_id=parking.id %}">Delete</a>
         </div>
         <div class="col">
-            <a class="btn btn-success" href="{% url 'edit-rate' rate_id=rate.id parking_id=parking.id %}">Edit</a>
+            <a class="btn button-2 full-width" href="{% url 'edit-rate' rate_id=rate.id parking_id=parking.id %}">Edit</a>
         </div>
+    </div>
     </div>
     {%endfor%}
 
 </div>
 {%endblock%}
-{% block postloadjs %}
 
-{% endblock %}
