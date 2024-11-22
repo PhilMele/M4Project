@@ -6,6 +6,9 @@ javascript error on index page due to geolocation
 Correct 500 error when normal user clicks on parking manager dashboard : if user doesnt have permission, redirect to home
 user cannot enter parking if car registration is not populated + userprofile as a whole
 Add back button to all pages
+create filtr that only shows activated parkings to user
+create a button to tell the parking managert o activate parking
+parking can only be activiated with rates have been populated and cannot be 0.
 
 # colour palette
 
@@ -717,3 +720,11 @@ Used to prevent non `parking_manager` user types to access parking_management ap
         ...
 
 If the user_type is not '2' (parking manager), return user to home page.
+
+## decorators
+from django.views.decorators.http import require_POST
+@login_required
+
+from django.contrib.auth.decorators import login_required
+login_required
+

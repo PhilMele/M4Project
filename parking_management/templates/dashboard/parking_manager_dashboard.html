@@ -24,14 +24,30 @@ THis is parking manager dashboard
         <div class="col">Active</div>
         <div class="col">See Details</div>
     </div>
+    <!-- Loop through parking id -->
     {% for item in parking_space_data %}
     <div class="row">
         <div class="col">{{ item.parking.name }}</div>
         <div class="col">{{ item.spaces_used }}/{{item.parking.max_capacity}}</div>
-
-        <div class="col">AddRates</div>
         <div class="col">
-            <a class="btn button-2" href="{% url 'parking-info' parking_id=item.parking.id %}">Button</a>
+            {% if item.parking.active %}
+            <form method="post" action="{% url 'activate-parking' item.parking.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn button-3">
+                    Deactivate
+                </button>
+            </form>
+            {% else %}
+            <form method="post" action="{% url 'activate-parking' item.parking.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn button-1">
+                    Activate
+                </button>
+            </form>
+            {%endif%}
+        </div>
+        <div class="col">
+            <a class="btn button-2" href="{% url 'parking-info' parking_id=item.parking.id %}">See Details</a>
         </div>
     </div>
     <div class="row">

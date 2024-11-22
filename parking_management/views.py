@@ -3,6 +3,7 @@ from user_management.models import UserProfile
 from parking_activity.models import Stay
 from .models import Parking, Rate, IllegalParking
 from .forms import ParkingForm, RateForm, IllegalParkingForm
+from django.views.decorators.http import require_POST
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -23,19 +24,44 @@ def parking_manager_dashboard(request):
     # calculates parking capacity
     parking_space_data =[]
     for parking in user_parking_list:
+        # activate/deactivate parking
+        activate = activate_parking(request,parking_id=parking.id)
         # return cpunt of all car registration parked in parking id
         parking_spaces_used = parking_space_available(request, parking_id=parking.id)
         print(f'parking_spaces_left = {parking_spaces_used}')
         parking_space_data.append({
             'parking': parking,
             'spaces_used': parking_spaces_used,
+            'is_activate': parking.active,
         })
+    
+    
 
 
     return render(request, 'dashboard/parking_manager_dashboard.html',{
         'user_parking_list':user_parking_list,
         'parking_space_data':parking_space_data,
     })
+
+@require_POST
+@login_required
+def activate_parking(request, parking_id):
+    if not is_parking_manager(request):
+        return redirect('home')
+
+    parking = get_object_or_404(Parking, id=parking_id)
+
+    # if actiate is true turn it off
+    if parking.active:
+        parking.active = False
+        parking.save()
+    # if activate is off turn it on
+    else:
+        parking.active = True
+        parking.save()
+
+    messages.success(request, f"{parking.name} has been {'activated' if parking.active else 'deactivated'}.")
+    return redirect('parking-manager-dashboard')
 
 def parking_inspector(request,parking_id):
     if not is_parking_manager(request):
