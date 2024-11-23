@@ -46,7 +46,7 @@ class ParkingForm(forms.ModelForm):
             'city': forms.TextInput(attrs={'aria-label': 'City', 'placeholder': 'Enter city'}),
             'county': forms.TextInput(attrs={'aria-label': 'County', 'placeholder': 'Enter county'}),
             'postcode': forms.TextInput(attrs={'aria-label': 'Postcode', 'placeholder': 'Enter postcode'}),
-            'country': CountrySelectWidget(attrs={'aria-label': 'Country'}),
+            'country': CountrySelectWidget(attrs={'aria-label': 'Country', 'class': 'w-100'}),
             'latitude': forms.TextInput(attrs={'aria-label': 'Latitude', 'placeholder': 'Enter latitude'}),
             'longitude': forms.TextInput(attrs={'aria-label': 'Longitude', 'placeholder': 'Enter longitude'}),
             'radius': forms.TextInput(attrs={'aria-label': 'Radius', 'placeholder': 'Enter parking radius'}),
