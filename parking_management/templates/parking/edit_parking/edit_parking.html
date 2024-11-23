@@ -62,8 +62,13 @@
         <label for="id_radius" class="sr-only">Radius</label>
         {{ editparkingform.radius|as_crispy_field }}
     </div>
+
+    <div class="create-parking-form-group">
+        <label for="id_max_capacity" class="sr-only">Max Capacity</label>
+        {{ editparkingform.max_capacity|as_crispy_field }}
+    </div>
     
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn button-1">Submit</button>
 </form>
 
 {%endblock%}

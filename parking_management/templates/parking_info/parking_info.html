@@ -76,7 +76,11 @@
     </div>
     <div class="row table-row">
         <div class="col">Addess: 2nd Line</div>
-        <div class="col">{{parking.street_address2}}</div>
+        <div class="col">
+            {% if parking.street_address2 %}
+                {{parking.street_address2}}
+            {% endif %}
+        </div>
     </div>
     <div class="row table-row">
         <div class="col">City</div>
@@ -105,6 +109,10 @@
     <div class="row table-row">
         <div class="col">Radius</div>
         <div class="col">{{parking.radius}}</div>
+    </div>
+    <div class="row table-row">
+        <div class="col">Capacity</div>
+        <div class="col">{{parking.max_capacity}}</div>
     </div>
     <hr>
     <!-- Delete parking -->

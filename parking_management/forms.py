@@ -39,7 +39,7 @@ class ParkingForm(forms.ModelForm):
 
         widgets = {
             'name': forms.TextInput(attrs={'aria-label': 'Parking Name', 'placeholder': 'Enter parking name'}),
-            'max_capacity': forms.NumberInput(attrs={'aria-label': 'Maximum Capacity', 'placeholder': 'Parking Maximum Capacity'}),
+            'max_capacity': forms.NumberInput(attrs={'aria-label': 'Maximum Capacity', 'placeholder': 'Maximum Capacity'}),
             'phone_number': forms.TextInput(attrs={'aria-label': 'Phone Number', 'placeholder': 'Enter phone number'}),
             'street_address1': forms.TextInput(attrs={'aria-label': 'Street Address 1', 'placeholder': 'Enter street address 1'}),
             'street_address2': forms.TextInput(attrs={'aria-label': 'Street Address 2', 'placeholder': 'Enter street address 2'}),

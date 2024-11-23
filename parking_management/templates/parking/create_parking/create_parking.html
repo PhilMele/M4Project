@@ -3,67 +3,78 @@
 {%load static %}
 
 {%block content%}
-Create parking
+<h1>Create Parking</h1>
+
 
 <form method="post">
     {% csrf_token %}
+    
     <div class="create-parking-form-group">
-        {{ parkingform.name.label_tag }} 
+        <label for="id_name" class="sr-only">Parking Name</label>
         {{ parkingform.name|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ parkingform.phone_number.label_tag }}
+        <label for="id_phone_number" class="sr-only">Phone Number</label>
         {{ parkingform.phone_number|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ parkingform.street_address1.label_tag }}
+        <label for="id_street_address1" class="sr-only">Street Address 1</label>
         {{ parkingform.street_address1|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ parkingform.street_address2.label_tag }}
+        <label for="id_street_address2" class="sr-only">Street Address 2</label>
         {{ parkingform.street_address2|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ parkingform.city.label_tag }}
+        <label for="id_city" class="sr-only">City</label>
         {{ parkingform.city|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ parkingform.county.label_tag }}
+        <label for="id_county" class="sr-only">County</label>
         {{ parkingform.county|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ parkingform.postcode.label_tag }}
+        <label for="id_postcode" class="sr-only">Postcode</label>
         {{ parkingform.postcode|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ parkingform.country.label_tag }}
+        <label for="id_country" class="sr-only">Country</label>
         {{ parkingform.country|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ parkingform.latitude.label_tag }}
+        <label for="id_latitude" class="sr-only">Latitude</label>
         {{ parkingform.latitude|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ parkingform.longitude.label_tag }}
+        <label for="id_longitude" class="sr-only">Longitude</label>
         {{ parkingform.longitude|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ parkingform.radius.label_tag }}
+        <label for="id_radius" class="sr-only">Radius</label>
         {{ parkingform.radius|as_crispy_field }}
     </div>
+
+    <div class="create-parking-form-group">
+        <label for="id_max_capacity" class="sr-only">Max Capacity</label>
+        {{ parkingform.max_capacity|as_crispy_field }}
+    </div>
     
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="row justify-content-center">
+        <button type="submit" class="btn button-1">Create Parking</button>
+    </div>
+    
 </form>
+
 
 {%endblock%}
 {% block postloadjs %}

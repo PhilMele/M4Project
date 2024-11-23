@@ -34,9 +34,6 @@ def parking_manager_dashboard(request):
             'spaces_used': parking_spaces_used,
             'is_activate': parking.active,
         })
-    
-    
-
 
     return render(request, 'dashboard/parking_manager_dashboard.html',{
         'user_parking_list':user_parking_list,
@@ -178,17 +175,14 @@ def edit_parking(request, parking_id):
     
     if request.method == "POST":
         editparkingform = ParkingForm(request.POST, instance=parking)
-       
         if editparkingform.is_valid():
-            
             editparkingform.save()
             messages.success(request, "Parking details updated successfully.")
             return redirect('parking-info', parking_id=parking.id)
         else:
-        
+            print(editparkingform.errors) 
             messages.error(request, "There was an issue updating the parking details.")
     else:
-        
         editparkingform = ParkingForm(instance=parking)
 
     return render(request, 'parking/edit_parking/edit_parking.html', {
