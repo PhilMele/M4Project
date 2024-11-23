@@ -2,66 +2,9 @@ from django import forms
 from django.forms import ModelForm
 from .models import Parking, Rate, IllegalParking
 from django_countries.fields import CountryField
+from django_countries.widgets import CountrySelectWidget
 
-class ParkingForm(ModelForm):
-
-    name = forms.CharField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter parking name'})
-    )
-    max_capacity = forms.IntegerField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Parking Maximum Capacity'})
-    )
-    phone_number = forms.CharField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter phone number'})
-    )
-    street_address1 = forms.CharField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter street address 1'})
-    )
-    street_address2 = forms.CharField(
-        required=False, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter street address 2'})
-    )
-    city = forms.CharField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter city'})
-    )
-    county = forms.CharField(
-        required=False, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter county'})
-    )
-    postcode = forms.CharField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter postcode'})
-    )
-    country = CountryField()
-    latitude = forms.DecimalField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter latitude'})
-    )
-    longitude = forms.DecimalField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter longitude'})
-    )
-    radius = forms.DecimalField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter parking radius'})
-    )
-
+class ParkingForm(forms.ModelForm):
     class Meta:
         model = Parking
         fields = (
@@ -70,14 +13,45 @@ class ParkingForm(ModelForm):
             'phone_number',
             'street_address1',
             'street_address2',
-            'city', 
+            'city',
             'county',
             'postcode',
             'country',
             'latitude',
             'longitude',
-            'radius'
+            'radius',
         )
+
+        labels = {
+            'name':'',
+            'max_capacity':'',
+            'phone_number':'',
+            'street_address1':'',
+            'street_address2':'',
+            'city':'',
+            'county':'',
+            'postcode':'',
+            'country':'',
+            'latitude':'',
+            'longitude':'',
+            'radius':'',
+        }
+
+        widgets = {
+            'name': forms.TextInput(attrs={'aria-label': 'Parking Name', 'placeholder': 'Enter parking name'}),
+            'max_capacity': forms.NumberInput(attrs={'aria-label': 'Maximum Capacity', 'placeholder': 'Parking Maximum Capacity'}),
+            'phone_number': forms.TextInput(attrs={'aria-label': 'Phone Number', 'placeholder': 'Enter phone number'}),
+            'street_address1': forms.TextInput(attrs={'aria-label': 'Street Address 1', 'placeholder': 'Enter street address 1'}),
+            'street_address2': forms.TextInput(attrs={'aria-label': 'Street Address 2', 'placeholder': 'Enter street address 2'}),
+            'city': forms.TextInput(attrs={'aria-label': 'City', 'placeholder': 'Enter city'}),
+            'county': forms.TextInput(attrs={'aria-label': 'County', 'placeholder': 'Enter county'}),
+            'postcode': forms.TextInput(attrs={'aria-label': 'Postcode', 'placeholder': 'Enter postcode'}),
+            'country': CountrySelectWidget(attrs={'aria-label': 'Country'}),
+            'latitude': forms.TextInput(attrs={'aria-label': 'Latitude', 'placeholder': 'Enter latitude'}),
+            'longitude': forms.TextInput(attrs={'aria-label': 'Longitude', 'placeholder': 'Enter longitude'}),
+            'radius': forms.TextInput(attrs={'aria-label': 'Radius', 'placeholder': 'Enter parking radius'}),
+        }
+
 
 
 class RateForm(ModelForm):

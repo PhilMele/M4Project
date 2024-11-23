@@ -3,62 +3,63 @@
 {%load static %}
 
 {%block content%}
-Create parking
+<h1>Edit Parking</h1>
 
 <form method="post">
     {% csrf_token %}
+    
     <div class="create-parking-form-group">
-        {{ editparkingform.name.label_tag }} 
+        <label for="id_name" class="sr-only">Parking Name</label>
         {{ editparkingform.name|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ editparkingform.phone_number.label_tag }}
+        <label for="id_phone_number" class="sr-only">Phone Number</label>
         {{ editparkingform.phone_number|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ editparkingform.street_address1.label_tag }}
+        <label for="id_street_address1" class="sr-only">Street Address 1</label>
         {{ editparkingform.street_address1|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ editparkingform.street_address2.label_tag }}
+        <label for="id_street_address2" class="sr-only">Street Address 2</label>
         {{ editparkingform.street_address2|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ editparkingform.city.label_tag }}
+        <label for="id_city" class="sr-only">City</label>
         {{ editparkingform.city|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ editparkingform.county.label_tag }}
+        <label for="id_county" class="sr-only">County</label>
         {{ editparkingform.county|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ editparkingform.postcode.label_tag }}
+        <label for="id_postcode" class="sr-only">Postcode</label>
         {{ editparkingform.postcode|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ editparkingform.country.label_tag }}
+        <label for="id_country" class="sr-only">Country</label>
         {{ editparkingform.country|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ editparkingform.latitude.label_tag }}
+        <label for="id_latitude" class="sr-only">Latitude</label>
         {{ editparkingform.latitude|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ editparkingform.longitude.label_tag }}
+        <label for="id_longitude" class="sr-only">Longitude</label>
         {{ editparkingform.longitude|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        {{ editparkingform.radius.label_tag }}
+        <label for="id_radius" class="sr-only">Radius</label>
         {{ editparkingform.radius|as_crispy_field }}
     </div>
     
