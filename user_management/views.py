@@ -61,7 +61,7 @@ def user_account(request):
         form = UserProfileForm(request.POST, instance=user_profile)
         if form.is_valid():  
             form.save()
-            messages.success(request, "Updated.")
+            messages.success(request, "User details updated.")
             return redirect('user-account')  
     else:
         form = UserProfileForm(instance=user_profile)

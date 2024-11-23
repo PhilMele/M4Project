@@ -2,52 +2,9 @@ from django import forms
 from django.forms import ModelForm
 from .models import UserProfile
 from django_countries.fields import CountryField
+from django_countries.widgets import CountrySelectWidget
 
 class UserProfileForm(ModelForm):
-    phone_number = forms.CharField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter phone number'})
-    )
-
-    street_address1 = forms.CharField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter 1st line of address'})
-    )
-
-    street_address2 = forms.CharField(
-        required=False, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter 2nd line of address'})
-    )
-
-    city = forms.CharField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter city'})
-    )
-
-    county = forms.CharField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter county'})
-    )
-
-    postcode = forms.CharField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter postcode'})
-    )
-
-    country = CountryField()
-
-    car_registration = forms.CharField(
-        required=True, 
-        label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter car registration'})
-    )
-
     class Meta:
         model = UserProfile
         fields = (
@@ -60,3 +17,25 @@ class UserProfileForm(ModelForm):
             'country',
             'car_registration',
         )
+
+        labels = {
+            'phone_number':'',
+            'street_address1':'',
+            'street_address2':'',
+            'city':'',
+            'county':'',
+            'postcode':'',
+            'country':'',
+            'car_registration':'',
+        }
+
+        widgets = {
+            'phone_number': forms.TextInput(attrs={'aria-label': 'Parking Name', 'placeholder': 'Enter Phone Number'}),
+            'street_address1': forms.TextInput(attrs={'aria-label': 'Street Address 1', 'placeholder': 'Enter street address 1'}),
+            'street_address2': forms.TextInput(attrs={'aria-label': 'Street Address 2', 'placeholder': 'Enter street address 2'}),
+            'city': forms.TextInput(attrs={'aria-label': 'City', 'placeholder': 'Enter city'}),
+            'county': forms.TextInput(attrs={'aria-label': 'County', 'placeholder': 'Enter county'}),
+            'postcode': forms.TextInput(attrs={'aria-label': 'Postcode', 'placeholder': 'Enter postcode'}),
+            'country': CountrySelectWidget(attrs={'aria-label': 'Country', 'class': 'w-100'}),
+        }
+
