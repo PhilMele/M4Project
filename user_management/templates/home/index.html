@@ -4,7 +4,7 @@
 {%block content%}
 <div class="container h-100">
 
-    <div class="row h-100">
+    <div class="row">
         <div class="col-7 col-md-6 my-auto">
             <h1>Dashboard</h1>
         </div>
@@ -12,32 +12,48 @@
 
     <span>Today, I want to:</span>
     <hr>
-    <div class="row">
-        <div class="col">
-            <div class="row h-100">
-                {%if existing_stay_obj %}
-                  <form action="{% url 'leave' stay_id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn button-1" id="checkout-button">Checkout Parking</button>
-                  </form>
-                {%else%}
-                <div class="col-12 col-md-12">
-        
-                    <form action="{% url 'get_parking_location' %}" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" id="userLatitude" name="latitude" value="">
-                        <input type="hidden" id="userLongitude" name="longitude" value="">
-                        <button type="submit" class="submit btn button-1" onclick="getLocation()">Enter Parking</button>
-                    </form>
-                </div>
-                {%endif%}
-            </div>
 
-        </div>
-        <div class="col">
-            <a class="btn button-2" href="{% url 'history' %}">Usage History</a>
-        </div>
+    <!-- Enter/Leave Parking Action -->
+    <div class="row padding-bottom w-100">
+        {% if existing_stay_obj %}
+            <form action="{% url 'leave' stay_id %}" class="w-100" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn button-1 w-100">
+                    <i class="fa-solid fa-credit-card icon-colour-bg"></i>
+                    <span>Checkout Parking</span>
+                </button>
+            </form>
+        {% else %}
+            <form action="{% url 'get_parking_location' %}" class="w-100" method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="userLatitude" name="latitude" value="">
+                <input type="hidden" id="userLongitude" name="longitude" value="">
+                <button type="submit" class="btn button-1 w-100" onclick="getLocation()">
+                    <i class="fa-solid fa-location-dot icon-colour-bg"></i>
+                    <span>Enter Parking</span>
+                </button>
+            </form>
+        {% endif %}
     </div>
+
+    <!-- History -->
+
+    <div class="row padding-bottom w-100">
+        <a class="btn button-2 w-100" href="{% url 'history' %}">
+            <i class="fa-regular fa-clipboard icon-colour-bg"></i>
+            <span>Check Usage History</span>
+        </a>
+    </div>
+
+    <!-- Check Account Details -->
+
+    <div class="row padding-bottom w-100">
+        <a class="btn button-4 w-100" href="{% url 'history' %}">
+            <i class="fa-solid fa-user  icon-colour-bg"></i>
+            <span>Check Profile Details</span>
+        </a>
+    </div>
+
 </div>
 
 {%endblock%}

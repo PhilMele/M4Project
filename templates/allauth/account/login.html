@@ -7,20 +7,21 @@
     {% trans "Sign In" %}
 {% endblock head_title %}
 {% block content %}
-    <div class="login-container">
+    <div class="login-container center">
         <!-- Logo  -->
-        <div>
-            <img src="https://geopay-app.s3.eu-north-1.amazonaws.com/images/logo/Logo-Favicon.png" alt="Logo">
+        <div class="row">
+            <img class="login-logo" src="https://geopay-app.s3.eu-north-1.amazonaws.com/images/logo/Logo-Favicon.png" alt="Logo">
         </div>
 
         <!-- Title -->
-        {% element h1 %}
-            {% trans "Sign In" %}
-        {% endelement %}
+         <div class="row center">
+            {% element h1 %}
+                {% trans "Sign In" %}
+            {% endelement %}
+        </div>
 
-       
-            <!-- Login Form -->
-            
+        <!-- Login Form -->
+        <div class="row">
             <form method="post" action="{% url 'account_login' %}">
                 {% csrf_token %}
                 
@@ -35,14 +36,22 @@
                     <div class="col-xl-6 col-lg-6 col-md-8 col-10">
                         <!-- Username input field with icon -->
                         <div class="mb-3">
-                            <label for="id_login" class="form-label"><i class="fas fa-user"></i> Username</label>
-                            <input type="text" class="form-control" id="id_login" name="login" placeholder="Enter your username" required>
+                            <div class="row">
+                                <label for="id_login" class="form-label"><i class="fas fa-user"></i> Username</label>
+                            </div>
+                            <div class="row">
+                                <input type="text" class="form-control" id="id_login" name="login" placeholder="Enter your username" required>
+                            </div>
                         </div>
 
                         <!-- Password input field with icon -->
                         <div class="mb-3">
-                            <label for="id_password" class="form-label"><i class="fas fa-lock"></i> Password</label>
-                            <input type="password" class="form-control" id="id_password" name="password" placeholder="Enter your password" required>
+                            <div class="row">
+                                <label for="id_password" class="form-label"><i class="fas fa-lock"></i> Password</label>
+                            </div>
+                            <div class="row">
+                                <input type="password" class="form-control" id="id_password" name="password" placeholder="Enter your password" required>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,12 +64,15 @@
                     </button>
                 </div>
             </form>
+        </div>
 
-            <!-- Sign Up Message -->
+        <!-- Sign Up Message -->
+        <div class="row">
             <p>
                 {% trans "If you have not created an account yet, then please " %}
                 <a href="{{ signup_url }}">{% trans "sign up" %}</a>
                 {% trans " first." %}
             </p>
+        </div>
     </div>
 {% endblock content %}

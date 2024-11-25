@@ -36,11 +36,20 @@ body {
     font-size: smaller;
 }
 
+/* Registration */
+.login-logo{
+    width: 10em;
+}
+
 /* Icons */
 
 #toggle-help {
     color: #EFC958;
     margin-left: 5px;
+}
+
+.icon-colour-bg{
+    color: #344E5C;
 }
 
 /* Rows */
@@ -76,22 +85,22 @@ body {
 
 .button-1{
     background: #4AB19D;
-    color: black;
+    color: #344E5C;
 }
 
 .button-2{
     background: #EFC958;
-    color: black;
-}
-
-.button-3{
-    background: #E17A47;
-    color: white;
+    color:#344E5C;
 }
 
 .button-3{
     background: #EF3D59;
-    color: white;
+    color: #344E5C;
+}
+
+.button-4{
+    background: #E17A47;
+    color:#344E5C;
 }
 
 .full-width{
