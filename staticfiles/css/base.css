@@ -12,10 +12,32 @@ body {
     display: flex;
     flex-direction: column; 
     box-sizing: border-box; 
+    font-size:small;
+}
+
+a{
+    text-decoration: none;
+    color: white;
 }
 
 .center{
     text-align: center;
+}
+
+/* Authentication */
+.logo-control{
+    width: 15em;
+
+}
+
+.auth-field-control{
+    margin: 0;
+}
+
+
+/* Form */
+.form-control {
+    font-size: small !important;
 }
 
 .form-group select, /* Target the select dropdown */
@@ -36,20 +58,11 @@ body {
     font-size: smaller;
 }
 
-/* Registration */
-.login-logo{
-    width: 10em;
-}
-
 /* Icons */
 
 #toggle-help {
     color: #EFC958;
     margin-left: 5px;
-}
-
-.icon-colour-bg{
-    color: #344E5C;
 }
 
 /* Rows */
@@ -79,6 +92,23 @@ body {
 }
 
 /* Navbar */
+
+
+.navbar-toggler-icon::before {
+    font-size: 1.5rem; 
+    color: white;
+    margin: 0;  
+}
+
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-menu{
+    background: none;
+}
 
 
 /* Buttons */

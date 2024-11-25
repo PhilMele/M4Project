@@ -12,6 +12,7 @@ body {
     display: flex;
     flex-direction: column; 
     box-sizing: border-box; 
+    font-size:small;
 }
 
 a{
@@ -21,6 +22,22 @@ a{
 
 .center{
     text-align: center;
+}
+
+/* Authentication */
+.logo-control{
+    width: 15em;
+
+}
+
+.auth-field-control{
+    margin: 0;
+}
+
+
+/* Form */
+.form-control {
+    font-size: small !important;
 }
 
 .form-group select, /* Target the select dropdown */
