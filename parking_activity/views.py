@@ -38,7 +38,7 @@ def get_parking_location(request):
             print(f'user_location_tuple = {user_location_tuple}')
 
             # match current user location to parking radius (if any)
-            parkings = Parking.objects.all()
+            parkings = Parking.objects.filter(active=True)
             
             # create for loop of parkings
             for parking in parkings:
@@ -93,7 +93,7 @@ def get_parking_rates(request, parking_id):
 @login_required
 def enter(request, parking_id=None):
     parking_name = None
-    parking_list = Parking.objects.all()
+    parking_list = Parking.objects.filter(active=True)
 
     if parking_id:
         parking_name = get_object_or_404(Parking, id = parking_id)
