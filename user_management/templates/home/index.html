@@ -13,45 +13,120 @@
     <span>Today, I want to:</span>
     <hr>
 
-    <!-- Enter/Leave Parking Action -->
-    <div class="row padding-bottom w-100">
+    <!-- Check In/ Out Parking -->
+    <div class="row padding-bottom w-100 table-row">
+        <!-- Display Checkout Option -->
         {% if existing_stay_obj %}
-            <form action="{% url 'leave' stay_id %}" class="w-100" method="POST">
-                {% csrf_token %}
-                <button type="submit" class="btn button-1 w-100">
-                    <i class="fa-solid fa-credit-card icon-colour-bg"></i>
-                    <span>Checkout Parking</span>
-                </button>
-            </form>
+        <div class="container">
+            <div class="row">
+                <div class="col-4 text-center d-flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-credit-card icon-colour-bg full-size-icon fa-5x"></i>
+                </div>
+                <div class="col-8">
+                    <div class="container">
+                        <div class="row">
+                            <span>
+                            You are parked at <b>{{parking_name}}</b>. Click the button below to when you are ready to checkout.
+                            </span>
+                        </div>
+                        <div class="row">
+                            <form action="{% url 'leave' stay_id %}" class="w-100" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn button-1 w-100">
+                                    <span>Checkout Parking</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% else %}
-            <form action="{% url 'get_parking_location' %}" class="w-100" method="POST">
-                {% csrf_token %}
-                <input type="hidden" id="userLatitude" name="latitude" value="">
-                <input type="hidden" id="userLongitude" name="longitude" value="">
-                <button type="submit" class="btn button-1 w-100" onclick="getLocation()">
-                    <i class="fa-solid fa-location-dot icon-colour-bg"></i>
-                    <span>Enter Parking</span>
-                </button>
-            </form>
+
+        <!--  Display Check-In Option --> 
+        <div class="container">
+            <div class="row">
+                <div class="col-4 text-center d-flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-location-dot icon-colour-bg full-size-icon fa-5x"></i>
+                </div>
+                <div class="col-8">
+                    <div class="container">
+                        <div class="row">
+                            <span>
+                            <b>Enter Parking:</b>
+                            Click the button below to check-in.
+                            </span>
+                        </div>
+                        <div class="row">
+                            <form action="{% url 'get_parking_location' %}" class="w-100" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" id="userLatitude" name="latitude" value="">
+                                <input type="hidden" id="userLongitude" name="longitude" value="">
+                                <button type="submit" class="btn button-1 w-100" onclick="getLocation()">
+                                    <span>Check-In</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {% endif %}
+
     </div>
 
     <!-- History -->
 
-    <div class="row padding-bottom w-100">
-        <a class="btn button-2 w-100" href="{% url 'history' %}">
-            <i class="fa-regular fa-clipboard icon-colour-bg"></i>
-            <span>Check Usage History</span>
-        </a>
+    <div class="row padding-bottom w-100 table-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 text-center d-flex align-items-center justify-content-center">
+                    <i class="fa-regular fa-clipboard icon-colour-bg full-size-icon fa-5x"></i>
+                </div>
+                <div class="col-8">
+                    <div class="container">
+                        <div class="row">
+                            <span><b>Usage History:</b> Consult your parking usage history.
+                            </span>
+                            </div>
+                        <div class="row">
+                            <a class="btn button-2 w-100" href="{% url 'history' %}">
+                                <span>
+                                Check History
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Check Account Details -->
 
-    <div class="row padding-bottom w-100">
-        <a class="btn button-4 w-100" href="{% url 'user-account' %}">
-            <i class="fa-solid fa-user  icon-colour-bg"></i>
-            <span>Check Profile Details</span>
-        </a>
+    <div class="row padding-bottom w-100 table-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 text-center d-flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-user icon-colour-bg full-size-icon fa-5x"></i>
+                </div>
+                <div class="col-8">
+                    <div class="container">
+                        <div class="row">
+                            <span>
+                            <b>My Account:</b> Access and edit your profile details.
+                            </span>
+                        </div>
+                        <div class="row">
+                            <a class="btn button-4 w-100" href="{% url 'user-account' %}">
+                                Check Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
