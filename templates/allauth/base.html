@@ -34,6 +34,7 @@
 
         <!-- Custom Javascript -->
         <script src="{% static 'js/scripts.js' %}"></script>
+        <script src="{% static 'js/fade_alert.js' %}"></script>
 
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -106,7 +107,7 @@
     <div class="container mt-3">
         {% for message in messages %}
             <div 
-                class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" 
+                class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show fade-out" 
                 role="alert">
                 {{ message }}
             </div>
@@ -124,7 +125,7 @@
     </main>
 
     {% block postloadjs %}
-
+    
     {% endblock %}
 </body>
 </html>
