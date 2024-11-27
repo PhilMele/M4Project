@@ -35,6 +35,8 @@ def logout_view(request):
 
 @login_required
 def index(request):
+    # if user is parking_manager, 
+    # redirect to parking manager dashboard
     if not is_parking_customer(request):
         return redirect('parking-manager-dashboard')
 

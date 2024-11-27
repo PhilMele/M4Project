@@ -5,40 +5,88 @@
 <h1>Dashboard</h1>
 
 <!-- Create / Edit / Delete Parking -->
-<div class="create-parking-div">
-    <div class="row">
-        <div class="col">Add New Parking</div>
-        <div class="col">
-            <a class="btn button-1" href="{% url 'create-parking'%}">Add Parking</a>
+<div class="container">
+    <div class="row table-row">
+        <div class="col-4 text-center d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-square-parking icon-colour-bg full-size-icon fa-5x"></i>
+        </div>
+        <div class="col-8">
+            <div class="container">
+                <div class="row">
+                    <span>
+                    <b>Add Parking:</b>
+                    Click to add a new parking.
+                    </span>
+                </div>
+                <div class="row">
+                    <a class="btn button-1 w-100" href="{% url 'create-parking'%}">Add</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 
 <hr>
 
 <!-- Parking Dashboard -->
-<div class="manager-dashboard">
+<div class="manager-dashboard container">
     <!-- Loop through parking id -->
     {% for item in parking_space_data %}
-    <div class="row">
-        <div class="col"><b>{{ item.parking.name }}</b></div>
-    </div>
-    <div class="row">
-        <div class="col">{{ item.spaces_used }}/{{item.parking.max_capacity}}</div>
-        <div class="col">
-            {% if item.parking.active %}
-                <span>Active</span>
-            {% else %}
-                <span class="parking-nonactive">Inactive</span>
-            {% endif %}
+    <div class="table-row-div">
+    
+        <!-- First Row -->
+        <div class="row">
+            <!-- Parking Title -->
+            <div class="col"><b>{{ item.parking.name }}</b></div>
         </div>
-        <div class="col">
-            <a class="btn button-2 full-width" href="{% url 'parking-info' parking_id=item.parking.id %}">Info</a>
+    
+        <!-- Second Row -->
+        <div class="row align-items-center center">
+            <!-- Parking Space Available -->
+            <div class="col"> 
+                <i class="fa-solid fa-car"></i>
+                <span>   
+                    {{ item.spaces_used }}/{{item.parking.max_capacity}}
+                </span> 
+            </div>
+            
+            <!-- Parking Active/Inactive -->
+            <div class="col">
+                {% if item.parking.active %}
+                    <span>
+                        <b>Active</b>
+                    </span>
+                {% else %}
+                    <span class="parking-nonactive">
+                        <b>Inactive</b> 
+                        <!-- Add a data attribute to link the icon to the help div -->
+                        <i 
+                            class="fa-solid fa-circle-info toggle-help" 
+                            data-help-id="help-parking-{{ forloop.counter }}"></i>
+                    </span>
+                {% endif %}
+            </div>
+        
+            <!-- Button To Access More Info -->
+            <div class="col">
+                <a class="btn button-2 full-width" href="{% url 'parking-info' parking_id=item.parking.id %}">Info</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Help div with taking unique ID -->
+    <div class="help-container">
+        <div id="help-parking-{{ forloop.counter }}" class="help-parking-activate-parking" style="display: none;">
+            <p class="small-text">You haven't activated this parking.</p>
+            <p class="small-text">Users can only check-in in active parkings.</p>
+            <p class="small-text">To activate, click on "Info" button/p>
         </div>
     </div>
     {% endfor %}
 </div>
+
 {%endblock%}
 {% block postloadjs %}
-
+<script src="{% static 'js/activate_parking_helper.js' %}"></script>
 {% endblock %}
