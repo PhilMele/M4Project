@@ -9,7 +9,48 @@
 
 <div class="container">
     <!-- Parking status -->
-    <div class="table-row-div">
+    <div class="row padding-bottom w-100 table-row">
+        <div class="container">
+            <div class="row w-100 d-flex align-items-center justify-content-center">
+                <div class="col-4 text-center d-flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-power-off icon-colour-bg full-size-icon fa-5x"></i>
+                </div>
+                <div class="col-8 d-flex align-items-center justify-content-center">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <span>
+                            <b>Status:</b>
+                                {% if parking.active %}
+                                    <span>Active</span>
+                                    {% else %}
+                                    <span class="parking-nonactive">Inactive</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="row justify-content-center">
+                            {% if parking.active %}
+                                <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn button-3">
+                                        Deactivate
+                                    </button>
+                                </form>
+                            {% else %}
+                                <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn button-1">
+                                        Activate
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="table-row-div">
         <div class="row padding-bottom">
             <div class="col">Status</div>
             <div class="col">
@@ -39,10 +80,35 @@
             {% endif %}
         </div>
 
-    </div> 
+    </div>  -->
     <hr>
+
+    <div class="row padding-bottom w-100 table-row">
+        <div class="container">
+            <div class="row w-100">
+                <div class="col-4 text-center d-flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-car icon-colour-bg full-size-icon fa-5x"></i>
+                </div>
+                <div class="col-8 d-flex align-items-center justify-content-center">
+                    <div class="container">
+                        <div class="row d-flex align-items-center justify-content-center">
+                            <span>
+                            <b>Spaces Used</b>
+                            </span>
+                        </div>
+                        <div class="row d-flex align-items-center justify-content-center">
+                            <span>
+                                {{stay_objects_count}}/{{parking.max_capacity}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Space available -->
-    <div class="row table-row">
+    <!-- <div class="row table-row">
         <div class="col">
             <span>
                 Spaces Used
@@ -50,8 +116,10 @@
         </div>
         <div class="col"></div>
         <div class="col">{{stay_objects_count}}/{{parking.max_capacity}}</div>
-    </div>
+    </div> -->
     <hr>
+
+
     <!-- Parking Inspector -->
     <div class="row justify-content-center">
         <a class="btn button-1 center" href="{% url 'parking-inspector' parking_id=parking.id %}">Parking Inspector</a>
