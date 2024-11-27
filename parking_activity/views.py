@@ -21,7 +21,14 @@ from django.http import JsonResponse
 #geolocation module
 from geopy import distance
 
+
 # Create your views here.
+def is_parking_customer(request):
+    print(f'request.user.userprofile.user_type: {request.user.userprofile.user_type}')
+    if request.user.userprofile.user_type != 1:
+        return False
+    return True
+
 @login_required
 def get_parking_location(request):
     if request.method == "POST":
@@ -76,6 +83,7 @@ def get_parking_location(request):
             
     return redirect ('home')
 
+
 #used to get parking rates through API (dynamically generated with js)
 #note: safe = False allows to return a list instead of a dictonnary
 # this is because Json expect a dict by default (add error to log of errors encourntered)
@@ -89,9 +97,16 @@ def get_parking_rates(request, parking_id):
     )
     return JsonResponse(list(rates), safe=False)
 
+
 # Mark user as entering parking
 @login_required
 def enter(request, parking_id=None):
+
+    # if user is parking_manager, 
+    # redirect to parking manager dashboard
+    if not is_parking_customer(request):
+        return redirect('parking-manager-dashboard')
+
     parking_name = None
     parking_list = Parking.objects.filter(active=True)
 
@@ -154,9 +169,15 @@ def enter(request, parking_id=None):
         'parking_list':parking_list,
         'parking_name':parking_name})
 
+
 # Mark user as leaving parking
 @login_required
 def leave(request, stay_id):
+    # if user is parking_manager, 
+    # redirect to parking manager dashboard
+    if not is_parking_customer(request):
+        return redirect('parking-manager-dashboard')
+
     # Retrieve the existing Stay object
     try:
         stay = Stay.objects.get(id=stay_id, user=request.user.userprofile)
@@ -301,9 +322,15 @@ def payment(request,applicable_fee,stay_id):
         print(f'Error in payment process:{e}')
         return HttpResponse("Error occured in payment processing")
 
+
 #stripe payment logic
 @login_required
 def payment_successful(request):
+    # if user is parking_manager, 
+    # redirect to parking manager dashboard
+    if not is_parking_customer(request):
+        return redirect('parking-manager-dashboard')
+
     stripe.api_key = stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     checkout_session_id = request.GET.get('session_id', None)
     session = stripe.checkout.Session.retrieve(checkout_session_id)
@@ -317,7 +344,13 @@ def payment_successful(request):
 
 @login_required
 def payment_cancelled(request):
+    # if user is parking_manager, 
+    # redirect to parking manager dashboard
+    if not is_parking_customer(request):
+        return redirect('parking-manager-dashboard')
+
     return render(request, 'payment/payment_cancelled.html')
+
 
 @csrf_exempt
 def stripe_webhook(request):
@@ -350,9 +383,14 @@ def stripe_webhook(request):
     return HttpResponse(status=200)
 
 
-
 @login_required
 def history(request):
+
+    # if user is parking_manager, 
+    # redirect to parking manager dashboard
+    if not is_parking_customer(request):
+        return redirect('parking-manager-dashboard')
+
     user_history = Stay.objects.filter(user=request.user.userprofile).order_by('-id')
     print(user_history)
 

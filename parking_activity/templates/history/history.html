@@ -6,7 +6,11 @@
 
 <div class="container">
     {% for stay in user_history %} 
-    <div class="table-row-div">  
+
+    <!-- table for each transaction -->
+    <div class="table-row-div"> 
+
+        <!-- Parking Name --> 
         <div class="row ">
             <div class="col">
                 <span>
@@ -14,6 +18,8 @@
                 </span>
             </div>
         </div>
+
+        <!-- Check-In info -->
         <div class="row">
             <div class="col-4">
                 <span>
@@ -31,8 +37,8 @@
             {%endfor%}
         </div>
 
+        <!-- Check-Out info -->
         <div class="row">
-
             <div class="col-4">Checkout: </div>
             {% for item in leave_parking_history %}
                 {%if stay.id == item.stay.id%}
@@ -47,6 +53,7 @@
             {%endfor%}
         </div>
 
+        <!-- Fee info -->
         <div class="row">
             <div class="col-4">Paid: </div>
             {% if stay.calculated_fee %}
@@ -64,6 +71,8 @@
                 </div>
             {% endif %}
         </div>
+
+        <!-- Transaction Id -->
         {% if stay.paid %}
         <div class="row">
             <div class="col-4">
@@ -78,11 +87,9 @@
             </div>
         </div>
         {% endif %}
+        
     </div>
     <hr>
-    {% endfor %}
-
-    
+    {% endfor %}  
 </div>
-
 {% endblock %}

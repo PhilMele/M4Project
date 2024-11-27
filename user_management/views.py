@@ -11,6 +11,12 @@ from django.contrib import messages
 
 
 # Create your views here.
+def is_parking_customer(request):
+    print(f'request.user.userprofile.user_type: {request.user.userprofile.user_type}')
+    if request.user.userprofile.user_type != 1:
+        return False
+    return True
+
 #register user
 def register(request):
     if request.method == "POST":
@@ -29,6 +35,9 @@ def logout_view(request):
 
 @login_required
 def index(request):
+    if not is_parking_customer(request):
+        return redirect('parking-manager-dashboard')
+
     # look up if user has already an existing Stay object
     # and exclude objects that is matched with a LeaveParking object 
     existing_stay_obj = Stay.objects.filter(user=request.user.userprofile).exclude(

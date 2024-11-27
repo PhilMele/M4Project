@@ -699,6 +699,8 @@ import os
 
 ciredits: https://docs.djangoproject.com/en/5.1/topics/logging/
 
+## is_parking_customer()
+
 ## is_parking_manager()
 Used to prevent non `parking_manager` user types to access parking_management app functions.
 

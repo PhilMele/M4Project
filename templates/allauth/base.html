@@ -55,13 +55,19 @@
 
   </head>
   <body>
+    
     <header class="container-fluid">
         <nav class="navbar navbar-expand-lg">
+            <!-- Brand -->
             <a class="navbar-brand" href="/">GeoPay</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa-solid fa-bars text-white"></i>
             </button>
+
+            <!-- Navbar starts -->
             <div class="collapse navbar-collapse" id="navbarNav">
+                
+                <!-- Links List -->
                 <ul class="navbar-nav">
                     <li class="nav-item active">
                         <a class="nav-link" href="/">
@@ -76,7 +82,8 @@
                             History
                         </a>
                     </li>
-                    <!-- Right-aligned dropdown menu -->
+
+                    <!-- Dropdown menu -->
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -99,21 +106,22 @@
                             </div>
                         </li>
                     </ul>
+
                 </ul>
             </div>
         </nav>
     </header>
 
     {% if messages %}
-    <div class="container mt-3">
-        {% for message in messages %}
-            <div 
-                class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show fade-out" 
-                role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-    </div>
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div 
+                    class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show fade-out" 
+                    role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
 
     {% block page_header %}
