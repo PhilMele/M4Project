@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center center">
             {% if parking.active %}
                 <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
                     {% csrf_token %}
@@ -43,7 +43,11 @@
     <hr>
     <!-- Space available -->
     <div class="row table-row">
-        <div class="col">Space Available</div>
+        <div class="col">
+            <span>
+                Spaces Used
+            </span>
+        </div>
         <div class="col"></div>
         <div class="col">{{stay_objects_count}}/{{parking.max_capacity}}</div>
     </div>

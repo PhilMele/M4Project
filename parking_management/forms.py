@@ -52,6 +52,16 @@ class ParkingForm(forms.ModelForm):
             'radius': forms.TextInput(attrs={'aria-label': 'Radius', 'placeholder': 'Enter parking radius'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # set all fields as required by default
+        for field_name, field in self.fields.items():
+            field.required = True
+
+        # make  street_address2 not required
+        self.fields['street_address2'].required = False
+
 
 
 class RateForm(ModelForm):

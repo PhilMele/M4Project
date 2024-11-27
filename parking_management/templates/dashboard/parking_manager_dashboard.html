@@ -61,9 +61,8 @@
                     <span class="parking-nonactive">
                         <b>Inactive</b> 
                         <!-- Add a data attribute to link the icon to the help div -->
-                        <i 
-                            class="fa-solid fa-circle-info toggle-help" 
-                            data-help-id="help-parking-{{ forloop.counter }}"></i>
+                        <i class="fa-solid fa-circle-info toggle-help" 
+                           data-help-id="help-parking-{{ forloop.counter }}"></i>
                     </span>
                 {% endif %}
             </div>
@@ -83,6 +82,7 @@
             <p class="small-text">To activate, click on "Info" button/p>
         </div>
     </div>
+    
     {% endfor %}
 </div>
 
