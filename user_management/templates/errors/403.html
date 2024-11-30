@@ -1,1 +1,13 @@
-error 403
+{% extends 'base.html' %}
+
+{% block title %}Bad Request{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center vh-100 text-center">
+    <div>
+        <h1>403 Oopsies</h1>
+        <p>This is forbidden access.</p>
+        <a href="{% url 'home' %}" class="btn button-1">Let's take you home.</a>
+    </div>
+</div>
+{% endblock %}
