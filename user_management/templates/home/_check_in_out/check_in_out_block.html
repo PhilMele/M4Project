@@ -5,13 +5,13 @@
         {% if existing_stay_obj %}
 
             {% block check_out %}
-                {% include 'home/_check_in_out/check_out.html' %}
+                {% include 'home/_check_in_out/check_out_block.html' %}
             {% endblock %}
         
         {% else %}
         <!--  Display Check-In Option --> 
             {% block check_in %}
-                {% include 'home/_check_in_out/check_in.html' %}
+                {% include 'home/_check_in_out/check_in_block.html' %}
             {% endblock %}
 
         {% endif %}
@@ -19,7 +19,7 @@
 
     <!-- If User has not provided car registration -->
         {% block enter_registration %}
-            {% include 'home/_check_in_out/enter_registration.html' %}
+            {% include 'home/_check_in_out/enter_registration_block.html' %}
         {% endblock %}
 
     {%endif%}
@@ -27,5 +27,5 @@
 
 <!-- Car Registration Modal -->
 {% block registration_prompt %}
-    {% include 'home/_check_in_out/registration_prompt.html' %}
+    {% include 'home/_check_in_out/registration_prompt_block.html' %}
 {% endblock %}
