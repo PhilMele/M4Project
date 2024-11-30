@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-4">Paid: </div>
+    {% if stay.calculated_fee %}
+        <div class="col-8">
+            <span>
+                £{{stay.calculated_fee}}
+            </span>
+            
+        </div>
+    {% else %}
+        <div class="col-8">
+            <span>
+                You haven't left.
+            </span>
+        </div>
+    {% endif %}
+</div>

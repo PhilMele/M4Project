@@ -11,81 +11,36 @@
     <div class="table-row-div"> 
 
         <!-- Parking Name --> 
-        <div class="row ">
-            <div class="col">
-                <span>
-                    <b>Parking: {{ stay.parking_name.name }}</b>
-                </span>
-            </div>
-        </div>
+        {% block parking_name_block %}
+            {% include 'history/history_blocks/parking_name_block.html' %}
+        {% endblock %}
+
 
         <!-- Check-In info -->
-        <div class="row">
-            <div class="col-4">
-                <span>
-                    Check-In:
-                </span> 
-            </div>
-            {% for item in enter_parking_history %}
-                {% if stay.id == item.stay.id %}
-                    <div class="col-8">
-                        <span>
-                            {{ item.entry.timestamp_enter }}
-                        </span>
-                    </div>
-                {%endif%}
-            {%endfor%}
-        </div>
+        {% block check_in_info_block %}
+            {% include 'history/history_blocks/check_in_info_block.html' %}
+        {% endblock %}
+
 
         <!-- Check-Out info -->
-        <div class="row">
-            <div class="col-4">Checkout: </div>
-            {% for item in leave_parking_history %}
-                {%if stay.id == item.stay.id%}
-                    <div class="col-8">
-                        <span>
-                            {{ item.leave.timestamp_leave }}
-                        </span>
-                    </div>
-                {% else %}
-                    <div class="col-8"></div>
-                {%endif%}
-            {%endfor%}
-        </div>
+        {% block check_out_info_block %}
+            {% include 'history/history_blocks/check_out_info_block.html' %}
+        {% endblock %}
+
 
         <!-- Fee info -->
-        <div class="row">
-            <div class="col-4">Paid: </div>
-            {% if stay.calculated_fee %}
-                <div class="col-8">
-                    <span>
-                        £{{stay.calculated_fee}}
-                    </span>
-                    
-                </div>
-            {% else %}
-                <div class="col-8">
-                    <span>
-                        You haven't left.
-                    </span>
-                </div>
-            {% endif %}
-        </div>
+        {% block fee_info_block %}
+            {% include 'history/history_blocks/fee_info_block.html' %}
+        {% endblock %}
+
 
         <!-- Transaction Id -->
         {% if stay.paid %}
-        <div class="row">
-            <div class="col-4">
-                <span>
-                    Transaction: 
-                </span>
-            </div>
-            <div class="col-8">
-                <span>
-                    {{stay.id}}
-                </span>
-            </div>
-        </div>
+
+            {% block transaction_id_block %}
+                {% include 'history/history_blocks/transaction_id_block.html' %}
+            {% endblock %}
+
         {% endif %}
         
     </div>

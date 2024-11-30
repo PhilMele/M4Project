@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-4">
+        <span>
+            Check-In:
+        </span> 
+    </div>
+    {% for item in enter_parking_history %}
+        {% if stay.id == item.stay.id %}
+            <div class="col-8">
+                <span>
+                    {{ item.entry.timestamp_enter }}
+                </span>
+            </div>
+        {%endif%}
+    {%endfor%}
+</div>
