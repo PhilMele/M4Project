@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const helpDiv = document.getElementById('help-parking-during-rate');
 
     helpLink.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent default behavior of the <a> tag
+        event.preventDefault(); // Prevent default behaviour of the <a> tag
         // Toggle the display of the help div
         if (helpDiv.style.display === 'none' || helpDiv.style.display === '') {
             helpDiv.style.display = 'block'; // Show the div

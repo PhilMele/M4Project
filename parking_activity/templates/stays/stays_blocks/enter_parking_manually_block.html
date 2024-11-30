@@ -1,0 +1,21 @@
+<form method="post">
+    {% csrf_token %}
+    <div class="enter-form center">
+        <label for="parking-select">Select Parking:</label><br>
+        <select id="parking-select" name="parking_name">
+            <option value="">Select parking</option>
+            {% for parking in parking_list %}
+                <option value="{{ parking.id }}" 
+                    {% if parking_id == parking.id %}
+                        selected
+                    {% endif %}>
+                    {{ parking.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <hr>
+    <div class="enter-submit-button center">
+        <input class="button-1 btn " type="submit" value="Check-In">
+    </div>
+</form>

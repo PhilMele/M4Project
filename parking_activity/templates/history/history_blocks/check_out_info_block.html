@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-4">Checkout: </div>
+    {% for item in leave_parking_history %}
+        {%if stay.id == item.stay.id%}
+            <div class="col-8">
+                <span>
+                    {{ item.leave.timestamp_leave }}
+                </span>
+            </div>
+        {% else %}
+            <div class="col-8"></div>
+        {%endif%}
+    {%endfor%}
+</div>

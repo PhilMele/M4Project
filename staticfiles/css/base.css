@@ -15,9 +15,31 @@ body {
     font-size:small;
 }
 
+/* Elements */
+
+h1 {
+    font-size: 1.5rem;
+}
+
+h2 {
+    font-size: 1rem;
+}
+
+
 a{
     text-decoration: none;
     color: white;
+}
+
+/* set text to black even if href if missing */
+a:not([href]) {
+    color: #344E5C;
+}
+
+/* Specific */
+
+.pad-top-10{
+    padding-top: 10px;
 }
 
 .center{
@@ -34,6 +56,9 @@ a{
     margin: 0;
 }
 
+.black-text{
+    color: black;
+}
 
 /* Form */
 .form-control {
@@ -65,6 +90,44 @@ a{
     margin-left: 5px;
 }
 
+.full-size-icon {
+    font-size: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Car registration pop-up */
+/* Popup overlay styling */
+.popup-overlay {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+}
+
+/* Popup content box */
+.popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+
 /* Rows */
 .padding-bottom{
     padding-bottom: 10px;
@@ -91,8 +154,15 @@ a{
     color: #EF3D59;
 }
 
-/* Navbar */
+/* Tabs */
+    /* Remove default colour change on hover */
 
+    /* Remove default colour change on hover */
+    .nav-tabs .nav-link:hover {
+        color: white; 
+    }
+
+/* Navbar */
 
 .navbar-toggler-icon::before {
     font-size: 1.5rem; 
@@ -151,6 +221,9 @@ a{
     background-color: #EF3D59;
     color: white;
 }
+
+
+
 
 /* Tables */
 table {

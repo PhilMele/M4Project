@@ -2,70 +2,44 @@
 {%load static %}
 
 {%block content%}
-{% if parking_name %}
-    <p>Your are about to check-in : <b>{{parking_name}}</b></p>
-    <hr>
-    <p>Please acknowledge the applicable rates to your stay, below:</p>
-{% else %}
 
-    <p>Take the time to acknowledge the applicable rates to your stay.</p>
-
-{% endif %}
+<!-- Displays parking name + Instructions -->
+    {% block instructions_block %}
+        {% include 'stays/stays_blocks/instructions_block.html' %}
+    {% endblock %}
 
 <hr>
 
-<!-- Render table that shows tarrif for selected parking -->
-<table id="ratesTable">
-    <thead>
-        <tr>
-            <th>Rate Name</th>
-            <th>Hour Range</th>
-            <th>Rate</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-<!-- Form -->
+<!-- Render table that shows rates for selected parking -->
+    {% block parking_rates_block %}
+        {% include 'stays/stays_blocks/parking_rates_block.html' %}
+    {% endblock %}
+
+<!-- Forms -->
+
+<!-- Parking ID is known : user can check-in -->
 {% if parking_id %}
 
     <!-- If parking ID is not None -->
+    {% block check_in_block %}
+        {% include 'stays/stays_blocks/check_in_block.html' %}
+    {% endblock %}
      
-     <form method="post">
-        {% csrf_token %}
-        <hr>
-        <div class="center">
-            <input type="submit" value="Check-In" class="btn button-1" action="">
-        </div>
-    </form>
 
     {%else%}
+<!-- Parking ID is not known : user selecteds parking manually -->
     
     <!-- If parking ID is None -->
-    <form method="post">
-        {% csrf_token %}
-        <div class="enter-form center">
-            <label for="parking-select">Select Parking:</label><br>
-            <select id="parking-select" name="parking_name">
-                <option value="">Select parking</option>
-                {% for parking in parking_list %}
-                    <option value="{{ parking.id }}" 
-                        {% if parking_id == parking.id %}
-                            selected
-                        {% endif %}>
-                        {{ parking.name }}
-                    </option>
-                {% endfor %}
-            </select>
-        </div>
-        <hr>
-        <div class="enter-submit-button center">
-            <input class="button-1 btn " type="submit" value="Check-In">
-        </div>
-    </form>
+
+    {% block enter_parking_manually_block %}
+        {% include 'stays/stays_blocks/enter_parking_manually_block.html' %}
+    {% endblock %}
+
 {%endif%}
 
 
 {%endblock%}
+
 {% block postloadjs %}
 <script src="{% static 'js/parking_fee.js' %}"></script>
 {% endblock %}
