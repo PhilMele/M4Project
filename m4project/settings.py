@@ -48,6 +48,10 @@ ALLOWED_HOSTS = [
 # Prevent sessions from being reset
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+# credits: https://stackoverflow.com/questions/3976498/why-doesnt-session-expire-at-browser-close-true-log-the-user-out-when-the-bro
+SESSION_COOKIE_DOMAIN = '.geopay-12a0f6ced11c.herokuapp.com'
+CSRF_TRUSTED_ORIGINS=['https://*.geopay-12a0f6ced11c.herokuapp.com']
 
 # Application definition
 
@@ -146,16 +150,6 @@ LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'm4project.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 from decouple import config
 import dj_database_url
