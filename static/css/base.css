@@ -20,6 +20,11 @@ a{
     color: white;
 }
 
+/* set text to black even if href if missing */
+a:not([href]) {
+    color: #344E5C;
+}
+
 .center{
     text-align: center;
 }

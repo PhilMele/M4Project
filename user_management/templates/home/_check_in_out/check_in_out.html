@@ -1,0 +1,31 @@
+<div class="row padding-bottom w-100 table-row">
+    <!-- If User not provided car registration -->
+    {% if car_reg %}
+        <!-- Display Checkout Option -->
+        {% if existing_stay_obj %}
+
+            {% block check_out %}
+                {% include 'home/_check_in_out/check_out.html' %}
+            {% endblock %}
+        
+        {% else %}
+        <!--  Display Check-In Option --> 
+            {% block check_in %}
+                {% include 'home/_check_in_out/check_in.html' %}
+            {% endblock %}
+
+        {% endif %}
+    {% else %}
+
+    <!-- If User has not provided car registration -->
+        {% block enter_registration %}
+            {% include 'home/_check_in_out/enter_registration.html' %}
+        {% endblock %}
+
+    {%endif%}
+</div>
+
+<!-- Car Registration Modal -->
+{% block registration_prompt %}
+    {% include 'home/_check_in_out/registration_prompt.html' %}
+{% endblock %}
