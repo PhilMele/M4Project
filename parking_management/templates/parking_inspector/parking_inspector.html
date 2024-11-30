@@ -1,55 +1,48 @@
 {%extends 'base.html' %}
 {%load static %}
-{% load crispy_forms_tags %}
 {%block content%}
 
 <h1>Parking Inspector</h1>
-<div class="container">
-    
-    <h2>Register Illegal cars</h2>
-    <form action="" method="POST">
-        <div class="table-row-div">
-            {% csrf_token %}
-            <div class="row justify-content-center">
-                {{ illegalparkingform.car_reg.label_tag }}
-                {{ illegalparkingform.car_reg|as_crispy_field }}
-            </div>
-            <div class="row justify-content-center"> 
-                <button type="submit" class="btn button-1">Add Registration</button>
-            </div>
-        </div>
-    </form>
-</div>
-<hr>
-<!-- Toggle displaying either illegal regs or current cars -->
-<div class="container">
-    <h2>List of Car Registrations Parked</h2>
-    {% for stay in parking_users %}
-    <div class="row table-row-div">{{stay.user.car_registration}}</div>
-    {% empty %}
-        <div class="row table-row-div">No cars parked currently.</div>
-    {% endfor %}
-</div>
-<hr>
-<div class="container">
-    <h2>Car Registration To Issue Tickets</h2>
-    {% for illegalparking in illegal_users %}
-        <div class="row table-row-div">
-            <div class="col-8">
-                {{illegalparking.car_reg}}
-            </div>
-            <div class="col-4">    
-                <form action="{% url 'delete-car-reg' parking_id=parking.id illegalparking_id=illegalparking.id  %}" method="POST">
-                    {% csrf_token %} 
-                    <button type="submit" class="btn button-3">X</button>
-                </form>
-            </div>
-        </div>  
-        {% empty %}
-        <div class="row table-row-div">This list is empty.</div>
-    {% endfor %}
 
-    
+<!-- Add Illegally Parked Car Registration -->
+    {% block register_illegal_car %}
+        {% include 'parking_inspector/parking_inspector_blocks/register_illegal_car.html' %}
+    {% endblock %}
+
+<hr>
+
+<div class="container mt-4">
+    <!-- Tab Navigation -->
+    <ul class="nav nav-tabs" id="parkingInspectorTabs" role="tablist">
+        <li class="nav-item w-50">
+            <a class="nav-link active" id="cars-checked-in-tab" data-toggle="tab" href="#cars-checked-in" role="tab" aria-controls="cars-checked-in" aria-selected="true">
+                Checked In
+            </a>
+        </li>
+        <li class="nav-item w-50">
+            <a class="nav-link" id="illegally-parked-cars-tab" data-toggle="tab" href="#illegally-parked-cars" role="tab" aria-controls="illegally-parked-cars" aria-selected="false">
+                Illegal Regs.
+            </a>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content pad-top-10" id="parkingInspectorTabsContent">
+
+        <!-- Cars Checked In Tab -->
+        <div class="tab-pane fade show active" id="cars-checked-in" role="tabpanel" aria-labelledby="cars-checked-in-tab">
+            {% block cars_checked_in %}
+                {% include 'parking_inspector/parking_inspector_blocks/cars_checked_in.html' %}
+            {% endblock %}
+        </div>
+
+        <!-- Illegally Parked Cars Tab -->
+        <div class="tab-pane fade" id="illegally-parked-cars" role="tabpanel" aria-labelledby="illegally-parked-cars-tab">
+            {% block illegally_parked_cars %}
+                {% include 'parking_inspector/parking_inspector_blocks/illegally_parked_cars.html' %}
+            {% endblock %}
+        </div>
+    </div>
 </div>
 
 

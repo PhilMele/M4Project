@@ -1,0 +1,21 @@
+<div class="container d-flex flex-column justify-content-center align-items-center">
+    <h2 class="center">Car Registration To Issue Tickets</h2>
+    
+    {% for illegalparking in illegal_users %}
+        <div class="row table-row-div d-flex align-items-center">
+            <div class="col-8">
+                {{ illegalparking.car_reg }}
+            </div>
+            <div class="col-4">    
+                <form action="{% url 'delete-car-reg' parking_id=parking.id illegalparking_id=illegalparking.id  %}" method="POST">
+                    {% csrf_token %} 
+                    <button type="submit" class="btn button-3">X</button>
+                </form>
+            </div>
+        </div>  
+    {% empty %}
+        <div class="row table-row-div d-flex align-items-center">
+            This list is empty.
+        </div>
+    {% endfor %}
+</div>

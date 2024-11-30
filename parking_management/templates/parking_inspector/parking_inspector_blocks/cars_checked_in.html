@@ -1,0 +1,12 @@
+<div class="container d-flex flex-column justify-content-center align-items-center">
+    <h2 class="center">List of Car Registrations Parked</h2>
+    {% for stay in parking_users %}
+        <div class="row table-row-div d-flex align-items-center">
+            {{ stay.user.car_registration }}
+        </div>
+    {% empty %}
+        <div class="row table-row-div d-flex align-items-center">
+            No cars parked currently.
+        </div>
+    {% endfor %}
+</div>

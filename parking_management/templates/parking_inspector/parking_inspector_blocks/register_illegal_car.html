@@ -1,0 +1,16 @@
+{% load crispy_forms_tags %}
+<div class="container"> 
+    <h2>Register Illegal cars</h2>
+    <form action="" method="POST">
+        <div class="table-row-div">
+            {% csrf_token %}
+            <div class="row justify-content-center">
+                {{ illegalparkingform.car_reg.label_tag }}
+                {{ illegalparkingform.car_reg|as_crispy_field }}
+            </div>
+            <div class="row justify-content-center"> 
+                <button type="submit" class="btn button-1">Add Registration</button>
+            </div>
+        </div>
+    </form>
+</div>

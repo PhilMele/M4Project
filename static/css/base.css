@@ -15,6 +15,17 @@ body {
     font-size:small;
 }
 
+/* Elements */
+
+h1 {
+    font-size: 1.5rem;
+}
+
+h2 {
+    font-size: 1rem;
+}
+
+
 a{
     text-decoration: none;
     color: white;
@@ -23,6 +34,12 @@ a{
 /* set text to black even if href if missing */
 a:not([href]) {
     color: #344E5C;
+}
+
+/* Specific css */
+
+.pad-top-10{
+    padding-top: 10px;
 }
 
 .center{
@@ -137,8 +154,15 @@ a:not([href]) {
     color: #EF3D59;
 }
 
-/* Navbar */
+/* Tabs */
+    /* Remove default colour change on hover */
 
+    /* Remove default colour change on hover */
+    .nav-tabs .nav-link:hover {
+        color: white; 
+    }
+
+/* Navbar */
 
 .navbar-toggler-icon::before {
     font-size: 1.5rem; 
