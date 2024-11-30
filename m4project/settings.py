@@ -37,14 +37,17 @@ REDIRECT_DOMAIN = os.getenv('REDIRECT_DOMAIN', 'http://localhost:8000/')
 
 
 # Credits : https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
-# DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = [
     'geopay-12a0f6ced11c.herokuapp.com',
     'localhost',
     '127.0.0.1',
 ]
+
+# Prevent sessions from being reset
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True 
 
 # Application definition
 
