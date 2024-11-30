@@ -155,12 +155,11 @@ a:not([href]) {
 }
 
 /* Tabs */
-    /* Remove default colour change on hover */
 
-    /* Remove default colour change on hover */
-    .nav-tabs .nav-link:hover {
-        color: white; 
-    }
+/* Remove default colour change on hover */
+.nav-tabs .nav-link:hover {
+    color: white; 
+}
 
 /* Navbar */
 
@@ -206,6 +205,7 @@ a:not([href]) {
 .full-width{
     width: 100%;
 }
+
 /* Custom Messages */
 .alert {
     border-radius: 20px; 
@@ -221,8 +221,6 @@ a:not([href]) {
     background-color: #EF3D59;
     color: white;
 }
-
-
 
 
 /* Tables */
@@ -252,4 +250,9 @@ tr:nth-child(even) {
 
 tr:hover {
     background-color: #ddd;
+}
+
+/* Error Handling */
+.error-height{
+    height: 50vh !important; 
 }
