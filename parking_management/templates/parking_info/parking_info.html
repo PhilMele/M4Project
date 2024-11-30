@@ -8,6 +8,7 @@
 
 
 <div class="container">
+    
     <!-- Parking status -->
     <div class="row padding-bottom w-100 table-row">
         <div class="container">
@@ -50,37 +51,6 @@
         </div>
     </div>
 
-    <!-- <div class="table-row-div">
-        <div class="row padding-bottom">
-            <div class="col">Status</div>
-            <div class="col">
-                {% if parking.active %}
-                <span>Active</span>
-                {% else %}
-                <span class="parking-nonactive">Inactive</span>
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="row justify-content-center center">
-            {% if parking.active %}
-                <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn button-3">
-                        Deactivate
-                    </button>
-                </form>
-            {% else %}
-                <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn button-1">
-                        Activate
-                    </button>
-                </form>
-            {% endif %}
-        </div>
-
-    </div>  -->
     <hr>
 
     <div class="row padding-bottom w-100 table-row">
@@ -107,23 +77,13 @@
         </div>
     </div>
 
-    <!-- Space available -->
-    <!-- <div class="row table-row">
-        <div class="col">
-            <span>
-                Spaces Used
-            </span>
-        </div>
-        <div class="col"></div>
-        <div class="col">{{stay_objects_count}}/{{parking.max_capacity}}</div>
-    </div> -->
     <hr>
-
 
     <!-- Parking Inspector -->
     <div class="row justify-content-center">
         <a class="btn button-1 center" href="{% url 'parking-inspector' parking_id=parking.id %}">Parking Inspector</a>
     </div>
+
     <hr>
 </div>
 
