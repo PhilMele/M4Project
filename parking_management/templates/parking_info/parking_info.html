@@ -3,191 +3,26 @@
 
 {%block content%}
 
-<!-- Parking Info -->
 <h1 class="text-center">Parking Informations</h1>
 
+<!-- Parking Status -->
 
-<div class="container">
-    
-    <!-- Parking status -->
-    <div class="row padding-bottom w-100 table-row">
-        <div class="container">
-            <div class="row w-100 d-flex align-items-center justify-content-center">
-                <div class="col-4 text-center d-flex align-items-center justify-content-center">
-                    <i class="fa-solid fa-power-off icon-colour-bg full-size-icon fa-5x"></i>
-                </div>
-                <div class="col-8 d-flex align-items-center justify-content-center">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <span>
-                            <b>Status:</b>
-                                {% if parking.active %}
-                                    <span>Active</span>
-                                    {% else %}
-                                    <span class="parking-nonactive">Inactive</span>
-                                {% endif %}
-                            </span>
-                        </div>
-                        <div class="row justify-content-center">
-                            {% if parking.active %}
-                                <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn button-3">
-                                        Deactivate
-                                    </button>
-                                </form>
-                            {% else %}
-                                <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn button-1">
-                                        Activate
-                                    </button>
-                                </form>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% block parking_info_block %}
+        {% include 'parking_info/parking_info_blocks/parking_info_block.html' %}
+    {% endblock %}
 
-    <hr>
+<!-- Parking Details -->
 
-    <div class="row padding-bottom w-100 table-row">
-        <div class="container">
-            <div class="row w-100">
-                <div class="col-4 text-center d-flex align-items-center justify-content-center">
-                    <i class="fa-solid fa-car icon-colour-bg full-size-icon fa-5x"></i>
-                </div>
-                <div class="col-8 d-flex align-items-center justify-content-center">
-                    <div class="container">
-                        <div class="row d-flex align-items-center justify-content-center">
-                            <span>
-                            <b>Spaces Used</b>
-                            </span>
-                        </div>
-                        <div class="row d-flex align-items-center justify-content-center">
-                            <span>
-                                {{stay_objects_count}}/{{parking.max_capacity}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <hr>
-
-    <!-- Parking Inspector -->
-    <div class="row justify-content-center">
-        <a class="btn button-1 center" href="{% url 'parking-inspector' parking_id=parking.id %}">Parking Inspector</a>
-    </div>
-
-    <hr>
-</div>
-
-<!-- Parking Location -->
-<div class="container">
-
-    <h2 class="text-center">Parking Details</h2>
-    
-    <div class="row table-row">
-        <div class="col">{{parking.name}}</div>
-        <div class="col">
-            <a class="btn button-2 full-width" href="{% url 'edit-parking' parking_id=parking.id %}">Edit</a>
-        </div>
-    </div>
-    <div class="row table-row">
-        <div class="col">Phone Number</div>
-        <div class="col">{{parking.phone_number}}</div>
-    </div>
-    <div class="row table-row">
-        <div class="col">Addess: 1st Line</div>
-        <div class="col">{{parking.street_address1}}</div>
-    </div>
-    <div class="row table-row">
-        <div class="col">Addess: 2nd Line</div>
-        <div class="col">
-            {% if parking.street_address2 %}
-                {{parking.street_address2}}
-            {% endif %}
-        </div>
-    </div>
-    <div class="row table-row">
-        <div class="col">City</div>
-        <div class="col">{{parking.city}}</div>
-    </div>
-    <div class="row table-row">
-        <div class="col">County</div>
-        <div class="col">{{parking.county}}</div>
-    </div>
-    <div class="row table-row">
-        <div class="col">Postcode</div>
-        <div class="col">{{parking.postcode}}</div>
-    </div>
-    <div class="row table-row">
-        <div class="col">Country</div>
-        <div class="col">{{parking.country}}</div>
-    </div>
-    <div class="row table-row">
-        <div class="col">Latitude</div>
-        <div class="col">{{parking.latitude}}</div>
-    </div>
-    <div class="row table-row">
-        <div class="col">Longitude</div>
-        <div class="col">{{parking.longitude}}</div>
-    </div>
-    <div class="row table-row">
-        <div class="col">Radius</div>
-        <div class="col">{{parking.radius}}</div>
-    </div>
-    <div class="row table-row">
-        <div class="col">Capacity</div>
-        <div class="col">{{parking.max_capacity}}</div>
-    </div>
-    <hr>
-    <!-- Delete parking -->
-    <div class="row justify-content-center">
-        <a class="btn button-3" href="{% url 'delete-parking' parking_id=parking.id %}">Delete Parking</a>
-    </div>
-
-</div>
+    {% block parking_location_block %}
+        {% include 'parking_info/parking_info_blocks/parking_location_block.html' %}
+    {% endblock %}
 <hr>
 
-
 <!-- Parking Rates -->
-<div class="container">
-    
-    <div class="row">
-        <h2 class="center">Applicable Rates</h2>
-    </div>
-    <div class="row justify-content-center">
-        <a class="btn button-1" href="{% url 'add-rate' parking_id=parking.id %}">Add New Rate</a>
-    </div>
-    <hr>
 
-    {%for rate in rates %}
-    <div class="table-row-div">
-        <div class="row">
-            <div class="col"><b>{{rate.rate_name}}</b></div>
-        </div>
-        <div class="row">
-            <div class="col">Multiplier: {{rate.hour_range}}</div>
-            <div class="col">Rate: £{{rate.rate}}</div>
+    {% block parking_rates_block %}
+        {% include 'parking_info/parking_info_blocks/parking_rates_block.html' %}
+    {% endblock %}
 
-        </div>
-        <div class="row padding-bottom">
-            <div class="col">
-                <a class="btn button-3 full-width" href="{% url 'delete-rate' rate_id=rate.id parking_id=parking.id %}">Delete</a>
-            </div>
-            <div class="col">
-                <a class="btn button-2 full-width" href="{% url 'edit-rate' rate_id=rate.id parking_id=parking.id %}">Edit</a>
-            </div>
-        </div>
-    </div>
-    {%endfor%}
-
-</div>
 {%endblock%}
 
