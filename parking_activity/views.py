@@ -31,6 +31,13 @@ def is_parking_customer(request):
 
 @login_required
 def get_parking_location(request):
+    
+    # checks if user has provided car registration
+    # in their userprofile
+    if not request.user.userprofile.car_registration:
+        messages.error(request, "You need to provide your car registration before checking in. Connect to your profile to add it.")
+        return redirect('home')
+
     if request.method == "POST":
 
         # capture user current location

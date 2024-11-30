@@ -45,7 +45,8 @@ def index(request):
     existing_stay_obj = Stay.objects.filter(user=request.user.userprofile).exclude(
         id__in=LeaveParking.objects.values_list('stay_id', flat=True)
     )
-    #declare variables as None so they are available in the 
+
+    # declare variables as None so they are available in the 
     # context even when `existing_stay_obj` does not exist
     parking_name = None
     stay_id = None
@@ -58,13 +59,19 @@ def index(request):
             lat = stay.parking_name.latitude
             long = stay.parking_name.longitude
             stay_id = stay.id
+
+    # checks if user has provided car registration
+    car_reg = False
+    if request.user.userprofile.car_registration:
+        car_reg= True
     
     return render(request, 'home/index.html',{
         'existing_stay_obj':existing_stay_obj,
         'parking_name':parking_name,
         'stay_id':stay_id,
         'lat':lat,
-        'long':long})
+        'long':long,
+        'car_reg':car_reg})
 
 def user_account(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
