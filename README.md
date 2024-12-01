@@ -12,6 +12,8 @@ parking can only be activiated with rates have been populated and cannot be 0.
 add footer
 fix check-out siccess message at Noneafter selecting manually what parking userchecks in
 fix logout problem when scanning qr code. Might be SSL certificate realted problem.
+Check validators for sign up
+check validators for login when email or password is wrong
 
 # colour palette
 
