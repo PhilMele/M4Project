@@ -11,6 +11,7 @@ create a button to tell the parking managert o activate parking
 parking can only be activiated with rates have been populated and cannot be 0.
 add footer
 fix check-out siccess message at Noneafter selecting manually what parking userchecks in
+fix logout problem when scanning qr code. Might be SSL certificate realted problem.
 
 # colour palette
 
@@ -783,6 +784,22 @@ In views.py (app level):
         raise SuspiciousOperation("Test 400 error")
 
 Add templates in: `app_name/templates/errors/template_name`
+
+## Problem encountered - user getting logged out on mobile phone 
+when opening new borwser window when scanning QR code
+
+To solve this problem, add to settings.py:
+
+    # Prevent sessions from being reset
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True 
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+    SESSION_COOKIE_DOMAIN = '.geopay-12a0f6ced11c.herokuapp.com'
+    CSRF_TRUSTED_ORIGINS=['https://*.geopay-12a0f6ced11c.herokuapp.com']
+
+credits: https://stackoverflow.com/questions/3976498/why-doesnt-session-expire-at-browser-close-true-log-the-user-out-when-the-bro
+
+This has improve the result. However, the problem still persist. This could be due to the fact I havent deployed the SSL certificate on the site, as this is a paying feature.
 
 ## sites used
 https://cdnjs.com/ : for cdn links
