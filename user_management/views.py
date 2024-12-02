@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from parking_activity.models import (Stay,
                                     EnterParking,
@@ -14,6 +14,8 @@ from django.http import HttpRequest
 from django.core.exceptions import PermissionDenied
 from django.core.exceptions import SuspiciousOperation
 
+# allauth views
+from allauth.account.views import SignupView
 
 # Create your views here.
 def is_parking_customer(request):
@@ -23,16 +25,34 @@ def is_parking_customer(request):
     return True
 
 #register user
-def register(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
+# def register(request):
+#     if request.method == "POST":
+#         form = UserCreationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             # authenticate user for login
+#             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect('home')
+#     else:
+#         form = UserCreationForm()
+#     return render(request, 'account/signup.html', {'form': form})
+class CustomSignupView(SignupView):
+    def form_valid(self, form):
+        # Save the user
+        user = form.save()
+
+        # Authenticate the user for login
+        user = authenticate(
+            username=form.cleaned_data['username'],
+            password=form.cleaned_data['password1']
+        )
+        if user is not None:
+            login(self.request, user)
             return redirect('home')
-    else:
-        form = UserCreationForm()
-    return render(request, 'account/signup.html', {'form': form})
+        return super().form_valid(form)
+
 
 def logout_view(request):
     logout(request)

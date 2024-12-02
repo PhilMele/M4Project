@@ -1,45 +1,58 @@
-{% extends "account/base_entrance.html" %}
-{% load allauth i18n %}
+{% extends "socialaccount/base_entrance.html" %}
+{% load i18n %}
+{% load allauth %}
+{% load static %} 
+
 {% block head_title %}
-    {% trans "Signup" %}
+    {% trans "Sign Up" %}
 {% endblock head_title %}
+{%block extra_js%}
+<script src="{% static 'js/signup.js' %}"></script>
+{%endblock%}
+
 {% block content %}
-    {% element h1 %}
-        {% trans "Sign Up" %}
-    {% endelement %}
-    {% setvar link %}
-        <a href="{{ login_url }}">
-        {% endsetvar %}
-        {% setvar end_link %}
-        </a>
-    {% endsetvar %}
-    {% element p %}
-        {% blocktranslate %}Already have an account? Then please {{ link }}sign in{{ end_link }}.{% endblocktranslate %}
-    {% endelement %}
-    {% if not SOCIALACCOUNT_ONLY %}
-        {% url 'account_signup' as action_url %}
-        {% element form form=form method="post" action=action_url tags="entrance,signup" %}
-            {% slot body %}
-                {% csrf_token %}
-                {% element fields form=form unlabeled=True %}
-                {% endelement %}
-                {{ redirect_field }}
-            {% endslot %}
-            {% slot actions %}
-                {% element button tags="prominent,signup" type="submit" %}
+    <div class="auth-container">
+        <!-- Logo -->
+        {% block logo %}
+            {% include 'allauth/elements/logo.html' %}
+        {% endblock %}
+
+        <!-- Title -->
+        <div class="row center justify-content-center">
+            {% element h1 %}
+            <h1>{% trans "Sign Up" %}</h1>
+            {% endelement %}
+        </div>
+
+        <!-- Signup Form -->
+       
+        <form method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+
+            <!-- Form Fields -->
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-danger">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+           
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <button type="submit" class="btn button-1 btn-block">
                     {% trans "Sign Up" %}
-                {% endelement %}
-            {% endslot %}
-        {% endelement %}
-    {% endif %}
-    {% if PASSKEY_SIGNUP_ENABLED %}
-        {% element hr %}
-        {% endelement %}
-        {% element button href=signup_by_passkey_url tags="prominent,signup,outline,primary" %}
-            {% trans "Sign up using a passkey" %}
-        {% endelement %}
-    {% endif %}
-    {% if SOCIALACCOUNT_ENABLED %}
-        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-    {% endif %}
+                </button>
+            </div>
+        </form>
+
+        <!-- signin -->
+        <p class="text-center mt-3">
+            {% trans "Already have an account? " %}
+            <a href="{{ login_url }}">{% trans "Sign In" %}</a>
+        </p>
+    </div>
 {% endblock content %}

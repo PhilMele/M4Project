@@ -27,15 +27,15 @@
     <body>
         {% block body %}
         {% if form.errors %}
-            <div class="alert alert-danger">
+            <div class="alert alert-danger alert-dismissible fade show fade-out center">
                 <ul>
                 {% for field in form %}
                     {% for error in field.errors %}
-                        <li>{{ field.label }}: {{ error }}</li>
+                        {{ field.label }}: {{ error }}
                     {% endfor %}
                 {% endfor %}
                 {% for error in form.non_field_errors %}
-                    <li>{{ error }}</li>
+                    {{ error }}
                 {% endfor %}
                 </ul>
             </div>

@@ -3,11 +3,14 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+# allauth view paths
+from .views import CustomSignupView
 
 urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('', views.index, name='home'),
     path('user_account/', views.user_account, name='user-account'),
+    path('accounts/signup/', CustomSignupView.as_view(), name='account_signup'),
 
     # Error hanlder testing
     path('test_500_error/', views.test_500_error, name='test-500-error'),

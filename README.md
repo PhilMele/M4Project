@@ -810,6 +810,10 @@ Django will by default look for an html file before retouring the the txt file.
 
 The email template was generated from a template taken from : https://tabular.email/
 
+
+Credits:
+Validation for login : https://stackoverflow.com/questions/74245576/the-problem-of-not-displaying-validation-messages-in-allauth-after-overriding-al
+
 ## sites used
 https://cdnjs.com/ : for cdn links
 https://tabular.email/: for email template

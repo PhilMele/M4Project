@@ -6,7 +6,7 @@ html {
 body {
     height: 100%; 
     margin: 10px; 
-    background-color: #344E5C;
+    background-color: #0D1A3A;
     color: white;
     font-family: "Poppins", sans-serif;
     display: flex;
@@ -188,22 +188,22 @@ a:not([href]) {
 
 .button-1{
     background: #4AB19D;
-    color: #344E5C;
+    color: #0D1A3A;
 }
 
 .button-2{
     background: #EFC958;
-    color:#344E5C;
+    color:#0D1A3A;
 }
 
 .button-3{
     background: #EF3D59;
-    color: #344E5C;
+    color: #0D1A3A;
 }
 
 .button-4{
     background: #E17A47;
-    color:#344E5C;
+    color:#0D1A3A;
 }
 
 .full-width{
@@ -213,7 +213,8 @@ a:not([href]) {
 /* Custom Messages */
 .alert {
     border-radius: 20px; 
-    padding: 15px; 
+  
+    border: none;
 }
 
 .alert-success{
@@ -222,6 +223,11 @@ a:not([href]) {
 }
 
 .alert-error { 
+    background-color: #EF3D59;
+    color: white;
+}
+
+.alert-danger { 
     background-color: #EF3D59;
     color: white;
 }
