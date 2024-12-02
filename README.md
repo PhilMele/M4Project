@@ -142,25 +142,57 @@ Icons and images are hosted on S3 Bucket:
 ### 2.1 Wireframes <a name="wireframes"></a>
 ### 2.1 Databases <a name="databases"></a>
 
-ERD was generated using django extension `Graphviz`.
 
-To install `Graphviz` these steps were followed:
-* run: `pip install django-extensions`
-* run: `winget install Graphviz`
-* add:
-    INSTALLED_APPS = [
-    # erd generator
-    'django_extensions'
-    ]
-* run: `pip install pydotplus`
-* run: `python manage.py graph_models -a -o erd.png`
+<details>
+    <summary>Click to see ER Diargram</summary>
+    <p>
+        <img src="static/images/readme_images/erd.png" alt="erd" />
+    </p>
+</details>
 
-   <details>
-      <summary>Click to see ER Diargram</summary>
-      <p>
-         <img src="static/images/readme_images/erd.png" alt="erd" />
-      </p>
-   </details>
+<details>
+<summary>Click to ER Diargram dependency installation process</summary>
+<p>
+        ERD was generated using django extension `Graphviz`.
+
+        To install `Graphviz` these steps were followed:
+        * run: `pip install django-extensions`
+        * run: `winget install Graphviz`
+        * add:
+
+            INSTALLED_APPS = [
+            ...
+            'django_extensions'
+            ]
+
+        * run: `pip install pydotplus`
+        * run: `python manage.py graph_models -a -o erd.png`
+</p>
+</details>
+
+The databases are split across 3 diffrent apps: 
+* `user_management`
+* `parking_activity`
+* `parking_management`.
+
+**`user_management` databases:**
+| **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
+|--------------------|--------------------------|-----------------------|-------------------------------------------------------------------|
+| **UserProfile**    | `user`                  | OneToOneField         | Links to the Django `User` model.                                |
+|                    | `user_type`             | IntegerField          | Type of user (1: User, 2: Parking Manager).                      |
+|                    | `phone_number`          | CharField             | Optional phone number.                                           |
+|                    | `street_address1`       | CharField             | First line of the user's street address.                         |
+|                    | `street_address2`       | CharField             | Second line of the user's street address.                        |
+|                    | `city`                  | CharField             | City name.                                                       |
+|                    | `county`                | CharField             | County name.                                                     |
+|                    | `postcode`              | CharField             | Postal code.                                                     |
+|                    | `country`               | CountryField          | Country of residence.                                            |
+|                    | `car_registration`      | CharField             | Optional car registration number.                                |
+|                    | `stripe_customer_id`    | CharField             | Stripe customer ID for payment processing.                       |
+|
+
+
+
 
 ## 3. Features <a name="features"></a>
 
