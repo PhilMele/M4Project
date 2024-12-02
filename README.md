@@ -166,10 +166,13 @@ No time spent in the outside cold.
 
 To install PostGres on local, the following steps were followed.
 
-To set up of PostGres on Local run : pip install psycopg2 (Documentation: https://medium.com/@shahrukhshl0/building-a-flask-crud-application-with-psycopg2-58de201e3c14)
+To set up of PostGres on Local run : `pip install psycopg2` 
+
 Issues encountered and solution:
 
-This may have been specific to my local setup, but I had to use : pip install psycopg2-binary (Documentation: https://pypi.org/project/psycopg2-binary/). My requirements.txt file lists : psycopg2-binary==2.9.9
+This may have been specific to my local setup, but I had to use : pip install psycopg2-binary 
+
+(Documentation: https://pypi.org/project/psycopg2-binary/). My requirements.txt file lists : psycopg2-binary==2.9.9
 
 In settings.py, edit `DATABASES` variables to the following to point to the new local postgres database:
 
@@ -213,6 +216,7 @@ Once this is done, you will want your data stored in a your .env file, to avoid 
 
 Useful links:
 * Instal postgres on local: https://www.postgresql.org/download/
+* Extra Documentation: https://pypi.org/project/psycopg2-binary/
 
 ### 5.1 Heroku Deployment <a name="heroku-deployment"></a>
 

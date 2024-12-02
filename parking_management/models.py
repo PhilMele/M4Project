@@ -19,7 +19,6 @@ class Parking (models.Model):
     longitude = models.CharField(verbose_name="Longitude",max_length=50, null=True, blank=True)
     radius = models.CharField(verbose_name="Radius",max_length=50, null=True, blank=True)
     active = models.BooleanField(default=False)
-    bank_details = models.CharField(max_length=80, null=True, blank=True)
 
     def __str__(self):
         return self.name

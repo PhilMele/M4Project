@@ -6,7 +6,6 @@ class ParkingAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'user',
-        'bank_details'
     )
 
 class RateAdmin(admin.ModelAdmin):

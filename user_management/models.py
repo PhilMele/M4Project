@@ -4,12 +4,6 @@ from django_countries.fields import CountryField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-class CardDetails(models.Model):
-    card_number = models.CharField(max_length=80, null=True, blank=True)
-    exp_month = models.CharField(max_length=2, null=True, blank=True)
-    exp_year = models.CharField(max_length=4, null=True, blank=True)
-    cvc = models.CharField(max_length=3, null=True, blank=True)
-
 USER_TYPE=(
     (1,'User'),
     (2,'Parking Manager'),
@@ -26,7 +20,6 @@ class UserProfile(models.Model):
     county = models.CharField(max_length=80, null=True, blank=True)
     postcode = models.CharField(max_length=20, null=True, blank=True)
     country = CountryField(blank_label='Country', null=True, blank=True)
-    card_details = models.ForeignKey(CardDetails, on_delete=models.SET_NULL, null=True, blank=True)
     car_registration = models.CharField(max_length=80, null=True, blank=True)
     stripe_customer_id = models.CharField(max_length=250, null=True, blank=True)
 
