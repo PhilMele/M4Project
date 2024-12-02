@@ -131,9 +131,36 @@ No time spent in the outside cold.
 ### 2.1 Colours <a name="colours"></a>
 ### 2.1 Typography <a name="typography"></a>
 ### 2.1 Icons & Images <a name="icons-images"></a>
+
+Icons and images are hosted on S3 Bucket:
+
+* Logo was generated using MidJourney;
+* Icons used are mostly coming from FontAwesome;
+* Other icons, in particular those used in email find are sourced from Icons8;
+* There is no actual images, as it did not add any value to the purpose of the product
+
 ### 2.1 Wireframes <a name="wireframes"></a>
 ### 2.1 Databases <a name="databases"></a>
 
+ERD was generated using django extension `Graphviz`.
+
+To install `Graphviz` these steps were followed:
+* run: `pip install django-extensions`
+* run: `winget install Graphviz`
+* add:
+    INSTALLED_APPS = [
+    # erd generator
+    'django_extensions'
+    ]
+* run: `pip install pydotplus`
+* run: `python manage.py graph_models -a -o erd.png`
+
+   <details>
+      <summary>Click to see ER Diargram</summary>
+      <p>
+         <img src="static/images/readme_images/erd.png" alt="erd" />
+      </p>
+   </details>
 
 ## 3. Features <a name="features"></a>
 

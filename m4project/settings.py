@@ -86,7 +86,10 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
 
     #S3 bucket
-    'storages'
+    'storages',
+
+    # erd generator
+    'django_extensions'
 
 
 ]
