@@ -61,7 +61,6 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 # credits: https://stackoverflow.com/questions/3976498/why-doesnt-session-expire-at-browser-close-true-log-the-user-out-when-the-bro
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -271,3 +270,5 @@ MESSAGE_TAGS = {
     messages.ERROR: 'error',
     messages.SUCCESS: 'success',
 }
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
