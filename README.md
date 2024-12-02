@@ -189,10 +189,62 @@ The databases are split across 3 diffrent apps:
 |                    | `country`               | CountryField          | Country of residence.                                            |
 |                    | `car_registration`      | CharField             | Optional car registration number.                                |
 |                    | `stripe_customer_id`    | CharField             | Stripe customer ID for payment processing.                       |
-|
 
 
+**`parking_management` databases:**
 
+
+| **Model**     | **Field Name**      | **Field Type**       | **Description**                                                   |
+|---------------|---------------------|-----------------------|-------------------------------------------------------------------|
+| **Parking**   | `name`              | CharField             | Name of the parking.                                         |
+|               | `user`              | ForeignKey            | Links to the `UserProfile` object of the parking manager.               |
+|               | `phone_number`      | CharField             | Contact phone number.                                            |
+|               | `street_address1`   | CharField             | First line of the parking's address.                            |
+|               | `street_address2`   | CharField             | Second line of the parking's address.                           |
+|               | `city`              | CharField             | City name.                                                       |
+|               | `county`            | CharField             | County name.                                                     |
+|               | `postcode`          | CharField             | Postal code.                                                     |
+|               | `country`           | CountryField          | Country of the parking location (default: GB).                   |
+|               | `max_capacity`      | IntegerField          | Maximum capacity of the parking lot (default: 50).               |
+|               | `latitude`          | CharField             | GPS latitude for geolocation.                                    |
+|               | `longitude`         | CharField             | GPS longitude for geolocation.                                   |
+|               | `radius`            | CharField             | Effective radius for geofencing.                                 |
+|               | `active`            | BooleanField          | Check if parking is active.                               |
+
+| **Model**     | **Field Name**      | **Field Type**       | **Description**                                                   |
+|---------------|---------------------|-----------------------|-------------------------------------------------------------------| 
+**Rate**      | `rate_name`         | CharField             | Name of the rate plan.                                           |
+|               | `user`              | ForeignKey            | Links to the `UserProfile` object of the parking manager.               |
+|               | `parking_name`      | ForeignKey            | Links to the related `Parking` object.                              |
+|               | `hour_range`        | IntegerField          | Duration in hours for which the rate applies.                    |
+|               | `rate`              | DecimalField          | Fee for the specified hour range.                                |
+|               | `timestamp_leave`   | DateTimeField         | Timestamp when the rate was applied. 
+
+
+| **Model**     | **Field Name**      | **Field Type**       | **Description**                                                   |
+|---------------|---------------------|-----------------------|-------------------------------------------------------------------|
+| **IllegalParking** | `inspector`     | ForeignKey            | Links to the inspecting `UserProfile`.                           |
+|               | `parking_name`      | ForeignKey            | Links to the `Parking` object illegal car reg. is parked          |
+|               | `car_reg`           | CharField             | Car registration of the illegaly parked car.                       |
+
+
+**`parking_activity` databases:**
+
+| **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
+|--------------------|--------------------------|-----------------------|-------------------------------------------------------------------|
+| **Stay**          | `user`                  | ForeignKey            | Links to the `UserProfile` of parking user.                  |
+|                   | `parking_name`          | ForeignKey            | Links to the `Parking`.                                      |
+|                   | `calculated_fee`        | DecimalField          | Fee calculated based on the stay duration.                       |
+|                   | `stripe_checkout_id`    | CharField             | Stripe checkout session ID for the payment.                      |
+|                   | `paid`                  | BooleanField          | Check if payment has been made.                               |
+| **EnterParking**  | `user`                  | ForeignKey            | Links to the `UserProfile` of the parking user object.                  |
+|                   | `parking_name`          | ForeignKey            | Links to the `Parking` object.                                      |
+|                   | `stay`                  | ForeignKey            | Links to the associated `Stay` object.                           |
+|                   | `timestamp_enter`       | DateTimeField         | Timestamp of entry.                                              |
+| **LeaveParking**  | `user`                  | ForeignKey            | Links to the `UserProfile` parking user object.                  |
+|                   | `parking_name`          | ForeignKey            | Links to the `Parking`.                                      |
+|                   | `stay`                  | ForeignKey            | Links to the associated `Stay` object.                           |
+|                   | `timestamp_leave`       | DateTimeField         | Timestamp of departure.                                          |
 
 ## 3. Features <a name="features"></a>
 
