@@ -803,5 +803,14 @@ credits: https://stackoverflow.com/questions/3976498/why-doesnt-session-expire-a
 
 This has improve the result. However, the problem still persist. This could be due to the fact I havent deployed the SSL certificate on the site, as this is a paying feature.
 
+## custom email
+Created : `password_reset_key_message.html` in path: `templates\allauth\account\email\password_reset_key_message.html`
+
+Django will by default look for an html file before retouring the the txt file.
+
+The email template was generated from a template taken from : https://tabular.email/
+
 ## sites used
 https://cdnjs.com/ : for cdn links
+https://tabular.email/: for email template
+https://icons8.com/ : icons on email
