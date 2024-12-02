@@ -14,6 +14,209 @@ fix check-out siccess message at Noneafter selecting manually what parking userc
 fix logout problem when scanning qr code. Might be SSL certificate realted problem.
 Check validators for sign up
 check validators for login when email or password is wrong
+check all code meets indentions standard and spaces
+add validator to make sure parking is null 0 or negative
+
+
+
+# M4Project - GeoPay
+
+<!-- ![rendering](...png) -->
+
+
+View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target="_blank">Click Here</a>
+
+# Table of Contents
+
+1. [User Experience](#ux)
+   - [Project Goals](#project-goals)
+   - [User Stories](#ux-subsection)
+2. [Design](#design)
+   - [Colours](#colours)
+   - [Typography](#typography)
+   - [Icons & Images](#icons-images)
+   - [Wireframes](#wireframes)
+   - [Databases](#databases)
+3. [Features](#features)
+    - [Authentication](#auth)
+    - [Password Reset Via Email](#password-reset)
+    - [Media Files : AWS S3 Bucket](#media-files)
+    - [Create User Account](#create-user-account)
+    - [Read, Edit & Delete User Account](#read-edit-delete-user-account)
+    - [User Dashboard](#user-dashboard)
+    - [Parking Manager Dashboard](#parking-manager-dashboard)
+    - [Create Parking Application](#create-parking)
+    - [Read, Edit & Delete Parking](#read-edit-delete-parking)
+    - [Create Parking](#create-parking)
+    - [Read, Edit & Delete Parking](#read-edit-delete-parking)
+    - [Create Parking Rates](#create-parking-rates)
+    - [Read, Edit & Delete Parking Rates](#read-edit-delete-parking-rates)
+    - [Check-In Parking : Geolocation](#check-in)
+    - [Check-Out Parking](#check-in)
+    - [Stripe Payment Integration](#stripe)
+    - [Crispy Forms](#cripsy)
+    - [Decorators](#decorators)
+    - [Custom Error Handlers](#error-handler)
+4. [Technologies](#tech)
+5. [Testing](#testing)
+   - [Validator Testing](#val-testing)
+     * [HTML](#html)
+     * [CSS](#css)
+     * [Javascript](#js)
+     * [Python](#py)
+   - [Lighthouse Testing](#lighthouse-testing)
+   - [User Testing](#user-testing)
+6. [Bugs](#bugs)
+   - [Current bugs](#current-bugs)
+   - [Design & User Experience improvements](#design-improvements)
+   - [Logic improvements & Backend](#logic-improvements)    
+7. [Deployment](#deployment)
+   - [Local Deployment](#local-deployment)
+   - [Heroku Deployment](#heroku-deployment)
+8. [Credits](#credits)
+
+
+## 1. User Experience <a name="ux"></a>
+
+### 1.1 Project Goals <a name="project-goals"></a>
+
+As a potential user, I built this project to address a recurring problem I face.
+
+There is a parking where I park once a month, and it rains all the time. If it does rain, there is some strong wind, or it's very cold outside.
+
+Sometimes, all three together.
+
+For me to register my car for parking, I need to walk to the machine, wait for it to connect to some internet, enter my registration and wait even longer for a ticket to be printed, so I can take this ticket to my wind screen.
+
+Some parkings have app. This one does not. But even if it had an app, I probably wouldn't download it.
+
+I want to park and pay, with no inbetween.
+
+This is what this project aims to achieve: a parking payment system based on geolocation, with a webapp.
+
+As a user, I want to check-in by opening the app. Using my phone's GPS, the app will capture my geolocation and check me in automatically.
+
+As I leave, I reopen the app to mark my departure and pay.
+
+No time spent in the outside cold.
+
+### 1.2 User Stories <a name="user-stories"></a>
+
+**User Management**
+* As a user, I want to create an account.
+* As a parking user, I want to be able to register my car registration number against my account.
+* As a parking user, I want to be able to edit my account details.
+* As a parking user, I want to be able to mark myself as a user of the parking by clicking on a button to show what time I arrived.
+* As a parking user, I want to automatically mark my entry and exit using geofencing to reduce manual effort.
+* As a parking user, I want to select my parking should geolocation fails.
+* As a parking user, I want to be able to pay for parking without walking to a machine.
+* As a parking user, I want to be automatically charged based on my entry and exit times, with no additional steps.
+* As a parking user, I want to be able to check my past transaction.
+
+**Platform Functionality**
+* As a platform, I want to record the time the user has registered their arrival and departure at a parking location.
+* As a platform, I want to charge the customer based on the time difference between their arrival and departure, multiplied by the hourly fee.
+* As a platform, I want to validate the user's location to ensure they are within the parking zone when they mark their arrival or departure.
+* As a platform, I want to securely store and process users' sensitive information, like payment details.
+
+**Parking Manager**
+* As a parking manager, I want to have a dedicated space to manage my parking from the account I have created.
+* As a parking manager, I want to set and adjust the hourly fee for my parking lots.
+* As a parking manager, I want to see a live list of all car registrations that have registered their arrival in my parking.
+* As a parking manager, I want to be able to physically walk through my parking and inspect if car with registrations that are not marked are parked.
+* As a parking manager, I want to keep records of those illegally parked cars, for future penatly process.
+
+## 2. Design <a name="design"></a>
+
+### 2.1 Colours <a name="colours"></a>
+### 2.1 Typography <a name="typography"></a>
+### 2.1 Icons & Images <a name="icons-images"></a>
+### 2.1 Wireframes <a name="wireframes"></a>
+### 2.1 Databases <a name="databases"></a>
+
+
+## 3. Features <a name="features"></a>
+
+### 3.1 Authentication <a name="auth"></a>
+
+## 4. Technologies <a name="tech"></a>
+
+## 5. Testing <a name="testing"></a>
+### 5.1 Validator Testing <a name="val-testing"></a>
+#### 5.1.1 HTML <a name="html"></a>
+#### 5.1.2 CSS <a name="css"></a>
+#### 5.1.3 Javascript <a name="js"></a>
+#### 5.1.3 Python <a name="py"></a>
+### 5.2 Lighthouse Testing <a name="lighthouse-testing"></a>
+### 5.3 User Testing <a name="user-testing"></a>
+
+<!-- Click on this link to see manual testing steps: [Manual Testing Guide](MANUAL_TESTING.md) -->
+
+## 6. Bugs <a name="bugs"></a>
+
+### 6.1 Current bugs <a name="current-bugs"></a>
+
+### 6.2 Design & User Experience improvements <a name="design-improvements"></a>
+
+### 6.3 Logic improvements & Backend <a name="logic-improvements"></a>
+
+## 7. Deployment <a name="deployment"></a>
+
+### 7.1 Local Deployment <a name="local-deployment"></a>
+
+To install PostGres on local, the following steps were followed.
+
+To set up of PostGres on Local run : pip install psycopg2 (Documentation: https://medium.com/@shahrukhshl0/building-a-flask-crud-application-with-psycopg2-58de201e3c14)
+Issues encountered and solution:
+
+This may have been specific to my local setup, but I had to use : pip install psycopg2-binary (Documentation: https://pypi.org/project/psycopg2-binary/). My requirements.txt file lists : psycopg2-binary==2.9.9
+
+In settings.py, edit `DATABASES` variables to the following to point to the new local postgres database:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'm4project',
+            'USER': '[yourusername]',
+            'PASSWORD': '[yourpassword]',
+            'HOST': 'localhost',
+            'PORT': '5432', 
+        }
+    }
+
+**Note:** You will need to run your migration again (`python manage.py migrate`) and recreate a new superuser. All data will be lost.
+
+Once this is done, you will want your data stored in a your .env file, to avoid secret keys being publicly available when pushing the project to github and adapting the variables to their environement (local, staging, production...). To do this, do the following:
+* enter `pip install python-decouple`
+* modify your settings.py to look like this:
+
+    from decouple import config
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USER'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST', default='localhost'),
+            'PORT': config('DB_PORT', default='5432'),
+        }
+    }
+
+* Add valuest to variables to .env file. Note these dont need to be in string format, as they are considered strings by default:
+
+    DB_NAME=m4project # your project name
+    DB_USER=username # your username
+    DB_PASSWORD=password # your password
+    DB_HOST=localhost
+    DB_PORT=5432
+
+Useful links:
+* Instal postgres on local: https://www.postgresql.org/download/
+
+### 5.1 Heroku Deployment <a name="heroku-deployment"></a>
+
+## 8. Credits <a name="credits"></a>
 
 # colour palette
 
@@ -152,57 +355,7 @@ In views.py:
         return render(request, 'account/signup.html', {'form': form})
 
 
-## setup PostGres on local:
-Setup - PostgreSQL
 
-Instal postgres on local: https://www.postgresql.org/download/
-
-Normal practice:
-
-To set up of PostGres on Local run : pip install psycopg2 (Documentation: https://medium.com/@shahrukhshl0/building-a-flask-crud-application-with-psycopg2-58de201e3c14)
-Issues encountered and solution:
-
-This may have been specific to my local setup, but I had to use : pip install psycopg2-binary (Documentation: https://pypi.org/project/psycopg2-binary/). My requirements.txt file lists : psycopg2-binary==2.9.9
-
-In settings.py, edit `DATABASES` variables to the following to point to the new local postgres database:
-
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'm4project',
-            'USER': '[yourusername]',
-            'PASSWORD': '[yourpassword]',
-            'HOST': 'localhost',
-            'PORT': '5432', 
-        }
-    }
-
-**Note:** You will need to run your migration again (`python manage.py migrate`) and recreate a new superuser. All data will be lost.
-
-Once this is done, you will want your data stored in a your .env file, to avoid secret keys being publicly available when pushing the project to github and adapting the variables to their environement (local, staging, production...). To do this, do the following:
-* enter `pip install python-decouple`
-* modify your settings.py to look like this:
-
-    from decouple import config
-
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('DB_NAME'),
-            'USER': config('DB_USER'),
-            'PASSWORD': config('DB_PASSWORD'),
-            'HOST': config('DB_HOST', default='localhost'),
-            'PORT': config('DB_PORT', default='5432'),
-        }
-    }
-
-* Add valuest to variables to .env file. Note these dont need to be in string format, as they are considered strings by default:
-
-    DB_NAME=m4project # your project name
-    DB_USER=username # your username
-    DB_PASSWORD=password # your password
-    DB_HOST=localhost
-    DB_PORT=5432
 
 ## static files
 
