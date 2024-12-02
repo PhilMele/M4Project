@@ -178,6 +178,7 @@ The databases are split across 3 diffrent apps:
 <details>
 <summary>Click to see `user_management` app models</summary>
 <p>
+
 | **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
 |--------------------|--------------------------|-----------------------|-------------------------------------------------------------------|
 | **UserProfile**    | `user`                  | OneToOneField         | Links to the Django `User` model.                                |
@@ -190,18 +191,19 @@ The databases are split across 3 diffrent apps:
 |                    | `postcode`              | CharField             | Postal code.                                                     |
 |                    | `country`               | CountryField          | Country of residence.                                            |
 |                    | `car_registration`      | CharField             | Optional car registration number.                                |
-|                    | `stripe_customer_id`    | CharField             | Stripe customer ID for payment processing.   
+|                    | `stripe_customer_id`    | CharField             | Stripe customer ID for payment processing.                       |
+
 </p>
 </details>
-                    |
 
 <details>
 <summary>Click to see `parking_management` app models</summary>
 <p>
+
 | **Model**     | **Field Name**      | **Field Type**       | **Description**                                                   |
 |---------------|---------------------|-----------------------|-------------------------------------------------------------------|
-| **Parking**   | `name`              | CharField             | Name of the parking.                                         |
-|               | `user`              | ForeignKey            | Links to the `UserProfile` object of the parking manager.               |
+| **Parking**   | `name`              | CharField             | Name of the parking lot.                                         |
+|               | `user`              | ForeignKey            | Links to the `UserProfile` of the parking manager.               |
 |               | `phone_number`      | CharField             | Contact phone number.                                            |
 |               | `street_address1`   | CharField             | First line of the parking's address.                            |
 |               | `street_address2`   | CharField             | Second line of the parking's address.                           |
@@ -213,44 +215,52 @@ The databases are split across 3 diffrent apps:
 |               | `latitude`          | CharField             | GPS latitude for geolocation.                                    |
 |               | `longitude`         | CharField             | GPS longitude for geolocation.                                   |
 |               | `radius`            | CharField             | Effective radius for geofencing.                                 |
-|               | `active`            | BooleanField          | Check if parking is active.                               |
-
-| **Model**     | **Field Name**      | **Field Type**       | **Description**                                                   |
-|---------------|---------------------|-----------------------|-------------------------------------------------------------------| 
-**Rate**      | `rate_name`         | CharField             | Name of the rate plan.                                           |
-|               | `user`              | ForeignKey            | Links to the `UserProfile` object of the parking manager.               |
-|               | `parking_name`      | ForeignKey            | Links to the related `Parking` object.                              |
-|               | `hour_range`        | IntegerField          | Duration in hours for which the rate applies.                    |
-|               | `rate`              | DecimalField          | Fee for the specified hour range.                                |
-|               | `timestamp_leave`   | DateTimeField         | Timestamp when the rate was applied. 
-
+|               | `active`            | BooleanField          | Whether the parking lot is active.                               |
 
 | **Model**     | **Field Name**      | **Field Type**       | **Description**                                                   |
 |---------------|---------------------|-----------------------|-------------------------------------------------------------------|
-| **IllegalParking** | `inspector`     | ForeignKey            | Links to the inspecting `UserProfile`.                           |
-|               | `parking_name`      | ForeignKey            | Links to the `Parking` object illegal car reg. is parked          |
-|               | `car_reg`           | CharField             | Car registration of the illegaly parked car.                     | `stripe_customer_id`    | CharField             | Stripe customer ID for payment processing.  |  
+| **Rate**      | `rate_name`         | CharField             | Name of the rate plan.                                           |
+|               | `user`              | ForeignKey            | Links to the `UserProfile` of the parking manager.               |
+|               | `parking_name`      | ForeignKey            | Links to the related `Parking` lot.                              |
+|               | `hour_range`        | IntegerField          | Duration in hours for which the rate applies.                    |
+|               | `rate`              | DecimalField          | Fee for the specified hour range.                                |
+|               | `timestamp_leave`   | DateTimeField         | Timestamp when the rate was applied.                             |
+
+| **Model**           | **Field Name**      | **Field Type**       | **Description**                                                   |
+|---------------------|---------------------|-----------------------|-------------------------------------------------------------------|
+| **IllegalParking**  | `inspector`        | ForeignKey            | Links to the inspecting `UserProfile`.                           |
+|                     | `parking_name`     | ForeignKey            | Links to the `Parking` lot where the incident occurred.          |
+|                     | `car_reg`          | CharField             | Car registration of the offending vehicle.                       |
+
 </p>
 </details>
 
 <details>
 <summary>Click to see `parking_activity` app models</summary>
 <p>
+
 | **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
 |--------------------|--------------------------|-----------------------|-------------------------------------------------------------------|
-| **Stay**          | `user`                  | ForeignKey            | Links to the `UserProfile` of parking user.                  |
-|                   | `parking_name`          | ForeignKey            | Links to the `Parking`.                                      |
+| **Stay**          | `user`                  | ForeignKey            | Links to the `UserProfile` of the parking user.                  |
+|                   | `parking_name`          | ForeignKey            | Links to the `Parking` lot.                                      |
 |                   | `calculated_fee`        | DecimalField          | Fee calculated based on the stay duration.                       |
 |                   | `stripe_checkout_id`    | CharField             | Stripe checkout session ID for the payment.                      |
-|                   | `paid`                  | BooleanField          | Check if payment has been made.                               |
-| **EnterParking**  | `user`                  | ForeignKey            | Links to the `UserProfile` of the parking user object.                  |
-|                   | `parking_name`          | ForeignKey            | Links to the `Parking` object.                                      |
-|                   | `stay`                  | ForeignKey            | Links to the associated `Stay` object.                           |
+|                   | `paid`                  | BooleanField          | Whether the payment has been made.                               |
+
+| **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
+|--------------------|--------------------------|-----------------------|-------------------------------------------------------------------|
+| **EnterParking**  | `user`                  | ForeignKey            | Links to the `UserProfile` of the parking user.                  |
+|                   | `parking_name`          | ForeignKey            | Links to the `Parking` lot.                                      |
+|                   | `stay`                  | ForeignKey            | Links to the associated `Stay` record.                           |
 |                   | `timestamp_enter`       | DateTimeField         | Timestamp of entry.                                              |
-| **LeaveParking**  | `user`                  | ForeignKey            | Links to the `UserProfile` parking user object.                  |
-|                   | `parking_name`          | ForeignKey            | Links to the `Parking`.                                      |
-|                   | `stay`                  | ForeignKey            | Links to the associated `Stay` object.                           |
-|                   | `timestamp_leave`       | DateTimeField         | Timestamp of departure.                                          | 
+
+| **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
+|--------------------|--------------------------|-----------------------|-------------------------------------------------------------------|
+| **LeaveParking**  | `user`                  | ForeignKey            | Links to the `UserProfile` of the parking user.                  |
+|                   | `parking_name`          | ForeignKey            | Links to the `Parking` lot.                                      |
+|                   | `stay`                  | ForeignKey            | Links to the associated `Stay` record.                           |
+|                   | `timestamp_leave`       | DateTimeField         | Timestamp of departure.                                          |
+
 </p>
 </details>
 
@@ -258,24 +268,24 @@ The databases are split across 3 diffrent apps:
 ## 3. Features <a name="features"></a>
 
 ### 3.1 Authentication <a name="auth"></a>
-### 3.1 Password Reset Via Email <a name="password-reset"></a>
-### 3.1 Media Files : AWS S3 Bucket <a name="media-files"></a>
-### 3.1 Create User Account <a name="create-user-account"></a>
-### 3.1 Read, Edit & Delete User Account <a name="read-edit-delete-user-account"></a>
-### 3.1 User Dashboard <a name="user-dashboard"></a>
-### 3.1 Parking Manager Dashboard <a name="parking-manager-dashboard"></a>
-### 3.1 Create Parking Application <a name="create-parking"></a>
-### 3.1 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
-### 3.1 Create Parking <a name="create-parking"></a>
-### 3.1 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
-### 3.1 Create Parking Rates <a name="create-parking-rates"></a>
-### 3.1 Read, Edit & Delete Parking Rates <a name="read-edit-delete-parking-rates"></a>
-### 3.1 Check-In Parking : Geolocation <a name="check-in"></a>
-### 3.1 Check-Out Parking <a name="check-out"></a>
-### 3.1 Stripe Payment Integration <a name="stripe"></a>
-### 3.1 Crispy Forms <a name="cripsy"></a>
-### 3.1 Decorators <a name="decorators"></a>
-### 3.1 Custom Error Handlers <a name="error-handler"></a>
+### 3.2 Password Reset Via Email <a name="password-reset"></a>
+### 3.3 Media Files : AWS S3 Bucket <a name="media-files"></a>
+### 3.4 Create User Account <a name="create-user-account"></a>
+### 3.5 Read, Edit & Delete User Account <a name="read-edit-delete-user-account"></a>
+### 3.6 User Dashboard <a name="user-dashboard"></a>
+### 3.7 Parking Manager Dashboard <a name="parking-manager-dashboard"></a>
+### 3.8 Create Parking Application <a name="create-parking"></a>
+### 3.9 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
+### 3.10 Create Parking <a name="create-parking"></a>
+### 3.11 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
+### 3.12 Create Parking Rates <a name="create-parking-rates"></a>
+### 3.13 Read, Edit & Delete Parking Rates <a name="read-edit-delete-parking-rates"></a>
+### 3.14 Check-In Parking : Geolocation <a name="check-in"></a>
+### 3.15 Check-Out Parking <a name="check-out"></a>
+### 3.16 Stripe Payment Integration <a name="stripe"></a>
+### 3.17 Crispy Forms <a name="cripsy"></a>
+### 3.18 Decorators <a name="decorators"></a>
+### 3.19 Custom Error Handlers <a name="error-handler"></a>
 
 ## 4. Technologies <a name="tech"></a>
 
