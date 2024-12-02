@@ -52,7 +52,7 @@ View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target=
     - [Create Parking Rates](#create-parking-rates)
     - [Read, Edit & Delete Parking Rates](#read-edit-delete-parking-rates)
     - [Check-In Parking : Geolocation](#check-in)
-    - [Check-Out Parking](#check-in)
+    - [Check-Out Parking](#check-out)
     - [Stripe Payment Integration](#stripe)
     - [Crispy Forms](#cripsy)
     - [Decorators](#decorators)
@@ -153,20 +153,20 @@ Icons and images are hosted on S3 Bucket:
 <details>
 <summary>Click to ER Diargram dependency installation process</summary>
 <p>
-        ERD was generated using django extension `Graphviz`.
+ERD was generated using django extension `Graphviz`.
 
-        To install `Graphviz` these steps were followed:
-        * run: `pip install django-extensions`
-        * run: `winget install Graphviz`
-        * add:
+To install `Graphviz` these steps were followed:
+    * run: `pip install django-extensions`
+    * run: `winget install Graphviz`
+    * add:
 
-            INSTALLED_APPS = [
-            ...
-            'django_extensions'
-            ]
+        INSTALLED_APPS = [
+        ...
+        'django_extensions'
+        ]
 
-        * run: `pip install pydotplus`
-        * run: `python manage.py graph_models -a -o erd.png`
+    * run: `pip install pydotplus`
+    * run: `python manage.py graph_models -a -o erd.png`
 </p>
 </details>
 
@@ -175,7 +175,9 @@ The databases are split across 3 diffrent apps:
 * `parking_activity`
 * `parking_management`.
 
-**`user_management` databases:**
+<details>
+<summary>Click to see `user_management` app models</summary>
+<p>
 | **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
 |--------------------|--------------------------|-----------------------|-------------------------------------------------------------------|
 | **UserProfile**    | `user`                  | OneToOneField         | Links to the Django `User` model.                                |
@@ -188,12 +190,14 @@ The databases are split across 3 diffrent apps:
 |                    | `postcode`              | CharField             | Postal code.                                                     |
 |                    | `country`               | CountryField          | Country of residence.                                            |
 |                    | `car_registration`      | CharField             | Optional car registration number.                                |
-|                    | `stripe_customer_id`    | CharField             | Stripe customer ID for payment processing.                       |
+|                    | `stripe_customer_id`    | CharField             | Stripe customer ID for payment processing.   
+</p>
+</details>
+                    |
 
-
-**`parking_management` databases:**
-
-
+<details>
+<summary>Click to see `parking_management` app models</summary>
+<p>
 | **Model**     | **Field Name**      | **Field Type**       | **Description**                                                   |
 |---------------|---------------------|-----------------------|-------------------------------------------------------------------|
 | **Parking**   | `name`              | CharField             | Name of the parking.                                         |
@@ -225,11 +229,13 @@ The databases are split across 3 diffrent apps:
 |---------------|---------------------|-----------------------|-------------------------------------------------------------------|
 | **IllegalParking** | `inspector`     | ForeignKey            | Links to the inspecting `UserProfile`.                           |
 |               | `parking_name`      | ForeignKey            | Links to the `Parking` object illegal car reg. is parked          |
-|               | `car_reg`           | CharField             | Car registration of the illegaly parked car.                       |
+|               | `car_reg`           | CharField             | Car registration of the illegaly parked car.                     | `stripe_customer_id`    | CharField             | Stripe customer ID for payment processing.  |  
+</p>
+</details>
 
-
-**`parking_activity` databases:**
-
+<details>
+<summary>Click to see `parking_activity` app models</summary>
+<p>
 | **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
 |--------------------|--------------------------|-----------------------|-------------------------------------------------------------------|
 | **Stay**          | `user`                  | ForeignKey            | Links to the `UserProfile` of parking user.                  |
@@ -244,11 +250,32 @@ The databases are split across 3 diffrent apps:
 | **LeaveParking**  | `user`                  | ForeignKey            | Links to the `UserProfile` parking user object.                  |
 |                   | `parking_name`          | ForeignKey            | Links to the `Parking`.                                      |
 |                   | `stay`                  | ForeignKey            | Links to the associated `Stay` object.                           |
-|                   | `timestamp_leave`       | DateTimeField         | Timestamp of departure.                                          |
+|                   | `timestamp_leave`       | DateTimeField         | Timestamp of departure.                                          | 
+</p>
+</details>
+
 
 ## 3. Features <a name="features"></a>
 
 ### 3.1 Authentication <a name="auth"></a>
+### 3.1 Password Reset Via Email <a name="password-reset"></a>
+### 3.1 Media Files : AWS S3 Bucket <a name="media-files"></a>
+### 3.1 Create User Account <a name="create-user-account"></a>
+### 3.1 Read, Edit & Delete User Account <a name="read-edit-delete-user-account"></a>
+### 3.1 User Dashboard <a name="user-dashboard"></a>
+### 3.1 Parking Manager Dashboard <a name="parking-manager-dashboard"></a>
+### 3.1 Create Parking Application <a name="create-parking"></a>
+### 3.1 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
+### 3.1 Create Parking <a name="create-parking"></a>
+### 3.1 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
+### 3.1 Create Parking Rates <a name="create-parking-rates"></a>
+### 3.1 Read, Edit & Delete Parking Rates <a name="read-edit-delete-parking-rates"></a>
+### 3.1 Check-In Parking : Geolocation <a name="check-in"></a>
+### 3.1 Check-Out Parking <a name="check-out"></a>
+### 3.1 Stripe Payment Integration <a name="stripe"></a>
+### 3.1 Crispy Forms <a name="cripsy"></a>
+### 3.1 Decorators <a name="decorators"></a>
+### 3.1 Custom Error Handlers <a name="error-handler"></a>
 
 ## 4. Technologies <a name="tech"></a>
 
