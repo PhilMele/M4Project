@@ -42,8 +42,7 @@ View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target=
     - [Authentication](#auth)
     - [Password Reset Via Email](#password-reset)
     - [Media Files : AWS S3 Bucket](#media-files)
-    - [Create User Account](#create-user-account)
-    - [Read, Edit & Delete User Account](#read-edit-delete-user-account)
+    - [User Profile](#user-profile)
     - [User Dashboard](#user-dashboard)
     - [Parking Manager Dashboard](#parking-manager-dashboard)
     - [Create Parking Application](#create-parking)
@@ -500,7 +499,6 @@ In `urls.py` (project level) add settings to serve media files in developement.
 
 </p>
 </details>
-
     
 
 To set up AWS S3 bucket, the following steps need to be followed:
@@ -526,22 +524,48 @@ To set up AWS S3 bucket, the following steps need to be followed:
         'storages',
     ]
 
-### 3.4 Create User Account <a name="create-user-account"></a>
-### 3.5 Read, Edit & Delete User Account <a name="read-edit-delete-user-account"></a>
-### 3.6 User Dashboard <a name="user-dashboard"></a>
-### 3.7 Parking Manager Dashboard <a name="parking-manager-dashboard"></a>
-### 3.8 Create Parking Application <a name="create-parking"></a>
-### 3.9 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
-### 3.10 Create Parking <a name="create-parking"></a>
-### 3.11 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
-### 3.12 Create Parking Rates <a name="create-parking-rates"></a>
-### 3.13 Read, Edit & Delete Parking Rates <a name="read-edit-delete-parking-rates"></a>
-### 3.14 Check-In Parking : Geolocation <a name="check-in"></a>
-### 3.15 Check-Out Parking <a name="check-out"></a>
-### 3.16 Stripe Payment Integration <a name="stripe"></a>
-### 3.17 Crispy Forms <a name="cripsy"></a>
-### 3.18 Decorators <a name="decorators"></a>
-### 3.19 Custom Error Handlers <a name="error-handler"></a>
+### 3.4 User Profile <a name="user-profile"></a>
+
+TO BE COMPELTED
+
+### 3.5 User Dashboard <a name="user-dashboard"></a>
+
+The user dashbaord can be found in `user_management\templates\home\index.html` and is managed by `index()`.
+
+The function first starts by idenifying the user type through `is_parking_customer()`.
+
+If the user_type is Parking Manager, that user will be automatically redirected to their own dashboard, whic his covered in the next section.
+
+`index()` is arguably one of the most central function for the user.
+
+This is from this function that the user can decide to:
+* check-in at a parking
+* checkout from a parking
+* check their transaction history
+* access their profile information
+
+The template includes `geolocation.js`, which capture the user's geolocation to match with a potential parking's geofence. This element is discussed further in the **Check-In Parking** section.
+
+Supported by `provide_car_reg.js` The function also restricts users from checking in, if they havent provided their car registration:
+
+    car_reg = False
+    if request.user.userprofile.car_registration:
+        car_reg= True
+
+
+### 3.6 Parking Manager Dashboard <a name="parking-manager-dashboard"></a>
+### 3.7 Create Parking Application <a name="create-parking"></a>
+### 3.8 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
+### 3.9 Create Parking <a name="create-parking"></a>
+### 3.10 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
+### 3.11 Create Parking Rates <a name="create-parking-rates"></a>
+### 3.12 Read, Edit & Delete Parking Rates <a name="read-edit-delete-parking-rates"></a>
+### 3.13 Check-In Parking : Geolocation <a name="check-in"></a>
+### 3.14 Check-Out Parking <a name="check-out"></a>
+### 3.15 Stripe Payment Integration <a name="stripe"></a>
+### 3.16 Crispy Forms <a name="cripsy"></a>
+### 3.17 Decorators <a name="decorators"></a>
+### 3.18 Custom Error Handlers <a name="error-handler"></a>
 
 ## 4. Technologies <a name="tech"></a>
 
