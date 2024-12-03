@@ -17,7 +17,7 @@ class Parking (models.Model):
     max_capacity = models.IntegerField(default='50')
     latitude = models.CharField(verbose_name="Latitude",max_length=50, null=True, blank=True)
     longitude = models.CharField(verbose_name="Longitude",max_length=50, null=True, blank=True)
-    radius = models.CharField(verbose_name="Radius",max_length=50, null=True, blank=True)
+    radius = models.CharField(verbose_name="Radius",max_length=50, null=True, blank=True, default='50')
     active = models.BooleanField(default=False)
 
     def __str__(self):

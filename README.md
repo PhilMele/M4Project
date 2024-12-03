@@ -17,7 +17,7 @@ check validators for login when email or password is wrong
 check all code meets indentions standard and spaces
 add validator to make sure parking is null 0 or negative
 change navbar for manager to remove uneeded elements
-
+imrpoevemt: parking insepctor can be imporved with OCR and connecting to a CRM to issue PCR
 
 
 # M4Project - GeoPay
@@ -55,6 +55,7 @@ View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target=
     - [Crispy Forms](#cripsy)
     - [Decorators](#decorators)
     - [Custom Error Handlers](#error-handler)
+    - [Parking Inspector](#parking-inspector)
 4. [Technologies](#tech)
 5. [Testing](#testing)
    - [Validator Testing](#val-testing)
@@ -573,7 +574,119 @@ At the bottom of the template, `activate_parking_helper.js` provides a reminder 
 ![rendering](static/images/readme_images/ui/parking_manager_dashboard/parking-manager-dashboard.png)
 
 ### 3.7 Create Parking<a name="create-parking"></a>
+
+Creating a parking is a feature available only to user type: Parking Manager.
+
+This feature is handled through `create_parking()`.
+
+This feature uses a django for: `ParkingForm()` which looks to populate fields defined in Parking model.
+
+**Important Note**: it is through these field, the geofence is defined. A default radius of 50 meters is applied. This radius should be extended to 850 meters if a device other than a mobile phone is used.
+
+This form sets all fields as mandatory, in forms.py, with the exception of street_address2 field:
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # set all fields as required by default
+        for field_name, field in self.fields.items():
+            field.required = True
+
+        # make  street_address2 not required
+        self.fields['street_address2'].required = False
+
+Upon success of the form being saved, the user is redirect to the parking_object page managed by `parking_info()`.
+
 ### 3.8 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
+
+`parking_info()` handles the management of parking information and takes as a parameter`parking_id`.
+
+This function enables the display of:
+* parking status
+* number of parking spaces used
+* access to Parking Inspector feature
+* parking information details and the option to add or edit them 
+* rates applicable and the option to add or edit them
+
+**Parking Status**
+
+Parking status advises whether, the `parkind_id` is active or innactive.
+
+For a user to check-in a parking, the parking needs to be `activate`.
+
+Activating and deactivating parking is enabled with `activate_parking()`. Taking `parking_id` as a parameter, it either switch the parking on and off.
+
+    @require_POST
+    @login_required
+    def activate_parking(request, parking_id):
+        if not is_parking_manager(request):
+            return redirect('home')
+
+        parking = get_object_or_404(Parking, id=parking_id)
+
+        # if actiate is true turn it off
+        if parking.active:
+            parking.active = False
+            parking.save()
+        # if activate is off turn it on
+        else:
+            parking.active = True
+            parking.save()
+
+        messages.success(request, f"{parking.name} has been {'activated' if parking.active else 'deactivated'}.")
+        return redirect('parking-info', parking_id=parking_id)
+
+The button that triggers this function on the template under :
+
+    <div class="col">
+        <a class="btn button-2 full-width" href="{% url 'parking-info' parking_id=item.parking.id %}">Info</a>
+    </div>
+
+**Parking Spaces Available**
+
+Parking spaces available are calculated with the user of `parking_space_available()`, taking `parking_id` as a parameter.
+
+This function counts the number of `Stay` objects, relating to `parking_id` parameter, that have not been marked as paid.
+
+The function returns this value through var `stay_objects_count` to `parking_info()`. 
+
+This variable is then returned on the template in `parking_info.html`, via `parking_info_block.html`.
+
+
+parking_info.html
+
+    {% block parking_info_block %}
+        {% include 'parking_info/parking_info_blocks/parking_info_block.html' %}
+    {% endblock %}
+
+parking_info_block.html
+
+    <div class="row d-flex align-items-center justify-content-center">
+        <span>
+            {{stay_objects_count}}/{{parking.max_capacity}}
+        </span>
+    </div>
+
+**Parking Inspector & Rates**
+
+This feature is covered in a later section.
+
+**Edit and Delete Parking Object**
+
+`edit_parking()` allows parking manager to edit the `parking_id` object by passing the object into `ParkingForm` as an instance to retrieve existing data and edit them.
+
+`delete_parking()`, taking `parkinf_id` as a parameter will allow a parking manager to delete a parking object.
+
+Upon deletion, object associated to parking_id object <b>will not be deleted</b>, as child models are set to `on_delete=models.SET_NULL`.
+
+This is set in place, in order to avoid losing history of transactional data done previously, in particular how rates are calculated, and also illegally parked cars.
+
+**Rates**
+
+Parking Info page displays all applicables rates to selected `parking_id` object.
+
+These rates are created and edited by the parking manager.
+
 ### 3.9 Create Parking Rates <a name="create-parking-rates"></a>
 ### 3.10 Read, Edit & Delete Parking Rates <a name="read-edit-delete-parking-rates"></a>
 ### 3.11 Check-In Parking : Geolocation <a name="check-in"></a>
@@ -582,6 +695,7 @@ At the bottom of the template, `activate_parking_helper.js` provides a reminder 
 ### 3.14 Crispy Forms <a name="cripsy"></a>
 ### 3.15 Decorators <a name="decorators"></a>
 ### 3.16 Custom Error Handlers <a name="error-handler"></a>
+### 3.17 Parking Inspector <a name="parking-inspector"></a>
 
 ## 4. Technologies <a name="tech"></a>
 
