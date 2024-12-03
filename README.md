@@ -16,6 +16,7 @@ Check validators for sign up
 check validators for login when email or password is wrong
 check all code meets indentions standard and spaces
 add validator to make sure parking is null 0 or negative
+change navbar for manager to remove uneeded elements
 
 
 

@@ -20,6 +20,10 @@ body {
     font-size:small;
 }
 
+main {
+    flex: 1;
+}
+
 /* Elements */
 
 h1 {
@@ -215,6 +219,13 @@ a:not([href]) {
     object-fit: contain; 
 }
 
+/* Footer */
+
+footer {
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
 
 /* Buttons */
 
