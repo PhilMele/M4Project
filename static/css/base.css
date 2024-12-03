@@ -170,12 +170,11 @@ a:not([href]) {
 
 /* Tabs */
 
+/* Navbar */
 /* Remove default colour change on hover */
 .nav-tabs .nav-link:hover {
     color: white; 
 }
-
-/* Navbar */
 
 .navbar-toggler-icon::before {
     font-size: 1.5rem; 
@@ -183,6 +182,18 @@ a:not([href]) {
     margin: 0;  
 }
 
+.nav-link {
+    text-align: center;
+}
+
+.nav-item{
+    width: 100%;
+}
+
+/* Ensure the navbar fills the width and aligns correctly */
+.navbar {
+    width: 100%;
+}
 
 .navbar a {
     color: white;
@@ -191,6 +202,17 @@ a:not([href]) {
 
 .dropdown-menu{
     background: none;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.brand-logo {
+    height: 50px; 
+    object-fit: contain; 
 }
 
 
