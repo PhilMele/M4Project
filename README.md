@@ -45,8 +45,6 @@ View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target=
     - [User Profile](#user-profile)
     - [User Dashboard](#user-dashboard)
     - [Parking Manager Dashboard](#parking-manager-dashboard)
-    - [Create Parking Application](#create-parking)
-    - [Read, Edit & Delete Parking](#read-edit-delete-parking)
     - [Create Parking](#create-parking)
     - [Read, Edit & Delete Parking](#read-edit-delete-parking)
     - [Create Parking Rates](#create-parking-rates)
@@ -530,7 +528,7 @@ TO BE COMPELTED
 
 ### 3.5 User Dashboard <a name="user-dashboard"></a>
 
-![rendering](static/images\readme_images/ui/user_dashboard/user-dashboard.png)
+![rendering](static/images/readme_images/ui/user_dashboard/user-dashboard.png)
 
 
 The user dashbaord can be found in `user_management\templates\home\index.html` and is managed by `index()`.
@@ -574,18 +572,16 @@ At the bottom of the template, `activate_parking_helper.js` provides a reminder 
 
 ![rendering](static/images/readme_images/ui/parking_manager_dashboard/parking-manager-dashboard.png)
 
-### 3.7 Create Parking Application <a name="create-parking"></a>
+### 3.7 Create Parking<a name="create-parking"></a>
 ### 3.8 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
-### 3.9 Create Parking <a name="create-parking"></a>
-### 3.10 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
-### 3.11 Create Parking Rates <a name="create-parking-rates"></a>
-### 3.12 Read, Edit & Delete Parking Rates <a name="read-edit-delete-parking-rates"></a>
-### 3.13 Check-In Parking : Geolocation <a name="check-in"></a>
-### 3.14 Check-Out Parking <a name="check-out"></a>
-### 3.15 Stripe Payment Integration <a name="stripe"></a>
-### 3.16 Crispy Forms <a name="cripsy"></a>
-### 3.17 Decorators <a name="decorators"></a>
-### 3.18 Custom Error Handlers <a name="error-handler"></a>
+### 3.9 Create Parking Rates <a name="create-parking-rates"></a>
+### 3.10 Read, Edit & Delete Parking Rates <a name="read-edit-delete-parking-rates"></a>
+### 3.11 Check-In Parking : Geolocation <a name="check-in"></a>
+### 3.12 Check-Out Parking <a name="check-out"></a>
+### 3.13 Stripe Payment Integration <a name="stripe"></a>
+### 3.14 Crispy Forms <a name="cripsy"></a>
+### 3.15 Decorators <a name="decorators"></a>
+### 3.16 Custom Error Handlers <a name="error-handler"></a>
 
 ## 4. Technologies <a name="tech"></a>
 
