@@ -154,7 +154,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https' 
-DEFAULT_FROM_EMAIL = '<info.geopay@gmail.com>'
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 
 # Allauth settings
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
