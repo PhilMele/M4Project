@@ -57,6 +57,10 @@ a:not([href]) {
 }
 
 /* Authentication */
+.auth-container{
+    max-width: 800px;
+}
+
 .logo-control{
     width: 15em;
 
