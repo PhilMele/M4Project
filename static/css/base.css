@@ -8,7 +8,12 @@ body {
     margin: 10px; 
     background-color: #0D1A3A;
     color: white;
-    font-family: "Poppins", sans-serif;
+    font-weight:500 ;
+    /* font-family: "Poppins", sans-serif; */
+    font-family: "Albert Sans", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 500;
+    font-style: normal; 
+    line-height: 22px; 
     display: flex;
     flex-direction: column; 
     box-sizing: border-box; 
@@ -19,6 +24,7 @@ body {
 
 h1 {
     font-size: 1.5rem;
+    font-weight: 800;
 }
 
 h2 {
