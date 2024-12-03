@@ -143,7 +143,6 @@ Icons and images are hosted on S3 Bucket:
 ### 2.1 Wireframes <a name="wireframes"></a>
 ### 2.1 Databases <a name="databases"></a>
 
-
 <details>
     <summary>Click to see ER Diargram</summary>
     <p>
@@ -269,6 +268,137 @@ The databases are split across 3 diffrent apps:
 ## 3. Features <a name="features"></a>
 
 ### 3.1 Authentication <a name="auth"></a>
+
+The project uses django allauth for authentication.
+
+The original templates were modfied for styling purposes, impacting the initial logic and the templates ability to display alter messages in some cases.
+
+As a result, a custom register view has been written up in order to display alert messages and login user after registering an account.
+
+This process is managed in user_management app through `CustomSignupView()`.
+
+<details>
+<summary>Click to see `CustomSignupView()`</summary>
+<p>
+    from django.contrib.auth.forms import UserCreationForm
+    from django.contrib.auth import login
+    from allauth.account.views import SignupView
+
+    class CustomSignupView(SignupView):
+    def form_valid(self, form):
+        # Save the user
+        user = form.save()
+
+        # Authenticate the user for login
+        user = authenticate(
+            username=form.cleaned_data['username'],
+            password=form.cleaned_data['password1']
+        )
+        if user is not None:
+            login(self.request, user)
+            return redirect('home')
+        return super().form_valid(form)
+</p>
+</details>
+
+In order to install allauth, the following dependencies need to be installed by running:`pip install django-allauth` 
+
+Your the project files, the following changes need to be made:
+
+<details>
+<summary>Click to see `settings.py` content</summary>
+<p>
+   TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [
+                os.path.join(BASE_DIR, 'templates'),
+            
+                os.path.join(BASE_DIR, 'templates', 'allauth'),
+
+            ],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    ...
+                    # needed for allauth package
+                    'django.template.context_processors.request',
+                ],
+            },
+        },
+    ]   
+
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        ...
+        # all auth package:
+        'django.contrib.sites',
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.google',
+
+        ...
+
+    ]
+
+    AUTHENTICATION_BACKENDS = [
+        # Needed to login by username in Django admin, regardless of `allauth`
+        'django.contrib.auth.backends.ModelBackend',
+
+        # `allauth` specific authentication methods, such as login by email
+        'allauth.account.auth_backends.AuthenticationBackend',
+
+    ]
+
+    MIDDLEWARE = [
+        ...
+        #All auth package:
+        'allauth.account.middleware.AccountMiddleware',
+    
+    ]
+</p>
+</details>
+
+
+
+<details>
+<summary>urls.py (app level)</summary>
+<p>
+    # allauth view paths
+    from .views import CustomSignupView
+
+    urlpatterns = [
+        ...
+        path('accounts/signup/', CustomSignupView.as_view(), name='account_signup'),
+    ]
+</p>
+</details>  
+
+<details>
+<summary>urls.py (project level)</summary>
+<p>
+    urlpatterns = [
+       
+        # Allauth package
+        path('accounts/', include('allauth.urls')),
+        
+    ]
+</p>
+</details>
+
+A migration will be required at the end.
+
+Usefull link:
+
+* Documentation : https://docs.allauth.org/en/latest/installation/quickstart.html
+
+
 ### 3.2 Password Reset Via Email <a name="password-reset"></a>
 ### 3.3 Media Files : AWS S3 Bucket <a name="media-files"></a>
 ### 3.4 Create User Account <a name="create-user-account"></a>
@@ -488,25 +618,6 @@ Keep track of payment:
         stay.paid = True
         stay.save()
         print("Payment sucessful!")
-
-## user authentication
-Leverage existing template provided by Django All-auth:
-
-In views.py:
-    from django.contrib.auth.forms import UserCreationForm
-    from django.contrib.auth import login
-
-    def register(request):
-        if request.method == "POST":
-            form = UserCreationForm(request.POST)
-            if form.is_valid():
-                user = form.save()
-                login(request, user)
-                return redirect('home')
-        else:
-            form = UserCreationForm()
-        return render(request, 'account/signup.html', {'form': form})
-
 
 
 

@@ -24,20 +24,6 @@ def is_parking_customer(request):
         return False
     return True
 
-#register user
-# def register(request):
-#     if request.method == "POST":
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             # authenticate user for login
-#             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
-#             if user is not None:
-#                 login(request, user)
-#                 return redirect('home')
-#     else:
-#         form = UserCreationForm()
-#     return render(request, 'account/signup.html', {'form': form})
 class CustomSignupView(SignupView):
     def form_valid(self, form):
         # Save the user
