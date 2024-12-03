@@ -308,6 +308,7 @@ Your the project files, the following changes need to be made:
 <details>
 <summary>Click to see `settings.py` content</summary>
 <p>
+
    TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -424,6 +425,7 @@ In order to enable emails sending, a gmail address was created and the credentia
 
 Some changes were needed in settings.py, which are detailed below.
 
+<details>
 <summary>Click to see changes in settings.py</summary>
 <p>
 
@@ -447,11 +449,83 @@ Django will by default look for an html file before retouring the the txt file.
 This template was built using a template found on: https://tabular.email/
 
 Useful links:
-Email templates: https://tabular.email/
-
-
+* Email templates: https://tabular.email/
 
 ### 3.3 Media Files : AWS S3 Bucket <a name="media-files"></a>
+
+Since this project primarily uses static files and only a few media files (like the logo and favicon), the AWS S3 bucket integration is minimal.
+
+Sensitive credentials, like AWS keys, are stored securely in `.env` file or on Heroku variables.
+
+This setup uses WhiteNoise for static file management in development and AWS S3 for production.
+
+Install required libraries: run `pip install django-storages boto3 whitenoise`
+
+Update settings.py to handle statics and media files.
+
+<details>
+<summary>Click to see changes in settings.py</summary>
+<p>
+
+    import os
+    from pathlib import Path
+
+    BASE_DIR = Path(__file__).resolve().parent.parent
+
+    # Static files settings
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+    
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+    # Static file storage for production
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+</p>
+</details>
+
+In `urls.py` (project level) add settings to serve media files in developement.
+
+
+<details>
+<summary>Click to see changes in `urls.py`</summary>
+<p>
+
+    urlpatterns = [
+    ...
+    ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+</p>
+</details>
+
+    
+
+To set up AWS S3 bucket, the following steps need to be followed:
+* Create an account
+* Create an S3 Bucket (untick `Block all public access`)
+* Click on newly created bucket and go to Permissions
+* write JSON bucket policy:
+* Click `Policy Generator` and entert he following: 
+    Type:`S3 Bucket Policy`
+    Select `Allow`
+    Principal: `*`
+    Actions: `GetObject`
+    ARN: `[enter ARN number from Properties tab]/*`
+* Copy/Paste policy generated into the policy bucket.
+* In terminal run:
+    `pip install django-storages`
+    `pip install boto3`
+* In setting.py:
+
+    INSTALLED_APPS = [
+    
+        #S3 bucket
+        'storages',
+    ]
+
 ### 3.4 Create User Account <a name="create-user-account"></a>
 ### 3.5 Read, Edit & Delete User Account <a name="read-edit-delete-user-account"></a>
 ### 3.6 User Dashboard <a name="user-dashboard"></a>
