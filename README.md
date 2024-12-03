@@ -530,6 +530,9 @@ TO BE COMPELTED
 
 ### 3.5 User Dashboard <a name="user-dashboard"></a>
 
+![rendering](static/images\readme_images/ui/user_dashboard/user-dashboard.png)
+
+
 The user dashbaord can be found in `user_management\templates\home\index.html` and is managed by `index()`.
 
 The function first starts by idenifying the user type through `is_parking_customer()`.
@@ -546,14 +549,31 @@ This is from this function that the user can decide to:
 
 The template includes `geolocation.js`, which capture the user's geolocation to match with a potential parking's geofence. This element is discussed further in the **Check-In Parking** section.
 
-Supported by `provide_car_reg.js` The function also restricts users from checking in, if they havent provided their car registration:
+Supported by `provide_car_reg.js`, the function also restricts users from checking in, if they havent provided their car registration:
 
     car_reg = False
     if request.user.userprofile.car_registration:
         car_reg= True
 
-
 ### 3.6 Parking Manager Dashboard <a name="parking-manager-dashboard"></a>
+
+The parking manager dashboard provides a dashboard to user_type: Parking Manager.
+
+It is handled by `parking_manager_dashboard()` and can be found on the following path: `parking_management/views.py`.
+
+Similarly to the User Dashboard, the function checks if the user is a parking manager, through `is_parking_manager()`. Failing this test, will redirect the user to User Dashboard.
+
+The dashboard allows the parking manager to have an overview of the `parking_id` that are associated to their account.
+
+From this dashboard, the parking manager can:
+* create a new parking object
+* check existing parking status
+* access each dedicate parking details page
+
+At the bottom of the template, `activate_parking_helper.js` provides a reminder to activate the parking, and how to do it.
+
+![rendering](static/images/readme_images/ui/parking_manager_dashboard/parking-manager-dashboard.png)
+
 ### 3.7 Create Parking Application <a name="create-parking"></a>
 ### 3.8 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
 ### 3.9 Create Parking <a name="create-parking"></a>
