@@ -20,6 +20,12 @@
 
 <hr>
 
+<div class="row">
+    <div class=" col-md-6 my-auto">
+        <h1>Portfolio</h1>
+    </div>
+</div>
+
 <!-- Parking Dashboard -->
 <div class="manager-dashboard">
     <!-- Loop through parking id -->
@@ -28,6 +34,13 @@
         {% block manager_dashboard_block %}
             {% include 'dashboard/dashboard_blocks/manager_dashboard_block.html' %}
         {% endblock %}
+
+    {% empty %}
+
+        <div class="table-row-div">
+            <p>You have no parking, in your portfolio.</p>
+            <p>You can add your first parking by clicking the button in the above section.</p>
+        </div>
 
     {% endfor %}
 </div>
