@@ -4,6 +4,7 @@ from .models import Parking, Rate, IllegalParking
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 from django.core.validators import RegexValidator
+from django.core.validators import MinValueValidator
 
 class ParkingForm(forms.ModelForm):
 
@@ -103,7 +104,8 @@ class RateForm(ModelForm):
     rate = forms.DecimalField(
         required=True, 
         label='', 
-        widget=forms.TextInput(attrs={'placeholder': 'Enter applicable rate'})
+        widget=forms.TextInput(attrs={'placeholder': 'Enter applicable rate'}),
+        validators=[MinValueValidator(0.01)]  # prevents user to under values under or equal to 0 
     )
     class Meta:
         model = Rate

@@ -29,7 +29,6 @@ fix success message on payment
 check if its ok to have the venv file avilable on github
 add tutorial on how to add long and lat from google maps to parking latlng
 remove commentedout text in dahsboard blocks if layout is good
-add check to make sure only numbers are going into lat and long fields
 
 # M4Project - GeoPay
 
@@ -737,6 +736,21 @@ Parking Info page displays all applicables rates to selected `parking_id` object
 These rates are created and edited by the parking manager.
 
 ### 3.9 Create Parking Rates <a name="create-parking-rates"></a>
+
+Creating parking rates is enabled by `add_rate()`.
+
+Using `RateForm`,(defined in: `parking_management/forms.py`) , it creates a rate object.
+
+The form contains validators ensuring:
+* all fields are populated
+* rate value is above 0.
+
+**Note for future development:** It would make sense to allow for the rate to be equal to 0, as some parkings offer free stay during an initial hour range. The current code will need to be modified. Currently, without this validator, stripe will not consider a fee of "0" value as payment. This is probably an easy fix.
+
+The template also contain some javascript, providing a tutorial on how the hourly rate works. 
+
+This logic is further explained in <a name="check-out"> Check-Out Parking </a>
+
 ### 3.10 Read, Edit & Delete Parking Rates <a name="read-edit-delete-parking-rates"></a>
 ### 3.11 Check-In Parking : Geolocation <a name="check-in"></a>
 ### 3.12 Check-Out Parking <a name="check-out"></a>

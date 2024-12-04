@@ -8,11 +8,13 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # Create your views here.
+
 def is_parking_manager(request):
     print(f'request.user.userprofile.user_type: {request.user.userprofile.user_type}')
     if request.user.userprofile.user_type != 2:
         return False
     return True
+
 
 @login_required
 def parking_manager_dashboard(request):
@@ -60,6 +62,7 @@ def activate_parking(request, parking_id):
     messages.success(request, f"{parking.name} has been {'activated' if parking.active else 'deactivated'}.")
     return redirect('parking-info', parking_id=parking_id)
 
+
 @login_required
 def parking_inspector(request,parking_id):
     if not is_parking_manager(request):
@@ -103,6 +106,7 @@ def parking_inspector(request,parking_id):
         'parking':parking,
     }) 
 
+
 @login_required
 def delete_car_reg(request, illegalparking_id, parking_id):
     if not is_parking_manager(request):
@@ -112,6 +116,7 @@ def delete_car_reg(request, illegalparking_id, parking_id):
     car_reg_obj.delete()
     messages.success(request, "Car reg. deleted.")
     return redirect('parking-inspector', parking_id = parking_id)
+
 
 # Parking objects
 @login_required
