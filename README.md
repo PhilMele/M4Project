@@ -26,7 +26,7 @@ add placeholders on parking manager dashboard if no parking is available
 add email verification
 fix error that says you echekc in Parking None if selected manually
 fix success message on payment
-
+check if its ok to have the venv file avilable on github
 
 # M4Project - GeoPay
 
