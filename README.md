@@ -30,6 +30,7 @@ check if its ok to have the venv file avilable on github
 add tutorial on how to add long and lat from google maps to parking latlng
 remove commentedout text in dahsboard blocks if layout is good
 in rateform, add a validator that prevents user adding another rate with same hour range
+re-add fields to all forms
 
 # M4Project - GeoPay
 
@@ -673,6 +674,15 @@ Activating and deactivating parking is enabled with `activate_parking()`. Taking
 
         parking = get_object_or_404(Parking, id=parking_id)
 
+        # checks the parking has rates applied
+        rate_exist = Rate.objects.filter(parking_name=parking)
+        print(rate_exist)
+        
+        if not rate_exist:
+            print('rate_exist is empty')
+            messages.error(request, f"Add a rate before activating parking.")
+            return redirect('parking-info', parking_id=parking.id)
+
         # if actiate is true turn it off
         if parking.active:
             parking.active = False
@@ -690,6 +700,13 @@ The button that triggers this function on the template under :
     <div class="col">
         <a class="btn button-2 full-width" href="{% url 'parking-info' parking_id=item.parking.id %}">Info</a>
     </div>
+
+**Note**: Parking objects cannot be activated unless they are provided at least with 1 applicable rate. This rule is set in force in both backend, where the logic will check if the an existing rate has been attached to this `parking_id` and display an error message, and in the front end by hiding the "Activate" button.
+
+    if not rate_exist:
+        print('rate_exist is empty')
+        messages.error(request, f"Add a rate before activating parking.")
+        return redirect('parking-info', parking_id=parking.id)
 
 **Parking Spaces Available**
 
@@ -775,6 +792,13 @@ This logic is further explained in <a name="check-out"> Check-Out Parking </a>
 
 ### 3.10 Read, Edit & Delete Parking Rates <a name="read-edit-delete-parking-rates"></a>
 
+Parking rate details are displayed by `parking_info()` through its template.
+
+Editing and deleting an specific `rate_id` is managed by respectively:
+* `edit_parking()` (path: `parking_management/views.py`)
+* `delete_parking()` (path: `parking_management/views.py`)
+
+![rendering](static/images/readme_images/ui/parking_info/parking-info-rates.png)
 
 
 ### 3.11 Check-In Parking : Geolocation <a name="check-in"></a>
