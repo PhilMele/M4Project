@@ -8,35 +8,44 @@
                     <i class="fa-solid fa-power-off icon-colour-bg full-size-icon fa-5x"></i>
                 </div>
                 <div class="col-8 d-flex align-items-center justify-content-center">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <span>
-                            <b>Status:</b>
-                                {% if parking.active %}
-                                    <span>Active</span>
+                    
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <span>
+                                <b>Status:</b>
+                                    {% if parking.active %}
+                                        <span>Active</span>
+                                        {% else %}
+                                        <span class="parking-nonactive">Inactive</span>
+
+                                    {% endif %}
+                                </span>
+                            </div>
+                            {% if is_rate%}
+                                <div class="row justify-content-center">
+                                    {% if parking.active %}
+                                        <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn button-3">
+                                                Deactivate
+                                            </button>
+                                        </form>
                                     {% else %}
-                                    <span class="parking-nonactive">Inactive</span>
-                                {% endif %}
-                            </span>
-                        </div>
-                        <div class="row justify-content-center">
-                            {% if parking.active %}
-                                <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn button-3">
-                                        Deactivate
-                                    </button>
-                                </form>
+                                        <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn button-1">
+                                                Activate
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
                             {% else %}
-                                <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn button-1">
-                                        Activate
-                                    </button>
-                                </form>
+                                <p class="row justify-content-center parking-nonactive center">
+                                    Tip: To activate, scroll down and add rates.
+                                </p>
                             {% endif %}
                         </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -72,8 +81,13 @@
     <hr>
 
     <!-- Parking Inspector -->
-    <div class="row justify-content-center">
-        <a class="btn button-1 center" href="{% url 'parking-inspector' parking_id=parking.id %}">Parking Inspector</a>
+    <div class="row table-row">
+        <div class="col d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-magnifying-glass icon-colour-bg full-size-icon fa-5x"></i>
+        </div>
+        <div class="col d-flex align-items-center justify-content-center">
+            <a class="btn button-1" href="{% url 'parking-inspector' parking_id=parking.id %}">Parking Inspector</a>
+        </div>
     </div>
 
     <hr>

@@ -99,7 +99,8 @@ class RateForm(ModelForm):
     hour_range = forms.IntegerField(
         required=True, 
         label='', 
-        widget=forms.NumberInput(attrs={'placeholder': 'Maximum hour until which rate is applicable'})
+        widget=forms.NumberInput(attrs={'placeholder': 'Maximum hour until which rate is applicable'}),
+        validators=[MinValueValidator(1)]
     )
     rate = forms.DecimalField(
         required=True, 

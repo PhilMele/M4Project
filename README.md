@@ -29,6 +29,7 @@ fix success message on payment
 check if its ok to have the venv file avilable on github
 add tutorial on how to add long and lat from google maps to parking latlng
 remove commentedout text in dahsboard blocks if layout is good
+in rateform, add a validator that prevents user adding another rate with same hour range
 
 # M4Project - GeoPay
 
@@ -745,6 +746,27 @@ The form contains validators ensuring:
 * all fields are populated
 * rate value is above 0.
 
+
+    class RateForm(ModelForm):
+
+        rate_name = forms.CharField(
+            required=True, 
+            label='', 
+            widget=forms.TextInput(attrs={'placeholder': 'Enter rate title'})
+        )
+        hour_range = forms.IntegerField(
+            required=True, 
+            label='', 
+            widget=forms.NumberInput(attrs={'placeholder': 'Maximum hour until which rate is applicable'}),
+            validators=[MinValueValidator(1)]
+        )
+        rate = forms.DecimalField(
+            required=True, 
+            label='', 
+            widget=forms.TextInput(attrs={'placeholder': 'Enter applicable rate'}),
+            validators=[MinValueValidator(0.01)]  # prevents user to under values under or equal to 0 
+        )
+
 **Note for future development:** It would make sense to allow for the rate to be equal to 0, as some parkings offer free stay during an initial hour range. The current code will need to be modified. Currently, without this validator, stripe will not consider a fee of "0" value as payment. This is probably an easy fix.
 
 The template also contain some javascript, providing a tutorial on how the hourly rate works. 
@@ -752,6 +774,9 @@ The template also contain some javascript, providing a tutorial on how the hourl
 This logic is further explained in <a name="check-out"> Check-Out Parking </a>
 
 ### 3.10 Read, Edit & Delete Parking Rates <a name="read-edit-delete-parking-rates"></a>
+
+
+
 ### 3.11 Check-In Parking : Geolocation <a name="check-in"></a>
 ### 3.12 Check-Out Parking <a name="check-out"></a>
 ### 3.13 Stripe Payment Integration <a name="stripe"></a>

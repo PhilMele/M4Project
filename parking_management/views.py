@@ -50,6 +50,17 @@ def activate_parking(request, parking_id):
 
     parking = get_object_or_404(Parking, id=parking_id)
 
+    # checks the parking has rates applied
+    rate_exist = Rate.objects.filter(parking_name=parking)
+    print(rate_exist)
+    
+    if not rate_exist:
+        print('rate_exist is empty')
+        messages.error(request, f"Add a rate before activating parking.")
+        return redirect('parking-info', parking_id=parking.id)
+
+
+
     # if actiate is true turn it off
     if parking.active:
         parking.active = False
@@ -142,20 +153,30 @@ def create_parking(request):
         'parkingform':parkingform
     })
 
+
 @login_required
 def parking_info(request, parking_id):
     if not is_parking_manager(request):
         return redirect('home')
 
     print({parking_id})
+
     stay_objects_count = parking_space_available(request, parking_id)
     parking = get_object_or_404(Parking, id=parking_id)
     rates = Rate.objects.filter(parking_name=parking)
+
+    # prevent user from seeing activate button on frontend
+    is_rate = True
+    if not rates:
+        is_rate=  False
+
     return render(request, 'parking_info/parking_info.html',{
         'parking':parking,
         'rates':rates,
-        'stay_objects_count':stay_objects_count
+        'stay_objects_count':stay_objects_count,
+        'is_rate':is_rate
     })
+
 
 def parking_space_available(request, parking_id):
     if not is_parking_manager(request):
@@ -170,6 +191,7 @@ def parking_space_available(request, parking_id):
         paid = False).count()
     
     return stay_objects_count
+
 
 @login_required
 def edit_parking(request, parking_id):
@@ -204,6 +226,7 @@ def delete_parking(request, parking_id):
     parking.delete()
     messages.success(request, "Parking deleted.")
     return redirect('parking-manager-dashboard')
+
 
 # Rate objects
 @login_required
