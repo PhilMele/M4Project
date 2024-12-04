@@ -78,18 +78,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            {% if request.user.userprofile.user_type == 2 %}
+                            <a class="nav-link" href="{% url 'create-parking' %}">
+                                <i class="fa-solid fa-square-parking icon-colour-bg"></i> Create Parking
+                            </a>
+                            {% else %}
                             <a class="nav-link" href="{% url 'history' %}">
                                 <i class="fa-regular fa-clipboard icon-colour-bg"></i> History
                             </a>
+                            {% endif %}
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa-solid fa-clipboard icon-colour-bg"></i> Account
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                {% if request.user.userprofile.user_type == 2 %}
-                                    <a class="dropdown-item" href="{% url 'parking-manager-dashboard' %}">Parking Manager</a>
-                                {% endif %}
                                 <a class="dropdown-item" href="{% url 'user-account' %}">
                                     <i class="fa-solid fa-user icon-colour-bg"></i> My Profile
                                 </a>

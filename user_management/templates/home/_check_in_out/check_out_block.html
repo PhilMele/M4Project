@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <div class="row">
         <div class="col-4 text-center d-flex align-items-center justify-content-center">
             <i class="fa-solid fa-credit-card icon-colour-bg full-size-icon fa-5x"></i>
@@ -19,6 +19,34 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="container">
+    <div class="row align-items-center">
+        <!-- First Column: Icon -->
+        <div class="col-4 text-center d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-credit-card icon-colour-bg full-size-icon fa-5x"></i>
+        </div>
+        <!-- Second Column: Text -->
+        <div class="col-8 col-md-4">
+            <div class="container">
+                <div class="row">
+                    <span>
+                        You are parked at <b>{{parking_name}}</b>.
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- Third Column: Form -->
+        <div class="col-12 col-md-4 mt-3 mt-md-0">
+            <form action="{% url 'leave' stay_id %}" class="w-100" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn button-1 w-100">
+                    <span>Checkout Parking</span>
+                </button>
+            </form>
         </div>
     </div>
 </div>

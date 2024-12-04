@@ -27,6 +27,7 @@ add email verification
 fix error that says you echekc in Parking None if selected manually
 fix success message on payment
 check if its ok to have the venv file avilable on github
+add tutorial on how to add long and lat from google maps to parking latlng
 
 # M4Project - GeoPay
 

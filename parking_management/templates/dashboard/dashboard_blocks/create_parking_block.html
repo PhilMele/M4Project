@@ -1,4 +1,4 @@
-
+<!-- 
     <div class="row table-row">
         <div class="col-4 text-center d-flex align-items-center justify-content-center">
             <i class="fa-solid fa-square-parking icon-colour-bg full-size-icon fa-5x"></i>
@@ -12,9 +12,32 @@
                     </span>
                 </div>
                 <div class="row">
-                    <a class="btn button-1 w-100" href="{% url 'create-parking'%}">Add</a>
+                    <a class="btn button-1 w-100" href="{% url 'create-parking' %}">Add</a>
                 </div>
             </div>
         </div>
     </div>
+ -->
+
+ <div class="row align-items-center table-row">
+    <!-- First Column: Icon -->
+    <div class="col-4 text-center d-flex align-items-center justify-content-center">
+        <i class="fa-solid fa-square-parking icon-colour-bg full-size-icon fa-5x"></i>
+    </div>
+    <!-- Second Column: Text -->
+    <div class="col-8 col-md-4">
+        <div class="container">
+            <div class="row">
+                <span>
+                    <b>Add Parking:</b>
+                    Click to add a new parking.
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- Third Column: Form -->
+    <div class="col-12 col-md-4 mt-3 mt-md-0">
+        <a class="btn button-1 w-100" href="{% url 'create-parking' %}">Add</a>
+    </div>
+</div>
 
