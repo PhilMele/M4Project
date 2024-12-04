@@ -3,8 +3,32 @@ from django.forms import ModelForm
 from .models import Parking, Rate, IllegalParking
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
+from django.core.validators import RegexValidator
 
 class ParkingForm(forms.ModelForm):
+
+    # restricts values in lat lng fields to didgits only
+    latitude = forms.CharField(
+        validators=[
+            RegexValidator(
+                regex=r'^([+-]?)((90(\.0{1,9})?)|([1-8]?[0-9])(\.\d{1,9})?)$',  # Allows latitude with up to 9 decimals
+                message="Latitude must be a valid number (e.g., -90.0 to 90.0) and up to 9 decimals."
+            )
+        ],
+        widget=forms.TextInput(attrs={'aria-label': 'Latitude', 'placeholder': 'Enter latitude'})
+    )
+
+    longitude = forms.CharField(
+        validators=[
+            RegexValidator(
+                regex=r'^([+-]?)((180(\.0{1,9})?)|((1[0-7][0-9])|([1-9]?[0-9]))(\.\d{1,9})?)$',  # Allows longitude with up to 9 decimals
+                message="Longitude must be a valid number (e.g., -180.0 to 180.0) and up to 9 decimals."
+            )
+        ],
+        widget=forms.TextInput(attrs={'aria-label': 'Longitude', 'placeholder': 'Enter longitude'})
+    )
+
+
     class Meta:
         model = Parking
         fields = (

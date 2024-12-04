@@ -28,11 +28,10 @@ fix error that says you echekc in Parking None if selected manually
 fix success message on payment
 check if its ok to have the venv file avilable on github
 add tutorial on how to add long and lat from google maps to parking latlng
+remove commentedout text in dahsboard blocks if layout is good
+add check to make sure only numbers are going into lat and long fields
 
 # M4Project - GeoPay
-
-<!-- ![rendering](...png) -->
-
 
 View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target="_blank">Click Here</a>
 
@@ -590,9 +589,46 @@ This feature is handled through `create_parking()`.
 
 This feature uses a django for: `ParkingForm()` which looks to populate fields defined in Parking model.
 
-**Important Note**: it is through these field, the geofence is defined. A default radius of 50 meters is applied. This radius should be extended to 850 meters if a device other than a mobile phone is used.
+**Important Note**: it is through these field, the geofence is defined. A default radius of 50 meters is applied. This radius should be extended to at least 850 meters if a device other than a mobile phone is used.
 
-This form sets all fields as mandatory, in forms.py, with the exception of street_address2 field:
+**Validators**
+
+**LatLng:** With regards to latitude and longitude fields, the form implements a restriction with Regex patterns, and only accepts digits and `-` signs, to ensure values are properly implemented.
+
+    class ParkingForm(forms.ModelForm):
+
+        # restricts values in lat lng fields to didgits only
+        latitude = forms.CharField(
+            validators=[
+                RegexValidator(
+                    regex=r'^([+-]?)((90(\.0{1,9})?)|([1-8]?[0-9])(\.\d{1,9})?)$',  # Allows latitude with up to 9 decimals
+                    message="Latitude must be a valid number (e.g., -90.0 to 90.0 and up to 9 decimals)."
+                )
+            ],
+            widget=forms.TextInput(attrs={'aria-label': 'Latitude', 'placeholder': 'Enter latitude'})
+        )
+
+        longitude = forms.CharField(
+            validators=[
+                RegexValidator(
+                    regex=r'^([+-]?)((180(\.0{1,9})?)|((1[0-7][0-9])|([1-9]?[0-9]))(\.\d{1,9})?)$',  # Allows longitude with up to 9 decimals
+                    message="Longitude must be a valid number (e.g., -180.0 to 180.0 and up to 9 decimals)."
+                )
+            ],
+            widget=forms.TextInput(attrs={'aria-label': 'Longitude', 'placeholder': 'Enter longitude'})
+        )
+
+**Note**: this regex synthax need to be credited to Stackoverflow post here: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+
+How does Regex work:
+* ^: Defines the start of the string.
+* -?: Matches an optional minus sign.
+* \d+: Matches one or more digits.
+* (\.\d+)?: Optionally matches a decimal point (.) followed by one or more digits.
+* $: Defines the end of the string.
+
+
+**Mandatory fields:** This form sets all fields as mandatory, in forms.py, with the exception of street_address2 field:
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -605,6 +641,10 @@ This form sets all fields as mandatory, in forms.py, with the exception of stree
         self.fields['street_address2'].required = False
 
 Upon success of the form being saved, the user is redirect to the parking_object page managed by `parking_info()`.
+
+Useful links:
+* Stackover post on Regex for LatLng values: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+
 
 ### 3.8 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
 
