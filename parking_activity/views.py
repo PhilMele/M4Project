@@ -195,7 +195,7 @@ def leave(request, stay_id):
             parking_name=stay.parking_name,
             stay=stay,
         )
-        messages.success(request, "Payment successfull!")
+        
         #calculte fee relating to stay
         #calculate total user stay
 
@@ -347,6 +347,9 @@ def payment_successful(request):
     stay = Stay.objects.get(stripe_checkout_id=checkout_session_id)
     stay.paid = True
     stay.save()
+
+    messages.success(request, "Payment successfull!")
+    
     return render(request, 'payment/payment_successful.html',{'customer':customer})
 
 @login_required

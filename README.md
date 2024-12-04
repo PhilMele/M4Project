@@ -18,6 +18,14 @@ check all code meets indentions standard and spaces
 add validator to make sure parking is null 0 or negative
 change navbar for manager to remove uneeded elements
 imrpoevemt: parking insepctor can be imporved with OCR and connecting to a CRM to issue PCR
+add labels to form fields
+add check to prevent activating parking if no rate is available
+add autamtaed email when order is paid
+add placeholders on user dashboard if no parking is available
+add placeholders on parking manager dashboard if no parking is available
+add email verification
+fix error that says you echekc in Parking None if selected manually
+fix success message on payment
 
 
 # M4Project - GeoPay
