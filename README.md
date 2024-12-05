@@ -1159,19 +1159,76 @@ The function will then compare both timestamps to extract the user's stay durati
 </p>
 </details>
 
-
 Var `total_stay_time_hours` is then used to calculte the applicable fee.
+
+    applicable_fee = calculate_user_fee(stay, total_stay_time_hours)
 
 **Phase 2 - User Fee calculation**
 
+This phase is managed by `calculate_user_fee()`.
 
+It takes both the `stay` model object and `total_stay_time_hours` as parameters, from `leave()`.
+
+The function starts by rounding up `total_stay_time_hours` to next hour : if a user stayed 1.5 hour, `total_stay_time_hours` will be equal to 2.
+
+Following this steps, the applicable rates to relevant parking objects are identified.
+
+<details>
+<summary>Click to see code</summary>
+<p>
+
+    #look for applicate rate for parking ID and total stay again rate.hour_range
+        rate_available = Rate.objects.filter(parking_name=stay.parking_name).order_by('hour_range')
+    print(f'rate_available = {rate_available}')
+
+</p>
+</details>
+
+Once these rates are identified, the functions proceeds to match the appropriate hourly rate to `total_stay_time_hours`, and return the value into variable `closest_rate`.
+
+
+<details>
+<summary>Click to see code</summary>
+<p>
+
+    #return applicable fee
+    #create variable to attach closest rate to it during loop
+    closest_rate = None
+    for rate in rate_available:
+        print(f'rate_available = Hour range:{rate.hour_range}; Rate:{rate.rate}')
+        if total_stay_time_hours <= Decimal(rate.hour_range):
+            closest_rate = rate
+            break 
+    
+    #if the user stayed longer than longest rate
+    #apply the latest rate on the list
+    if closest_rate is None and rate_available.exists():
+        closest_rate = rate_available.last()
+
+</p>
+</details>
+
+Once `closest_rate` is defined, the applicable fee can be calculated and returned to `leave()` under variable: `applicable_fee`.
+
+<details>
+<summary>Click to see code</summary>
+<p>
+
+    if closest_rate:
+        print(f'closest rate is {closest_rate}')
+        applicable_fee = closest_rate.rate * roundedup_total_stay_time_hours
+        print(f'applicable_fee = {applicable_fee}')
+        return (applicable_fee)
+    else:
+        print('Looks like there is a problem!')
+        return None
+</p>
+</details>
 
 **Phase 3 - Fee Form**
 
 
 Fee form proceed to redircting the user to payment stage on stipe
-
-
 
 
 ### 3.13 Stripe Payment Integration <a name="stripe"></a>
@@ -1184,6 +1241,7 @@ User is redirect to payment successful (or fail)
 
 **Phase 4 - Payment**
 
+**Phase 4 - Payment Confirmation**
 
 ### 3.14 Crispy Forms <a name="cripsy"></a>
 ### 3.15 Decorators <a name="decorators"></a>

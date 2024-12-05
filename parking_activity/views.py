@@ -234,7 +234,6 @@ def leave(request, stay_id):
 def calculate_user_fee(stay, total_stay_time_hours):
     #apply applicable fee against total user stay
     #round up stay to next hour value
-    #PROBLEM TO FIX: AFTER LONG TIME WITHOUT CHECKING OUT THE MAX RATE IS NOT PCIKED UP
     roundedup_total_stay_time_hours = math.ceil(total_stay_time_hours)
     print(f'rounded_total_stay_time_hours = {roundedup_total_stay_time_hours}')
 
