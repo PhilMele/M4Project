@@ -1245,7 +1245,7 @@ This phase is handled by `fee_form()` and managed by `leave()`, passing `applica
 The role of this function is retrieve the stay object id, and add the calculated fee to it, before redirecting the user back to `leave()` for payment handling.
 
 <details>
-<summary>Click to leave() code section redirection to fee_form()</summary>
+<summary>Click to fee_form() code</summary>
 <p>
 
     # add Fee value to stay_id
@@ -1260,8 +1260,6 @@ The role of this function is retrieve the stay object id, and add the calculated
             print('Stay object does not exist')         
 </p>
 </details>
-
-
 
 
 ### 3.13 Stripe Payment Integration <a name="stripe"></a>

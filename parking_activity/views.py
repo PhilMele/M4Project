@@ -21,6 +21,11 @@ from django.http import JsonResponse
 #geolocation module
 from geopy import distance
 
+# email sending
+from django.core.mail import send_mail
+
+# debugging
+import logging
 
 # Create your views here.
 def is_parking_customer(request):
@@ -380,15 +385,43 @@ def stripe_webhook(request):
     except stripe.error.SignatureVerificationError as e:
         print(f"Signature verification failed: {str(e)}")  # Log the error for debugging
         return HttpResponse(status=400)
+
+
     if event['type'] == 'checkout.session.completed':
         print("Webhook received: checkout.session.completed")
         session = event['data']['object']
         session_id = session.get('id', None)
         time.sleep(15)
-        user_payment = UserPayment.objects.get(stripe_checkout_id=session_id)
-        line_items = stripe.checkout.Session.list_line_items(session_id,limit=1)
-        user_payment.payment.bool = True
-        user_payment.save()
+        try:
+            # retrieve user payment record
+            user_payment = UserPayment.objects.get(stripe_checkout_id=session_id)
+            line_items = stripe.checkout.Session.list_line_items(session_id,limit=1)
+            user_payment.payment.bool = True
+            user_payment.save()
+
+            # prepare email
+            subject = "Email tets"
+            message = ("this is a test email")
+            email_reciever = user_payment.user.email
+
+            # send email
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email_reciever],
+                    fail_silently=False,
+                )
+                logger.info('Email sent successfully')
+            except Exception as e:
+                logger.error('Error sending email: %s', str(e))
+            print('email is sent')
+        except UserPayment.DoesNotExist:
+            print("UserPayment record not found for session")
+        except Exception as e:
+            print(f"Error handling webhook: {str(e)}")
+
     return HttpResponse(status=200)
 
 
