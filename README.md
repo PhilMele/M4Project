@@ -1103,9 +1103,9 @@ If var `existing_stay_obj` exists, the template will return a button redirecting
 
 Otherwise a button leading to `enter()`(check-in) is displayed.
 
-**Phase 1 - User Stay Duration Calculation**
+This entire section is managed by `leave()`, which handles the relationships between other functions.
 
-This phase is managed by `leave()`.
+**Phase 1 - User Stay Duration Calculation**
 
 Using the `stay_id` parameter, it creates a LeaveParking objects, child to its Stay model object.
 
@@ -1179,7 +1179,7 @@ Following this steps, the applicable rates to relevant parking objects are ident
 
     #look for applicate rate for parking ID and total stay again rate.hour_range
         rate_available = Rate.objects.filter(parking_name=stay.parking_name).order_by('hour_range')
-    print(f'rate_available = {rate_available}')
+        print(f'rate_available = {rate_available}')
 
 </p>
 </details>
@@ -1227,8 +1227,41 @@ Once `closest_rate` is defined, the applicable fee can be calculated and returne
 
 **Phase 3 - Fee Form**
 
+This phase is handled by `fee_form()` and managed by `leave()`, passing `applicable_fee` and `stay_id` as parameters. 
 
-Fee form proceed to redircting the user to payment stage on stipe
+<details>
+<summary>Click see to leave() code section redirecting to fee_form()</summary>
+<p>
+
+    if applicable_fee:
+        print(f'applicable_fee is {applicable_fee}')
+        fee_form(request, applicable_fee, stay_id)
+        return payment(request,applicable_fee, stay_id)
+    else:
+        print(f'no applicable fee')
+</p>
+</details>
+
+The role of this function is retrieve the stay object id, and add the calculated fee to it, before redirecting the user back to `leave()` for payment handling.
+
+<details>
+<summary>Click to leave() code section redirection to fee_form()</summary>
+<p>
+
+    # add Fee value to stay_id
+    @login_required     
+    def fee_form(request, applicable_fee,stay_id ):
+        try:
+            stay = Stay.objects.get(id=stay_id)
+            stay.calculated_fee = applicable_fee
+            stay.save()
+            print(f"Stay object {stay_id} updated with calculated_fee: {stay.calculated_fee}")
+        except Stay.DoesNotExist:
+            print('Stay object does not exist')         
+</p>
+</details>
+
+
 
 
 ### 3.13 Stripe Payment Integration <a name="stripe"></a>

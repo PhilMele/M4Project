@@ -265,7 +265,7 @@ def calculate_user_fee(stay, total_stay_time_hours):
         return None
 
 
-# Create new Fee model object agianst user name
+# add Fee value to stay_id
 @login_required     
 def fee_form(request, applicable_fee,stay_id ):
     try:
