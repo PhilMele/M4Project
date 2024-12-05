@@ -802,6 +802,276 @@ Editing and deleting an specific `rate_id` is managed by respectively:
 
 
 ### 3.11 Check-In Parking : Geolocation <a name="check-in"></a>
+
+This section is managed by parking_activity app.
+
+The check-in process starts from the user dashboard.
+
+The function first checks if the user has provided their car registration number. If not, it will prompt the user to do so, before moving any further.
+
+From this point, the check-in process can be divided into 3 phases:
+
+**Phase 1 - Capturing User Geolocation**
+
+If the user profile has a car registration number, the user will be able to access the "Check-In" button. By clicking the button `getLocation()` triggers which will populate 2 hidden inputs. `getLocation()` is a javascript function managed by `geolocation.js` (path: static/js/geolocation.js)
+
+    <div class="col-12 col-md-4 mt-3 mt-md-0">
+        <form action="{% url 'get_parking_location' %}" class="w-100" method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="userLatitude" name="latitude" value="">
+            <input type="hidden" id="userLongitude" name="longitude" value="">
+            <button type="submit" class="btn button-1 w-100" onclick="getLocation()">
+                <span>Check-In</span>
+            </button>
+        </form>
+    </div>
+
+**Credits**: `getLocation()` is a copy of `HTML Geolocation API` from W3Schools (https://www.w3schools.com/html/html5_geolocation.asp
+)
+
+These two hidden inputs will capture the user's latitude and longitude.
+
+Once captured, the templates form logic will trigger `get_parking_location()`.
+
+The role of `get_parking_location()` is to look for a matching geolocation between the user, and a potential parking.
+
+In order to do so, `get_parking_location()` collects the values in `user_latitude` and `user_longitude` variables which are fed by the hidden input fields populate by the javascript function.
+
+    if request.method == "POST":
+
+        # capture user current location
+        user_latitude = request.POST.get('latitude')
+        user_longitude = request.POST.get('longitude')
+        print(f'user_latitude = {user_latitude}')
+        print(f'user_longitude = {user_longitude}')
+
+**Phase 2 - Capturing Matching Parking Geolocation**
+
+If these two variables have values against them, the function will then proceed to: 
+* set the user location in a tuple
+* list all activate parking objects and look for matching geolocation, taking into account their respective radius value, defined in each parking object.
+
+At the end of this process, the logic will either return a `parking_id` or nothing. 
+
+The `parking_id` is then passed as a parameter in `enter()`.
+
+In the event, no parking_id could be returned, `parking_id` is set as None by default in `enter()`.
+
+**views.py:**
+
+    @login_required
+    def enter(request, parking_id=None):
+        ...
+
+**urls.py:**
+
+    path('enter/', views.enter, name='enter'),
+    path('enter/<int:parking_id>/', views.enter, name='enter_with_parking_id'),
+
+Useful links:
+* HTML Geolocation API: https://www.w3schools.com/html/html5_geolocation.asp
+
+
+**Error encountered**: `Uncaught TypeError: Cannot set properties of null (setting 'innerHTML')`. This as a result of the script being uploaded at the begining of the template, before the element exists.
+
+This problem was solved by moving the js file to the bottom of the body of the index.html template:
+
+    {%block content%}
+        ...
+    {%endblock%}
+
+    {% block postloadjs %}
+        <script src="{% static 'js/geolocation.js' %}"></script>
+    {% endblock %}
+
+
+**Error encountered** `TypeError: float() argument must be a string or a real number, not 'set'`: following Igor-S answer on stackoverflow, I encountered this error.
+
+This is because of the use of `({})`, which in Python define a set, rather than parentheses `()`.
+
+To fix this error by converting the values into `float`:
+    
+    user_location = (float(user_latitude), float(user_longitude))
+
+**Error encountered** `TypeError: '<=' not supported between instances of 'float' and 'str'`: following the above mentioned example provided on stackoverflow.
+
+This error happened because `parking.radius` is a string and `locations_distance` is a float.
+
+    if locations_distance <= parking_radius:
+        print(f'You are in {parking.name}')
+    else:
+        print(f'You are not in {parking.name}')
+
+Both values need to be in the same format:
+
+    parking_radius = float(parking.radius)
+
+**Error encountered** User geolocation innacuracy: unless a mobile phone is used for testing, the accuracy of the geolocation varies between 3m to 888m. I found that from my laptop a range of 900m was comfortable to capture a nearby geofence.
+
+For mobile phone, I had 100% success with a radius set at 50 meters.
+
+**Phase 3 - Validating User Consent to Check-In**
+
+This is the last phase of the check-in process and is managed by both a python and javascript functions. Respectively:
+* `enter()`
+* `fetchRates()`
+
+If a `parking_id` was provided as a parameter, `enter()` will prompt the user to:
+* confirm they are happy to check-in at the identified parking. 
+* automatically display the applicable rate to said `parking_id`.
+
+As it had to be generated dynamically, taking into account that no `parking_id` parameters could be passed, the task of displaying applicable rates was assigned to `parking_fee.js`.
+
+Through `parking_fee.js`, `fetchRates()` collects dynamically applicables rates from selected parking form the database, by using `get_parking_rates()` (views.py).
+
+
+<details>
+<summary>Click to see `get_parking_rates()`</summary>
+<p>
+
+    def get_parking_rates(request, parking_id):
+        print(f'get_parking_rates parking id = {get_parking_rates}')
+        rates = Rate.objects.filter(parking_name_id = parking_id).values(
+            'rate_name',
+            'hour_range',
+            'rate',
+        )
+        return JsonResponse(list(rates), safe=False)
+
+</p>
+</details>
+    
+
+`get_parking_rates()`is an API that collects Rate model objects relevant to the `parking_id` the user is checking-in from.
+
+These objects are then returned back to `fetchRates()` in json format, before being rendererd in a table through `renderRatesTable()`.
+
+![rendering](static/images/readme_images/ui/check_in/check-in.png)
+
+
+<details>
+<summary>Click to see `renderRatesTable()`</summary>
+<p>
+
+    function renderRatesTable(data){
+
+        // get the body of the table
+        const table = document.getElementById("ratesTable");
+        const tbody = document.querySelector("table tbody")
+        tbody.innerHTML = "";
+
+        if(data.length>0){
+            
+            // shows table
+            table.style.display ="table"
+            // Adds data to table rwos
+
+            data.forEach(rate=>{
+                const tableRow = document.createElement('tr');
+                tableRow.innerHTML = `
+                <tr>
+                    <td>${rate.rate_name}</td>
+                    <td>${rate.hour_range}</td>
+                    <td>£${rate.rate}</td>
+                </tr>
+                `;
+                tbody.appendChild(tableRow);
+            });
+        }else{
+            table.style.display = "none"
+        }
+    }
+
+</p>
+</details>
+    
+
+**Error encountered**: the initial code was returning an error. It seems that Json excpts a dictionaryy by default. To correct this problem `safe` is set to `False` (`safe = False`), which allows to return a list instead.
+
+**Note**: this part was by far the most challenging part of the project. A big acknowledgment to Gareth McGirr and Stackoverflow for the help.
+
+Credits:
+* Gareth Mc Girr (mentor) who guided through this process
+* Stackoverflow: https://dev.to/chryzcode/django-json-response-safe-false-4f9i
+
+**What happens if `parking_id` is None as a parameter?**
+
+As mentioned at the end of the previous Phase, `enter()` can expect a `parking_id` parameter, but this is not mandatory.
+
+This last section covers the possibility that geolocation might fail, or the user simply did not enable it on their phone. 
+
+In this case we still want the user to be able to check-in through a manual step.
+
+If `parking_id` is not provided as a parameter, the user is offered to select the parking they are looking to check-in from through a drop down menu.
+
+This drop down menu is generated in the template:
+
+
+<details>
+<summary>Click to see template form</summary>
+<p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="enter-form center">
+            <label for="parking-select">Select Parking:</label><br>
+            <select id="parking-select" name="parking_name">
+                <option value="">Select parking</option>
+                {% for parking in parking_list %}
+                    <option value="{{ parking.id }}" 
+                        {% if parking_id == parking.id %}
+                            selected
+                        {% endif %}>
+                        {{ parking.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <hr>
+        <div class="enter-submit-button center">
+            <input class="button-1 btn " type="submit" value="Check-In">
+        </div>
+    </form>
+
+</p>
+</details> 
+
+Upon selection by the user the `parking_id` is captured by an event listener, which will return the parking rates against the selected `parking_id`, using `get_parking_rates()` and the process previously mentioned.
+
+
+<details>
+<summary>Click to see script</summary>
+<p>
+
+
+    // look for changes if the user has selected a parking manually
+    const manuallySelectedParking = document.getElementById('parking-select');
+    console.log("manuallySelectedParking=", manuallySelectedParking);
+
+    if(manuallySelectedParking){
+        manuallySelectedParking.addEventListener('change', function(){
+            console.log("this is getting accessed")
+            parkingId = this.value || "null";
+            console.log(`Updated parking id is ${parkingId}`);
+            // only trigger fetchRates() if parking_id is not null
+            // to avoid 404 error in console
+            if (parkingId !== "null"){
+                fetchRates();
+            }
+            
+        })
+
+    }
+
+</p>
+</details>
+
+**Phase 4 Check-in Form**
+
+This final phase is managed by `enter()` which handles both scenarios of having the `parking_id` provided as a parameter, or provided later on upon manual selection by the user.
+
+**Suggestion for future improvement**: there is one scenario that this project does not cover, is the pssibility of the user being geolocated within an incorrect parking, especially if 2 parking radiuses are overlaping. It would make sense to add a possibility for the user to override the `parking_id` parameter through manual selection.
+
 ### 3.12 Check-Out Parking <a name="check-out"></a>
 ### 3.13 Stripe Payment Integration <a name="stripe"></a>
 ### 3.14 Crispy Forms <a name="cripsy"></a>
