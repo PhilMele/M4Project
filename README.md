@@ -826,7 +826,8 @@ If the user profile has a car registration number, the user will be able to acce
         </form>
     </div>
 
-**Credits**: `getLocation()` is a copy of `HTML Geolocation API` from W3Schools (https://www.w3schools.com/html/html5_geolocation.asp
+**Credits**: 
+* `getLocation()` is a copy of `HTML Geolocation API` from W3Schools (https://www.w3schools.com/html/html5_geolocation.asp
 )
 
 These two hidden inputs will capture the user's latitude and longitude.
@@ -988,11 +989,6 @@ These objects are then returned back to `fetchRates()` in json format, before be
 
 **Error encountered**: the initial code was returning an error. It seems that Json excpts a dictionaryy by default. To correct this problem `safe` is set to `False` (`safe = False`), which allows to return a list instead.
 
-**Note**: this part was by far the most challenging part of the project. A big acknowledgment to Gareth McGirr and Stackoverflow for the help.
-
-Credits:
-* Gareth Mc Girr (mentor) who guided through this process
-* Stackoverflow: https://dev.to/chryzcode/django-json-response-safe-false-4f9i
 
 **What happens if `parking_id` is None as a parameter?**
 
@@ -1072,8 +1068,123 @@ This final phase is managed by `enter()` which handles both scenarios of having 
 
 **Suggestion for future improvement**: there is one scenario that this project does not cover, is the pssibility of the user being geolocated within an incorrect parking, especially if 2 parking radiuses are overlaping. It would make sense to add a possibility for the user to override the `parking_id` parameter through manual selection.
 
+**Note**: the check-in process was by far the most challenging part of the project. A big acknowledgment to Gareth McGirr and Stackoverflow for the help.
+
+Credits:
+* Gareth Mc Girr (mentor) who guided through this process
+* Stackoverflow: https://dev.to/chryzcode/django-json-response-safe-false-4f9i
+
 ### 3.12 Check-Out Parking <a name="check-out"></a>
+
+Similarly to the check-in process, the check-out process starts from index template (index.html).
+
+After checking-in, the user is redirect to `index.html`, with a slight change to the previous screen.
+
+Instead of displaying "Check-In" button, the user is now presented with "Check-out" button instead.
+
+The display management of these two buttons is hanlded in `index()` through var `existing_stay_obj`:
+* the variable returns the latest Stay model object created with an empty Leave field.
+
+
+<details>
+<summary>Click to see code</summary>
+<p>
+
+    #look up if user has already an existing Stay object
+    #and exclude objects that is matched with a LeaveParking object 
+    existing_stay_obj = Stay.objects.filter(user=request.user.userprofile).exclude(
+        id__in=LeaveParking.objects.values_list('stay_id', flat=True)
+    )
+
+</p>
+</details>
+
+If var `existing_stay_obj` exists, the template will return a button redirecting the user to `leave()` (checkout) with `stay_id` as parameter. 
+
+Otherwise a button leading to `enter()`(check-in) is displayed.
+
+**Phase 1 - User Stay Duration Calculation**
+
+This phase is managed by `leave()`.
+
+Using the `stay_id` parameter, it creates a LeaveParking objects, child to its Stay model object.
+
+
+<details>
+<summary>Click to see code</summary>
+<p>
+
+    # Retrieve the existing Stay object
+    try:
+        stay = Stay.objects.get(id=stay_id, user=request.user.userprofile)
+        print(f'stay id = {stay}')
+        # Create a LeaveParking entry
+        leave_parking = LeaveParking.objects.create(
+            user=request.user.userprofile,
+            parking_name=stay.parking_name,
+            stay=stay,
+        )
+
+
+</p>
+</details>
+
+The newly created object also contained a timestamp field, which is automatically populated upon creation.
+
+Following successful creation of the leave object, `leave()` proceeds to collect both timestamp from EnterParking and LeaveParking childs objects to `stay_id`.
+
+The function will then compare both timestamps to extract the user's stay duration in var `total_stay_time_hours`.
+
+
+<details>
+<summary>Click to see code</summary>
+<p>
+
+    #retrieve enter timestamp
+    enter_time = EnterParking.objects.get(stay=stay_id)
+    print(f'enter_time = {enter_time.timestamp_enter}')
+
+    #retrieve leave timestamp
+    exit_time = LeaveParking.objects.get(stay=stay_id)
+    print(f'exit_time = {exit_time.timestamp_leave}')
+
+    #difference between enter and leave time
+    total_stay_time = exit_time.timestamp_leave - enter_time.timestamp_enter
+    print(f'total_stay_time = {total_stay_time}')
+
+    # Convert total_stay_time to hours
+    total_stay_time_hours = Decimal(total_stay_time.total_seconds()) / Decimal(3600)
+    print(f'total_stay_time in hours = {total_stay_time_hours}')
+
+</p>
+</details>
+
+
+Var `total_stay_time_hours` is then used to calculte the applicable fee.
+
+**Phase 2 - User Fee calculation**
+
+
+
+**Phase 3 - Fee Form**
+
+
+Fee form proceed to redircting the user to payment stage on stipe
+
+
+
+
 ### 3.13 Stripe Payment Integration <a name="stripe"></a>
+redirect to stripe page
+Get stripe id
+PAyment is made
+Email is sent (to do)
+Database records stay objects as paid
+User is redirect to payment successful (or fail)
+
+**Phase 4 - Payment**
+
+
 ### 3.14 Crispy Forms <a name="cripsy"></a>
 ### 3.15 Decorators <a name="decorators"></a>
 ### 3.16 Custom Error Handlers <a name="error-handler"></a>
