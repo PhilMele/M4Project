@@ -153,28 +153,33 @@ def enter(request, parking_id=None):
     else:
         print("Paring Id is none. Do this parrt later")
         if request.method == "POST":
-            stayform = StayForm(request.POST)
-            if parking_name:
-                print(f'parking_name = {parking_name}')
-                if stayform.is_valid():
-                    staydata = stayform.save(commit = False)
-                    staydata.user = request.user.userprofile
-                    #staydata.parking_name = parking_name
-                    #nextstep: I need to attach the selected parking name in 
-                    #enter.html to the enter parking object
-                    staydata.save()
-                    messages.success(request,f'You have successfully checked-in at {parking_name}')
-                    enter_parking_obj = EnterParking.objects.create(
-                        user = request.user.userprofile,
-                        parking_name = parking_name,
-                        stay = staydata
-                        )
-                    return redirect('home')
-                else:
-                    for error in list(stayform.errors.values()):
-                        messages.error(request, error)
+            # get the parking_name value from POST 
+            parking_id = request.POST.get('parking_name')  
+            if parking_id:
+                parking_name = get_object_or_404(Parking, id=parking_id)
             else:
-                messages.error(request, "Please selecte parking, before checking in.")
+                messages.error(request, "Please select a valid parking location.")
+                return redirect('enter') 
+
+            print(f'parking_name = {parking_name}')
+            stayform = StayForm(request.POST)
+            if stayform.is_valid():
+                staydata = stayform.save(commit = False)
+                staydata.user = request.user.userprofile
+                #staydata.parking_name = parking_name
+                #nextstep: I need to attach the selected parking name in 
+                #enter.html to the enter parking object
+                staydata.save()
+                messages.success(request,f'You have successfully checked-in at {parking_name}')
+                enter_parking_obj = EnterParking.objects.create(
+                    user = request.user.userprofile,
+                    parking_name = parking_name,
+                    stay = staydata
+                    )
+                return redirect('home')
+            else:
+                for error in list(stayform.errors.values()):
+                    messages.error(request, error)
         else:
             stayform = StayForm()
             
@@ -368,10 +373,10 @@ def payment_cancelled(request):
 
     return render(request, 'payment/payment_cancelled.html')
 
-logger = logging.getLogger(__name__)
+
 @csrf_exempt
 def stripe_webhook(request):
-    logger.debug("enter webhook")
+    print("enter webhook")
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     time.sleep(10) # time left to stripe to process payment
     payload = request.body
@@ -399,7 +404,7 @@ def stripe_webhook(request):
             # retrieve user payment record
             stay = Stay.objects.get(stripe_checkout_id=session_id)
             line_items = stripe.checkout.Session.list_line_items(session_id,limit=1)
-            stay.paid = Fal
+            stay.paid = True
             user_payment.save()
 
             # prepare email
