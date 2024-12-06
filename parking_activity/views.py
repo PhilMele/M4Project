@@ -23,6 +23,7 @@ from geopy import distance
 
 # email sending
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 # debugging
 import logging
@@ -410,9 +411,17 @@ def stripe_webhook(request):
             stay.paid = True
             stay.save()
 
+            subject = "Payment Confirmation"
+            context = {
+                'username': stay.user.user.username,
+                'stripe_checkout_id': stay.stripe_checkout_id,
+                'transaction_id': stay.id,
+                'amount_paid': stay.calculated_fee,
+                'parking_name': stay.parking_name.name,
+            }
+
             # prepare email
-            subject = "Email tets"
-            message = ("this is a test email")
+            message = render_to_string('email/payment_confirmation_email.html', context)
             email_reciever = stay.user.user.email
 
             # send email
@@ -422,6 +431,7 @@ def stripe_webhook(request):
                     message,
                     settings.DEFAULT_FROM_EMAIL,
                     [email_reciever],
+                    html_message=message,
                     fail_silently=False,
                 )
                 logger.info('Email sent successfully')

@@ -1270,6 +1270,8 @@ Email is sent (to do)
 Database records stay objects as paid
 User is redirect to payment successful (or fail)
 
+error encountered: webhook address need to include app name `https://[domain-name]/parking_activity/stripe_webhook/`
+
 **Phase 4 - Payment**
 
 **Phase 4 - Payment Confirmation**
