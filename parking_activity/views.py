@@ -411,7 +411,7 @@ def stripe_webhook(request):
             stay.paid = True
             stay.save()
 
-            subject = "Payment Confirmation"
+            subject = "[GeoPay] Payment Confirmation"
             context = {
                 'username': stay.user.user.username,
                 'stripe_checkout_id': stay.stripe_checkout_id,

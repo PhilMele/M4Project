@@ -1647,6 +1647,31 @@ Currently the parking manager can:
 
 ## 4. Technologies <a name="tech"></a>
 
+* Django & Python are used for both backend and frontend.
+* HTML : for front endrendering.
+* CSS : for front endrendering.
+* Bootstrap : for front endrendering.
+* JavaScript : for both backend and frontend.
+* PostgreSQL : for data storing.
+* VSCode :  used to write and edit code.
+* Git : used for version control.
+* GitHub : used to host version controls online.
+* Heroku : used to host PostGres database online.
+* WhiteNoise : used for serving static files with Heroku.
+* AWS S3 Bucket used for online media file storage.
+* Stripe used payment processing.
+* Gmail API used for sending emails in my application.
+* Pixso used for wireframes.
+* Midjourney used for logo generation.
+* ICO Converter was used to compress images and convert them into .webp.
+* Chrome Developer Tools used to debug, test responsiveness, and generate Lighthouse reports.
+* Google Fonts was used to import fonts for the site.
+* Font Awesome was used for all the site icons.
+* W3C HTML Validator was used to validate the HTML code.
+* W3C CSS Validator was used to validate the CSS code.
+* JSHint was used to detect errors and potential problems in JavaScript code.
+* Notion : for generation of tables in md format
+
 ## 5. Testing <a name="testing"></a>
 ### 5.1 Validator Testing <a name="val-testing"></a>
 #### 5.1.1 HTML <a name="html"></a>
@@ -1654,6 +1679,7 @@ Currently the parking manager can:
 #### 5.1.3 Javascript <a name="js"></a>
 #### 5.1.3 Python <a name="py"></a>
 ### 5.2 Lighthouse Testing <a name="lighthouse-testing"></a>
+
 ### 5.3 User Testing <a name="user-testing"></a>
 
 <!-- Click on this link to see manual testing steps: [Manual Testing Guide](MANUAL_TESTING.md) -->
@@ -1727,6 +1753,19 @@ Useful links:
 ### 5.1 Heroku Deployment <a name="heroku-deployment"></a>
 
 ## 8. Credits <a name="credits"></a>
+
+
+
+* `getLocation()` is a copy of `HTML Geolocation API` from W3Schools (https://www.w3schools.com/html/html5_geolocation.asp
+)
+* Stackoverflow: https://dev.to/chryzcode/django-json-response-safe-false-4f9i
+* Overall Stripe Integration Youtube tutorial: The tutorial provided by the course material wasnt adapted to what I was looking for. Instead I followed the tutorial from this video (https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s) and made a number of changes to suit my project.
+* RyanM on Stackoverflow for this answer: https://stackoverflow.com/questions/79256457/django-stripe-webhook-not-found/79256537#79256537 
+* Crispy Form Documentation: https://django-crispy-forms.readthedocs.io/en/latest/
+* Django Documentation: https://docs.djangoproject.com/en/5.1/topics/http/decorators/
+* Gareth Mc Girr (mentor) who guided through this process
+
+In additon, there is a large number of stackoverflow, reddits and github posts that I should credit but didnt take note of them as I was trying out different solutions.
 
 # colour palette
 
