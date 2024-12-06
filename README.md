@@ -1568,6 +1568,7 @@ Templates are located in: `user_management\templates\errors`
 
 <summary>Click to see code for urls.py (project level)</summary>
 <p>
+
     from django.conf.urls import handler404, handler500, handler403, handler400
 
     urlpatterns = [....
@@ -1584,8 +1585,6 @@ Templates are located in: `user_management\templates\errors`
     
 <summary>Click to see code for views.py (app level)</summary>
 <p>
-
-In views.py (app level):
 
     def handler404(request, exception):
         """ Handle 404 errors and render the custom 404 error page """
@@ -1624,10 +1623,27 @@ In views.py (app level):
 </p>
 </details>
 
-
-
-
 ### 3.17 Parking Inspector <a name="parking-inspector"></a>
+
+This feature is mostly managed through `parking_inspector()` and allows the parking manager to see the state of their parkings and check if all vehicles in the parking have check-in the app.
+
+For those that are not checked-in, the parking manager has an option to record the registration plate of the illegally parked car.
+
+The list can then be used to send Parking Charge Notices from a different system.
+
+Currently the parking manager can:
+* See checked-in cars
+* Add illegally parked cars
+* Delete illegally parked cars (`delete_car_reg()`)
+
+
+![rendering](static/images/readme_images/ui/parking_inspector/parking-inspector.png)
+
+**Future improvements:**
+
+* This feature could benefit from immediate improvement such as the possibility to take a picture of the car and upload on the S3 Bucket for proof. This feature is not implemented yet.
+* Another feature could be to accelerate the detection of illegally parked cars by integration Optical Character Recognition (Optical Character Recognition). This feature could be implemented by using django progressive web app extension. This would allow the parking manager to simply scan each car registration and let the GeoPay look in the database if the parked as checked-in. 
+
 
 ## 4. Technologies <a name="tech"></a>
 
