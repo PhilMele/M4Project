@@ -5,7 +5,7 @@
 {%block content%}
 <h1>Edit Rate</h1>
 
-<form method="post">
+<form method="post" class="">
     {% csrf_token %}
     <div class="create-parking-form-group">
         {{ editrateform.rate_name.label_tag }} 
@@ -30,7 +30,9 @@
         {{ editrateform.rate|as_crispy_field }}
     </div>
     
-    <button type="submit" class="btn btn-primary">Edit</button>
+    <div class="row justify-content-center">
+        <button type="submit" class="btn button-1 justify-content-center">Edit</button>
+    </div>
 </form>
 
 {%endblock%}
