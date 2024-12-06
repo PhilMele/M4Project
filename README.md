@@ -1752,9 +1752,56 @@ Useful links:
 
 ### 5.1 Heroku Deployment <a name="heroku-deployment"></a>
 
+**Heroku Deployment**
+
+In order to setup django for deployment on Heroku, the following steps were followed:
+
+* Log into heroku : `heroku login`
+* Add heroku remote : `git remote add heroku [Heroku Git URL]` (can be found in Heroku Settings)
+* Push code to Heroku: `git push heroku master`
+* Run first migration: `heroku run python manage.py migrate`
+
+**Problem encountered**: the Procfile generated with command line from documentation echo web: gunicorn app:app > Procfile created an issue relating to encoding. The encoding defaulted to UTF-16 instead of UTF-8.
+
+To solve this problem: create a new Procfile through a Notepad, selected encoding UTF-8 and called it Procfile.txt in the same location as the actual Procfile. I then deleted the previous Procfile and renamed Procfile.txt to Procfile.
+
+Credits & Useful Links:
+* Procfile encoding solution: https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
+
+
+**Setup production environement**
+
+In your settings.py add:
+
+    DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+
+In your Heroku Variable add `DJANGO_DEBUG` as `False`.
+
+By default, if this is not specified, the server will consider as a development environement.
+
+Add whitenoise in settings.py to middleware list
+
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+**Error encountered**: `MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.`. whitenoise wasnot installed. Adding whitenoise corrected the error.
+
+**Error encountered**: css file not loading in production. This problem was solved by moving `'whitenoise.middleware.WhiteNoiseMiddleware',` to the top.
+
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        #whitenoise package : used for production to be set at the top
+        'whitenoise.middleware.WhiteNoiseMiddleware',    
+    ]
+
+Final note: everytime the static folder is changed, in particular for css, `python manage.py collectstatic` needs to be run from the console to push the changes to staticfiles.
+
+**Credits & Useful Link:**
+* https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
+* https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
+* https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
+
+
 ## 8. Credits <a name="credits"></a>
-
-
 
 * `getLocation()` is a copy of `HTML Geolocation API` from W3Schools (https://www.w3schools.com/html/html5_geolocation.asp
 )
@@ -1764,8 +1811,10 @@ Useful links:
 * Crispy Form Documentation: https://django-crispy-forms.readthedocs.io/en/latest/
 * Django Documentation: https://docs.djangoproject.com/en/5.1/topics/http/decorators/
 * Gareth Mc Girr (mentor) who guided through this process
+* Procfile encoding: https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
+* Django Deployment: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
 
-In additon, there is a large number of stackoverflow, reddits and github posts that I should credit but didnt take note of them as I was trying out different solutions.
+**In additon**, there is a large number of stackoverflow, reddits and github posts that I should credit but didnt take note of them as I was trying out different solutions.
 
 # colour palette
 
