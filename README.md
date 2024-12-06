@@ -140,6 +140,12 @@ No time spent in the outside cold.
 ## 2. Design <a name="design"></a>
 
 ### 2.1 Colours <a name="colours"></a>
+
+The main colours used for this project are the following:
+
+
+![rendering](static/images/readme_images/colour_scheme/colour-scheme.png)
+
 ### 2.1 Typography <a name="typography"></a>
 ### 2.1 Icons & Images <a name="icons-images"></a>
 
@@ -1695,7 +1701,21 @@ Currently the parking manager can:
 ## 7. Deployment <a name="deployment"></a>
 
 ### 7.1 Local Deployment <a name="local-deployment"></a>
+**Project Deployment - Local**
 
+**Project Creation**: The project starts by creating a folder from VS Code name M4Project.
+
+Once the folder is created, click on folder to start from sratch.
+
+**Local Deployment**: To copy this project, you can use git clone from your terminal.
+
+Go to the terminal and input: git clone https://github.com/PhilMele/M4Project.git in the directory you wish to have the project folder in.
+
+Using your code editor, such as VS Code: 
+* click on open folder 
+* click on the newly created folder.
+
+**Database Deployment - PostGres**
 To install PostGres on local, the following steps were followed.
 
 To set up of PostGres on Local run : `pip install psycopg2` 
@@ -1738,13 +1758,18 @@ Once this is done, you will want your data stored in a your .env file, to avoid 
         }
     }
 
-* Add valuest to variables to .env file. Note these dont need to be in string format, as they are considered strings by default:
+* Add values to variables to .env file. Note these dont need to be in string format, as they are considered strings by default. For this project, values need to attached to the following variables:
 
-    DB_NAME=m4project # your project name
-    DB_USER=username # your username
-    DB_PASSWORD=password # your password
-    DB_HOST=localhost
-    DB_PORT=5432
+    # stripe
+    STRIPE_PUBLIC_KEY_TEST = 'value'
+    STRIPE_SECRET_KEY_TEST ='value'
+    STRIPE_WEBHOOK_SECRET_TEST = 'value'
+    # local and heroku
+    DATABASE_URL= 'value'
+    DJANGO_SECRET_KEY = 'value'
+    # for gmail
+    EMAIL_HOST_USER = 'value'
+    EMAIL_HOST_PASSWORD = 'value'
 
 Useful links:
 * Instal postgres on local: https://www.postgresql.org/download/
