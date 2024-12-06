@@ -12,7 +12,6 @@ import math
 
 #stripe modul imports
 
-from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import stripe
 import time

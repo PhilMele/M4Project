@@ -1487,24 +1487,146 @@ Successful confirmation will eventually trigger an payment confirmation email be
 </p>
 </details>
 
-
-
 ![rendering](static/images/readme_images/ui/payment_confirmation_email/payment-confirmation-email.png)
-
 
 **error encountered**: `stripe_webhook not found`. As my webhook view in not included in my main app, the console logs were showing a failed attempt at retrieving `stripe_webhook` path. The issue was solved by adding the name to the webhook path in the Stripe platform: `https://[domain-name]/parking_activity/stripe_webhook/`. 
 
-Credits: The solution was brough to me by RyanM on Stackoverflow after I posted my question: https://stackoverflow.com/questions/79256457/django-stripe-webhook-not-found/79256537#79256537 
-
-Credits:
+**Useful Links & Credits:**
 * Overall Stripe Integration: The tutorial provided by the course material wasnt adapted to what I was looking for. Instead I followed the tutorial from this video (https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s) and made a number of changes to suit my project.
-* `stripe_webhook not found`: https://stackoverflow.com/questions/79256457/django-stripe-webhook-not-found/79256537#79256537 
-
+* `stripe_webhook not found`: The solution was brough to me by RyanM on Stackoverflow after I posted my question: https://stackoverflow.com/questions/79256457/django-stripe-webhook-not-found/79256537#79256537 
 
 
 ### 3.14 Crispy Forms <a name="cripsy"></a>
+
+The improve the layout of the forms, the project includes the use of crispy forms.
+
+**Implementation steps**:
+* Run `pip install django-crispy-forms`
+* Run `pip install crispy-bootstrap5`
+
+
+* In Installed_apps (**Settings.py**) add:
+
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        ...
+        #crispy form packages
+        'crispy_forms',
+        'crispy_bootstrap5',
+
+    ]
+* In Settings.py, add:
+
+    CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+* add to template:
+    {% load crispy_forms_tags %}
+
+* add to form fields:
+    {{ variable|as_crispy_field }}
+
+**Useful Links & Credits:**
+* Documentation: https://django-crispy-forms.readthedocs.io/en/latest/
+
+
 ### 3.15 Decorators <a name="decorators"></a>
+
+The project makes a thorough of of the login_required decorator.
+
+It allows to force a user to be authenticated before accessing a specific function and related template.
+
+With the exception of login and register templates, all other function have a decorator.
+
+    from django.contrib.auth.decorators import login_required
+
+        @login_required
+        def index(request):
+        ...
+
+Other decorators in use: 
+* @csrf_exempt - to remove the need for CSRF token in Stripe callback
+* @require_POST - restricts a view to only accept POST methods 
+
+**Useful Links & Credits:**
+* Documentation: https://docs.djangoproject.com/en/5.1/topics/http/decorators/
+
+
 ### 3.16 Custom Error Handlers <a name="error-handler"></a>
+
+The project implements custom error handlers, allowing to gracefully handle potential error communicated by the browser to the user.
+
+Custom templates list:
+* 404 error
+* 500 error
+* 403 error
+* 400 error
+
+Templates are located in: `user_management\templates\errors`
+
+![rendering](static/images/readme_images/ui/custom_error_handler/404-custom-error-handler.png)
+
+
+<summary>Click to see code for urls.py (project level)</summary>
+<p>
+    from django.conf.urls import handler404, handler500, handler403, handler400
+
+    urlpatterns = [....
+    ] 
+
+    handler404 = 'user_management.views.handler404'
+    handler500 = 'user_management.views.handler500'
+    handler403 = 'user_management.views.handler403'
+    handler400 = 'user_management.views.handler400'
+                
+</p>
+</details>
+
+    
+<summary>Click to see code for views.py (app level)</summary>
+<p>
+
+In views.py (app level):
+
+    def handler404(request, exception):
+        """ Handle 404 errors and render the custom 404 error page """
+        return render(request, 'errors/404.html', status=404)
+
+
+    def handler500(request):
+        """ Handle 500 errors and render the custom 500 error page """
+        return render(request, 'errors/500.html', status=500)
+
+
+    def handler403(request, exception):
+        """ Handle 403 errors and render the custom 403 error page """
+        return render(request, 'errors/403.html', status=403)
+
+
+    def handler400(request, exception):
+        """ Handle 400 errors and render the custom 400 error page """
+        return render(request, 'errors/400.html', status=400)
+
+
+    def test_500_error(request: HttpRequest):
+        """ Raise a test exception for the 500 error handler """
+        raise Exception("Test 500 error")
+
+
+    def test_403_error(request):
+        """ Raise a test exception for the 403 error handler """
+        raise PermissionDenied("Test 403 error")
+
+
+    def test_400_error(request):
+        """ Raise a test exception for the 400 error handler """
+        raise SuspiciousOperation("Test 400 error")
+            
+</p>
+</details>
+
+
+
+
 ### 3.17 Parking Inspector <a name="parking-inspector"></a>
 
 ## 4. Technologies <a name="tech"></a>
@@ -2243,55 +2365,7 @@ login_required
 
 
 ## error handlers
-urls.py (project level):
 
-    from django.conf.urls import handler404, handler500, handler403, handler400
-
-    urlpatterns = [....
-    ] 
-
-    handler404 = 'user_management.views.handler404'
-    handler500 = 'user_management.views.handler500'
-    handler403 = 'user_management.views.handler403'
-    handler400 = 'user_management.views.handler400'
-
-In views.py (app level):
-
-    def handler404(request, exception):
-        """ Handle 404 errors and render the custom 404 error page """
-        return render(request, 'errors/404.html', status=404)
-
-
-    def handler500(request):
-        """ Handle 500 errors and render the custom 500 error page """
-        return render(request, 'errors/500.html', status=500)
-
-
-    def handler403(request, exception):
-        """ Handle 403 errors and render the custom 403 error page """
-        return render(request, 'errors/403.html', status=403)
-
-
-    def handler400(request, exception):
-        """ Handle 400 errors and render the custom 400 error page """
-        return render(request, 'errors/400.html', status=400)
-
-
-    def test_500_error(request: HttpRequest):
-        """ Raise a test exception for the 500 error handler """
-        raise Exception("Test 500 error")
-
-
-    def test_403_error(request):
-        """ Raise a test exception for the 403 error handler """
-        raise PermissionDenied("Test 403 error")
-
-
-    def test_400_error(request):
-        """ Raise a test exception for the 400 error handler """
-        raise SuspiciousOperation("Test 400 error")
-
-Add templates in: `app_name/templates/errors/template_name`
 
 ## Problem encountered - user getting logged out on mobile phone 
 when opening new borwser window when scanning QR code
