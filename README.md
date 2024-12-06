@@ -32,6 +32,8 @@ remove commentedout text in dahsboard blocks if layout is good
 in rateform, add a validator that prevents user adding another rate with same hour range
 re-add fields to all forms
 check if payment confirmation email is sent twice again
+In history setcion: add pagination + filter to make the search of specific transaction easier.
+
 
 # M4Project - GeoPay
 
@@ -1265,7 +1267,7 @@ The role of this function is retrieve the stay object id, and add the calculated
 
 ### 3.13 Stripe Payment Integration <a name="stripe"></a>
 
-**Phase - Payment**
+**Phase 1 - Payment**
 
 Following succesful completion of `fee_form()`, the user is returned to `leave()` for payment handling.
 
@@ -1326,45 +1328,179 @@ A local variable `price_object` is defined. The role of this variable is to crea
 
 
 
-Following creation of `price_object`, a Stripe Checkout session is created with var `checkout_session`. This checkout session pushes the price and `price_object` id to Stripe.
+Following **Phase 1 - Payment**
 
-From there, Stripe will either return a succesfull or failed payment and return the use to the relevant template.
+Following the successful completion of `fee_form()`, the user is returned to `leave()` for payment handling.
 
-Before returning the user to the appropriate template, the `stay_id` model object is updated with the stripe checkout ID.
+Payment handling is managed through a Stripe integration, detailed below.
+
+The process starts with the `payment()` function, which takes `applicable_fee` and `stay_id` as parameters. This function begins by retrieving the `STRIPE_SECRET_KEY_TEST` from the `.env` file and converting the `applicable_fee` from pounds to pence (as required by Stripe). 
+
+<details>
+<summary>Click to see code</summary>
+<p>
+    # Set API key to avoid "No API key provided" error
+    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    amount_int = int(applicable_fee * 100)  # Convert pounds to pence
+</p> </details>
+
+The function checks if the user has an existing Stripe customer ID in their profile (UserProfile model). If not, it creates a new customer on Stripe and saves the ID to the user's profile.
+
+<details> <summary>Click to see code</summary> <p>
+    if not request.user.userprofile.stripe_customer_id:
+        customer = stripe.Customer.create(
+            email=request.user.email
+        )
+        request.user.userprofile.stripe_customer_id = customer.id
+        request.user.userprofile.save()
+</p> </details>
+
+A price_object is created to represent the payment amount and currency on Stripe. This object is essential for generating the checkout session.
+
+<details> <summary>Click to see code</summary> <p>
+    price_object = stripe.Price.create(
+        unit_amount=amount_int,  # Amount in pence
+        currency="gbp",          # British Pounds
+        product_data={
+            "name": "Parking Fee"
+        }
+    )
+</p> </details>
+
+After creating the price_object, a Stripe checkout session is initialized. The session includes the price details, payment method options, and success or cancellation URLs. Stripe returns the user to these URLs based on payment status.
+
+<details><summary>Click to see code</summary> <p>
+    checkout_session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price': price_object.id,
+            'quantity': 1,
+        }],
+        mode='payment',
+        customer=request.user.userprofile.stripe_customer_id,
+        success_url=settings.REDIRECT_DOMAIN + 'parking_activity/payment_successful?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url=settings.REDIRECT_DOMAIN + 'parking_activity/payment_cancelled',
+    )
+</p> </details>
+
+Finally, the stay_id model object is updated with the Stripe checkout session ID for tracking, and the user is redirected to the Stripe-hosted checkout page.
+
+<details> <summary>Click to see code</summary> <p>
+    stay = Stay.objects.get(id=stay_id)
+    stay.stripe_checkout_id = checkout_session.id
+    stay.save()
+
+    return redirect(checkout_session.url)
+</p> </details>
+
+
+**Phase 2 - Payment Confirmation (Stripe Webhook)**
+
+Following successful payment, the user recieves an email confirmation.
+
+This process is managed by `stripe_webhook()`.
+
+After successful payment, Stripe will send a query back to the server and starts with a few validation.
+
 
 <details>
 <summary>Click to see code</summary>
 <p>
 
-    #create chekcout session
-    checkout_session = stripe.checkout.Session.create(
-        payment_method_types=['card'],
-        line_items=[{
-            'price':price_object.id,
-            'quantity':1,
-        },],
-        mode='payment',
-        customer=request.user.userprofile.stripe_customer_id,
-        success_url = settings.REDIRECT_DOMAIN + 'parking_activity/payment_successful?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url = settings.REDIRECT_DOMAIN + 'parking_activity/payment_cancelled',
-    )
+    @csrf_exempt
+    def stripe_webhook(request):
 
-    #update stay model field with strip checkout id
-    stay = Stay.objects.get(id=stay_id)
-    stay.stripe_checkout_id = checkout_session.id
+        print("enter webhook")
+        stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    
+        payload = request.body
+        signature_header = request.META.get('HTTP_STRIPE_SIGNATURE')
+        webhook_secret = settings.STRIPE_WEBHOOK_SECRET_TEST
+        event = None
+        try:
+            event = stripe.Webhook.construct_event(
+                payload, signature_header, webhook_secret
+            )
+        except ValueError as e:
+            print(f"Invalid payload: {str(e)}")  # Log the error for debugging
+            return HttpResponse(status=400)
+        except stripe.error.SignatureVerificationError as e:
+            print(f"Signature verification failed: {str(e)}")  # Log the error for debugging
+            return HttpResponse(status=400)
+        ...
+                
+</p>
+</details>
+
+
+Following successful validation, Stripe will look to push payment confirmation to the server, updating the `stay_id` object from False to True.
+
+<details>
+<summary>Click to see code</summary>
+<p>
+
+    # retrieve user payment record
+    stay = Stay.objects.get(stripe_checkout_id=session_id)
+    line_items = stripe.checkout.Session.list_line_items(session_id,limit=1)
+    stay.paid = True
     stay.save()
                 
 </p>
 </details>
 
 
-**Phase 2 - Payment Confirmation (Stripe Webhook)**
+
+Successful confirmation will eventually trigger an payment confirmation email being sent to the user.
 
 
-error encountered: webhook address need to include app name `https://[domain-name]/parking_activity/stripe_webhook/`
+<summary>Click to see code</summary>
+<p>
 
+    subject = "Payment Confirmation"
+                context = {
+                    'username': stay.user.user.username,
+                    'stripe_checkout_id': stay.stripe_checkout_id,
+                    'transaction_id': stay.id,
+                    'amount_paid': stay.calculated_fee,
+                    'parking_name': stay.parking_name.name,
+                }
+
+                # prepare email
+                message = render_to_string('email/payment_confirmation_email.html', context)
+                email_reciever = stay.user.user.email
+
+                # send email
+                try:
+                    send_mail(
+                        subject,
+                        message,
+                        settings.DEFAULT_FROM_EMAIL,
+                        [email_reciever],
+                        html_message=message,
+                        fail_silently=False,
+                    )
+                    logger.info('Email sent successfully')
+                except Exception as e:
+                    logger.error('Error sending email: %s', str(e))
+                print('email is sent')
+                
+</p>
+</details>
+
+
+
+![rendering](static/images/readme_images/ui/payment_confirmation_email/payment-confirmation-email.png)
+
+
+**error encountered**: `stripe_webhook not found`. As my webhook view in not included in my main app, the console logs were showing a failed attempt at retrieving `stripe_webhook` path. The issue was solved by adding the name to the webhook path in the Stripe platform: `https://[domain-name]/parking_activity/stripe_webhook/`. 
+
+Credits: The solution was brough to me by RyanM on Stackoverflow after I posted my question: https://stackoverflow.com/questions/79256457/django-stripe-webhook-not-found/79256537#79256537 
 
 Credits:
+* Overall Stripe Integration: The tutorial provided by the course material wasnt adapted to what I was looking for. Instead I followed the tutorial from this video (https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s) and made a number of changes to suit my project.
+* `stripe_webhook not found`: https://stackoverflow.com/questions/79256457/django-stripe-webhook-not-found/79256537#79256537 
+
+
 
 ### 3.14 Crispy Forms <a name="cripsy"></a>
 ### 3.15 Decorators <a name="decorators"></a>
