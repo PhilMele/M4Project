@@ -31,6 +31,7 @@ add tutorial on how to add long and lat from google maps to parking latlng
 remove commentedout text in dahsboard blocks if layout is good
 in rateform, add a validator that prevents user adding another rate with same hour range
 re-add fields to all forms
+check if payment confirmation email is sent twice again
 
 # M4Project - GeoPay
 
@@ -1263,18 +1264,107 @@ The role of this function is retrieve the stay object id, and add the calculated
 
 
 ### 3.13 Stripe Payment Integration <a name="stripe"></a>
-redirect to stripe page
-Get stripe id
-PAyment is made
-Email is sent (to do)
-Database records stay objects as paid
-User is redirect to payment successful (or fail)
+
+**Phase - Payment**
+
+Following succesful completion of `fee_form()`, the user is returned to `leave()` for payment handling.
+
+Payment handling is managed through a Stripe integration, which is detailed below.
+
+The Payment handling process starts from `payment()`, taking `applicable_fee`, `stay_id` as parameters.
+
+The function will start by collecting the `STRIPE_SECRET_KEY_TEST` from .env file, and set `applicable_fee` from pence to pounds. 
+
+
+<details>
+<summary>Click to see code</summary>
+<p>
+
+    #set API key the begining to avoid 
+    #"Error in payment process:No API key provided."
+        stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+        amount_int = int(applicable_fee*100)
+
+</p>
+</details>
+
+The function looks for existing stripe ID, in the UserProfile model object.
+
+<details>
+<summary>Click to see code</summary>
+<p>
+
+    #check if userprofile already has a stripe id
+    # Create a customer if not already created
+        if not request.user.userprofile.stripe_customer_id:
+            customer = stripe.Customer.create(
+                email=request.user.email
+            )
+            request.user.userprofile.stripe_customer_id = customer.id
+            request.user.userprofile.save()
+                
+</p>
+</details>
+
+A local variable `price_object` is defined. The role of this variable is to create object in Stripe for future use.
+
+<details>
+<summary>Click to see code</summary>
+<p>
+
+    #create a price object in stripe
+        price_object = stripe.Price.create(
+            unit_amount=amount_int,
+            currency="gbp",
+            product_data={
+                "name":"Parking Fee"
+            }
+        )
+                
+</p>
+</details>
+
+
+
+Following creation of `price_object`, a Stripe Checkout session is created with var `checkout_session`. This checkout session pushes the price and `price_object` id to Stripe.
+
+From there, Stripe will either return a succesfull or failed payment and return the use to the relevant template.
+
+Before returning the user to the appropriate template, the `stay_id` model object is updated with the stripe checkout ID.
+
+<details>
+<summary>Click to see code</summary>
+<p>
+
+    #create chekcout session
+    checkout_session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price':price_object.id,
+            'quantity':1,
+        },],
+        mode='payment',
+        customer=request.user.userprofile.stripe_customer_id,
+        success_url = settings.REDIRECT_DOMAIN + 'parking_activity/payment_successful?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url = settings.REDIRECT_DOMAIN + 'parking_activity/payment_cancelled',
+    )
+
+    #update stay model field with strip checkout id
+    stay = Stay.objects.get(id=stay_id)
+    stay.stripe_checkout_id = checkout_session.id
+    stay.save()
+                
+</p>
+</details>
+
+
+**Phase 2 - Payment Confirmation (Stripe Webhook)**
+
 
 error encountered: webhook address need to include app name `https://[domain-name]/parking_activity/stripe_webhook/`
 
-**Phase 4 - Payment**
 
-**Phase 4 - Payment Confirmation**
+Credits:
 
 ### 3.14 Crispy Forms <a name="cripsy"></a>
 ### 3.15 Decorators <a name="decorators"></a>

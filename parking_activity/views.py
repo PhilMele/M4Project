@@ -314,7 +314,7 @@ def payment(request,applicable_fee,stay_id):
         #create a price object in stripe
         price_object = stripe.Price.create(
             unit_amount=amount_int,
-            currency="usd",
+            currency="gbp",
             product_data={
                 "name":"Parking Fee"
             }
@@ -366,6 +366,7 @@ def payment_successful(request):
     messages.success(request, "Payment successfull!")
     
     return render(request, 'payment/payment_successful.html',{'customer':customer})
+
 
 @login_required
 def payment_cancelled(request):
