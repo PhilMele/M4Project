@@ -27,6 +27,8 @@ from django.core.mail import send_mail
 # debugging
 import logging
 
+logger = logging.getLogger(__name__)
+
 # Create your views here.
 def is_parking_customer(request):
     print(f'request.user.userprofile.user_type: {request.user.userprofile.user_type}')
@@ -376,9 +378,10 @@ def payment_cancelled(request):
 
 @csrf_exempt
 def stripe_webhook(request):
+
     print("enter webhook")
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
-    time.sleep(10) # time left to stripe to process payment
+   
     payload = request.body
     signature_header = request.META.get('HTTP_STRIPE_SIGNATURE')
     webhook_secret = settings.STRIPE_WEBHOOK_SECRET_TEST
@@ -405,12 +408,12 @@ def stripe_webhook(request):
             stay = Stay.objects.get(stripe_checkout_id=session_id)
             line_items = stripe.checkout.Session.list_line_items(session_id,limit=1)
             stay.paid = True
-            user_payment.save()
+            stay.save()
 
             # prepare email
             subject = "Email tets"
             message = ("this is a test email")
-            email_reciever = user_payment.user.email
+            email_reciever = stay.user.user.email
 
             # send email
             try:
@@ -425,8 +428,8 @@ def stripe_webhook(request):
             except Exception as e:
                 logger.error('Error sending email: %s', str(e))
             print('email is sent')
-        except UserPayment.DoesNotExist:
-            print("UserPayment record not found for session")
+        except Stay.DoesNotExist:
+            print("Stay record not found for session")
         except Exception as e:
             print(f"Error handling webhook: {str(e)}")
 
