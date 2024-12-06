@@ -1,11 +1,18 @@
 <div class="container">
-    
+    <hr>
     <div class="row justify-content-center">
         <h2 class="center">Applicable Rates</h2>
     </div>
-    <div class="row justify-content-center">
-        <a class="btn button-1" href="{% url 'add-rate' parking_id=parking.id %}">Add New Rate</a>
+
+    <div class="row table-row">
+        <div class="col-12 col-md-4 text-center d-flex align-items-center justify-content-center">
+            <p>This section displays applicable rates. Click the green button to add a new rate.</p>
+        </div>
+        <div class="col-12 col-md-8 d-flex align-items-center justify-content-center">
+            <a class="btn button-1 justify-content-center" href="{% url 'add-rate' parking_id=parking.id %}">Add New Rate</a>
+        </div>
     </div>
+    
     <hr>
 
     {%for rate in rates %}
@@ -14,16 +21,20 @@
             <div class="col"><b>{{rate.rate_name}}</b></div>
         </div>
         <div class="row">
-            <div class="col">Multiplier: {{rate.hour_range}}</div>
-            <div class="col">Rate: £{{rate.rate}}</div>
+            <div class="col-4 text-center d-flex align-items-center justify-content-center">Multiplier: {{rate.hour_range}}</div>
+            <div class="col-8 d-flex align-items-center justify-content-center">Rate: £{{rate.rate}}</div>
 
         </div>
         <div class="row padding-bottom">
-            <div class="col">
-                <a class="btn button-3 full-width" href="{% url 'delete-rate' rate_id=rate.id parking_id=parking.id %}">Delete</a>
+            <div class="col-4 text-center d-flex align-items-center justify-content-center">
+                <a class="btn button-3 justify-content-center" href="{% url 'delete-rate' rate_id=rate.id parking_id=parking.id %}">
+                    <span class="d-none d-sm-inline">Delete</span>
+                    <span class="d-inline d-sm-none">X</span>
+                </a>
+                <!-- <a class="btn button-3" href="{% url 'delete-rate' rate_id=rate.id parking_id=parking.id %}">Delete</a> -->
             </div>
-            <div class="col">
-                <a class="btn button-2 full-width" href="{% url 'edit-rate' rate_id=rate.id parking_id=parking.id %}">Edit</a>
+            <div class="col-8 d-flex align-items-center justify-content-center">
+                <a class="btn button-2" href="{% url 'edit-rate' rate_id=rate.id parking_id=parking.id %}">Edit</a>
             </div>
         </div>
     </div>

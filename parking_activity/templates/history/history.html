@@ -3,12 +3,14 @@
 
 {% block content %}
 
-
 <div class="container">
-    {% for stay in user_history %} 
 
+<h1>Transaction History</h1>
+
+<p>From this page, you can see all your parking transactions made through the GeoPay.</p>
+    {% for stay in user_history %} 
     <!-- table for each transaction -->
-    <div class="table-row-div"> 
+    <div class="table-row-div history-container"> 
 
         <!-- Parking Name --> 
         {% block parking_name_block %}

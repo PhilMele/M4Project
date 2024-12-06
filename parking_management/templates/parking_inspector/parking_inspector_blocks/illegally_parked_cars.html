@@ -9,7 +9,7 @@
             <div class="col-4">    
                 <form action="{% url 'delete-car-reg' parking_id=parking.id illegalparking_id=illegalparking.id  %}" method="POST">
                     {% csrf_token %} 
-                    <button type="submit" class="btn button-3">X</button>
+                    <button type="submit" class="btn button-3 justify-content-center">X</button>
                 </form>
             </div>
         </div>  

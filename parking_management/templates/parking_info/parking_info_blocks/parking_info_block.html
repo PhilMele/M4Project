@@ -26,14 +26,14 @@
                                     {% if parking.active %}
                                         <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn button-3">
+                                            <button type="submit" class="btn button-3 w-100">
                                                 Deactivate
                                             </button>
                                         </form>
                                     {% else %}
                                         <form method="post" action="{% url 'activate-parking' parking_id=parking.id %}">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn button-1">
+                                            <button type="submit" class="btn button-1 w-100">
                                                 Activate
                                             </button>
                                         </form>
@@ -82,11 +82,11 @@
 
     <!-- Parking Inspector -->
     <div class="row padding-bottom w-100 table-row">
-        <div class="col d-flex align-items-center justify-content-center">
+        <div class="col-4 text-center d-flex align-items-center justify-content-center">
             <i class="fa-solid fa-magnifying-glass icon-colour-bg full-size-icon fa-5x"></i>
         </div>
-        <div class="col d-flex align-items-center justify-content-center">
-            <a class="btn button-1" href="{% url 'parking-inspector' parking_id=parking.id %}">Parking Inspector</a>
+        <div class="col-8 d-flex align-items-center justify-content-center">
+            <a class="btn button-1 display-flex justify-content-center" href="{% url 'parking-inspector' parking_id=parking.id %}">Parking Inspector</a>
         </div>
     </div>
 

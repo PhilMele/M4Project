@@ -33,6 +33,7 @@ in rateform, add a validator that prevents user adding another rate with same ho
 re-add fields to all forms
 check if payment confirmation email is sent twice again
 In history setcion: add pagination + filter to make the search of specific transaction easier.
+Add Favicon
 
 
 # M4Project - GeoPay
@@ -544,7 +545,6 @@ To set up AWS S3 bucket, the following steps need to be followed:
 * In setting.py:
 
     INSTALLED_APPS = [
-    
         #S3 bucket
         'storages',
     ]
@@ -576,9 +576,16 @@ The template includes `geolocation.js`, which capture the user's geolocation to 
 
 Supported by `provide_car_reg.js`, the function also restricts users from checking in, if they havent provided their car registration:
 
+<details>
+<summary>Click to see code</summary>
+<p>
     car_reg = False
     if request.user.userprofile.car_registration:
         car_reg= True
+</p>
+</details>
+
+
 
 ### 3.6 Parking Manager Dashboard <a name="parking-manager-dashboard"></a>
 
@@ -609,12 +616,14 @@ This feature uses a django for: `ParkingForm()` which looks to populate fields d
 
 **Important Note**: it is through these field, the geofence is defined. A default radius of 50 meters is applied. This radius should be extended to at least 850 meters if a device other than a mobile phone is used.
 
-**Validators**
+**Validators - LatLng:**
 
-**LatLng:** With regards to latitude and longitude fields, the form implements a restriction with Regex patterns, and only accepts digits and `-` signs, to ensure values are properly implemented.
+With regards to latitude and longitude fields, the form implements a restriction with Regex patterns, and only accepts digits and `-` signs, to ensure values are properly implemented.
 
+<details>
+<summary>Click to see code</summary>
+<p>
     class ParkingForm(forms.ModelForm):
-
         # restricts values in lat lng fields to didgits only
         latitude = forms.CharField(
             validators=[
@@ -635,8 +644,12 @@ This feature uses a django for: `ParkingForm()` which looks to populate fields d
             ],
             widget=forms.TextInput(attrs={'aria-label': 'Longitude', 'placeholder': 'Enter longitude'})
         )
+</p>
+</details>
 
-**Note**: this regex synthax need to be credited to Stackoverflow post here: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+
+**Credits & Useful Links**: 
+* This regex synthax is credited to Stackoverflow post: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
 
 How does Regex work:
 * ^: Defines the start of the string.
@@ -646,7 +659,12 @@ How does Regex work:
 * $: Defines the end of the string.
 
 
-**Mandatory fields:** This form sets all fields as mandatory, in forms.py, with the exception of street_address2 field:
+**Validators - Mandatory Field:** This form sets all fields as mandatory, in forms.py, with the exception of street_address2 field:
+
+
+<details>
+<summary>Click to see code</summary>
+<p>
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -657,11 +675,10 @@ How does Regex work:
 
         # make  street_address2 not required
         self.fields['street_address2'].required = False
+</p>
+</details>
 
 Upon success of the form being saved, the user is redirect to the parking_object page managed by `parking_info()`.
-
-Useful links:
-* Stackover post on Regex for LatLng values: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
 
 
 ### 3.8 Read, Edit & Delete Parking <a name="read-edit-delete-parking"></a>
@@ -682,6 +699,10 @@ Parking status advises whether, the `parkind_id` is active or innactive.
 For a user to check-in a parking, the parking needs to be `activate`.
 
 Activating and deactivating parking is enabled with `activate_parking()`. Taking `parking_id` as a parameter, it either switch the parking on and off.
+
+<details>
+<summary>Click to see code</summary>
+<p>
 
     @require_POST
     @login_required
@@ -712,18 +733,40 @@ Activating and deactivating parking is enabled with `activate_parking()`. Taking
         messages.success(request, f"{parking.name} has been {'activated' if parking.active else 'deactivated'}.")
         return redirect('parking-info', parking_id=parking_id)
 
+</p>
+</details>
+
 The button that triggers this function on the template under :
+
+
+
+<details>
+<summary>Click to see code</summary>
+<p>
 
     <div class="col">
         <a class="btn button-2 full-width" href="{% url 'parking-info' parking_id=item.parking.id %}">Info</a>
     </div>
 
+</p>
+</details>
+
+
 **Note**: Parking objects cannot be activated unless they are provided at least with 1 applicable rate. This rule is set in force in both backend, where the logic will check if the an existing rate has been attached to this `parking_id` and display an error message, and in the front end by hiding the "Activate" button.
+
+<details>
+<summary>Click to see code</summary>
+<p>
 
     if not rate_exist:
         print('rate_exist is empty')
         messages.error(request, f"Add a rate before activating parking.")
         return redirect('parking-info', parking_id=parking.id)
+    
+</p>
+</details>
+
+
 
 **Parking Spaces Available**
 
@@ -736,19 +779,32 @@ The function returns this value through var `stay_objects_count` to `parking_inf
 This variable is then returned on the template in `parking_info.html`, via `parking_info_block.html`.
 
 
-parking_info.html
+
+<details>
+<summary>Click to see parking_info.html</summary>
+<p>
 
     {% block parking_info_block %}
         {% include 'parking_info/parking_info_blocks/parking_info_block.html' %}
     {% endblock %}
+    
+</p>
+</details>
 
-parking_info_block.html
+
+<details>
+<summary>Click to see parking_info_block.html</summary>
+<p>
 
     <div class="row d-flex align-items-center justify-content-center">
         <span>
             {{stay_objects_count}}/{{parking.max_capacity}}
         </span>
     </div>
+    
+</p>
+</details>
+
 
 **Parking Inspector & Rates**
 
@@ -780,6 +836,9 @@ The form contains validators ensuring:
 * all fields are populated
 * rate value is above 0.
 
+<details>
+<summary>Click to see parking_info_block.html</summary>
+<p>
 
     class RateForm(ModelForm):
 
@@ -800,6 +859,10 @@ The form contains validators ensuring:
             widget=forms.TextInput(attrs={'placeholder': 'Enter applicable rate'}),
             validators=[MinValueValidator(0.01)]  # prevents user to under values under or equal to 0 
         )
+    
+</p>
+</details>
+  
 
 **Note for future development:** It would make sense to allow for the rate to be equal to 0, as some parkings offer free stay during an initial hour range. The current code will need to be modified. Currently, without this validator, stripe will not consider a fee of "0" value as payment. This is probably an easy fix.
 
@@ -832,6 +895,11 @@ From this point, the check-in process can be divided into 3 phases:
 
 If the user profile has a car registration number, the user will be able to access the "Check-In" button. By clicking the button `getLocation()` triggers which will populate 2 hidden inputs. `getLocation()` is a javascript function managed by `geolocation.js` (path: static/js/geolocation.js)
 
+
+<details>
+<summary>Click to see parking_info_block.html</summary>
+<p>
+
     <div class="col-12 col-md-4 mt-3 mt-md-0">
         <form action="{% url 'get_parking_location' %}" class="w-100" method="POST">
             {% csrf_token %}
@@ -842,10 +910,10 @@ If the user profile has a car registration number, the user will be able to acce
             </button>
         </form>
     </div>
+    
+</p>
+</details>
 
-**Credits**: 
-* `getLocation()` is a copy of `HTML Geolocation API` from W3Schools (https://www.w3schools.com/html/html5_geolocation.asp
-)
 
 These two hidden inputs will capture the user's latitude and longitude.
 
@@ -856,12 +924,15 @@ The role of `get_parking_location()` is to look for a matching geolocation betwe
 In order to do so, `get_parking_location()` collects the values in `user_latitude` and `user_longitude` variables which are fed by the hidden input fields populate by the javascript function.
 
     if request.method == "POST":
-
         # capture user current location
         user_latitude = request.POST.get('latitude')
         user_longitude = request.POST.get('longitude')
         print(f'user_latitude = {user_latitude}')
         print(f'user_longitude = {user_longitude}')
+
+**Credits & Useful Link**: 
+* `getLocation()` is a copy of `HTML Geolocation API` from W3Schools (https://www.w3schools.com/html/html5_geolocation.asp
+)
 
 **Phase 2 - Capturing Matching Parking Geolocation**
 
@@ -1846,6 +1917,7 @@ Final note: everytime the static folder is changed, in particular for css, `pyth
 * Gareth Mc Girr (mentor) who guided through this process
 * Procfile encoding: https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
 * Django Deployment: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
+* Regex Synthax: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
 
 **In additon**, there is a large number of stackoverflow, reddits and github posts that I should credit but didnt take note of them as I was trying out different solutions.
 
