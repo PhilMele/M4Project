@@ -143,11 +143,17 @@ No time spent in the outside cold.
 
 The main colours used for this project are the following:
 
-
 ![rendering](static/images/readme_images/colour_scheme/colour-scheme.png)
 
-### 2.1 Typography <a name="typography"></a>
-### 2.1 Icons & Images <a name="icons-images"></a>
+### 2.2 Typography <a name="typography"></a>
+
+The project uses Albert Sans, to create a modern and accessible font.
+
+The font is sourced from Google.
+
+![rendering](static/images/readme_images/typography/typography.png)
+
+### 2.3 Icons & Images <a name="icons-images"></a>
 
 Icons and images are hosted on S3 Bucket:
 
@@ -156,8 +162,10 @@ Icons and images are hosted on S3 Bucket:
 * Other icons, in particular those used in email find are sourced from Icons8;
 * There is no actual images, as it did not add any value to the purpose of the product
 
-### 2.1 Wireframes <a name="wireframes"></a>
-### 2.1 Databases <a name="databases"></a>
+### 2.4 Wireframes <a name="wireframes"></a>
+
+
+### 2.5 Databases <a name="databases"></a>
 
 <details>
     <summary>Click to see ER Diargram</summary>
