@@ -33,6 +33,12 @@ h1 {
 
 h2 {
     font-size: 1rem;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 
@@ -43,7 +49,7 @@ a{
 
 /* set text to black even if href if missing */
 a:not([href]) {
-    color: #344E5C;
+    color: #0D1A3A;
 }
 
 /* Specific */
@@ -58,6 +64,10 @@ a:not([href]) {
 
 .center{
     text-align: center;
+}
+
+.pad-right-0{
+    padding-right: 0;
 }
 
 /* Authentication */
@@ -232,21 +242,29 @@ footer {
 .button-1{
     background: #4AB19D;
     color: #0D1A3A;
+    width: 100%;
+    display: flex;
 }
 
 .button-2{
     background: #EFC958;
     color:#0D1A3A;
+    width: 100%;
+    display: flex;
 }
 
 .button-3{
     background: #EF3D59;
     color: #0D1A3A;
+    width: 100%;
+    display: flex;
 }
 
 .button-4{
     background: #E17A47;
     color:#0D1A3A;
+    width: 100%;
+    display: flex;
 }
 
 .full-width{
@@ -308,4 +326,47 @@ tr:hover {
 /* Error Handling */
 .error-height{
     height: 50vh !important; 
+}
+
+/* Tutorial images */
+.tutorial-image{
+    max-width: 100%;
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+    .large-screen-btn-display {
+        display: flex;
+        width: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .large-screen-btn-display {
+        width: 100%;
+    }
+
+    /* overrides  .button-1 - 
+    used in paring manager dashboard */
+    .button-1.button-1-100 { 
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 400px) {
+    .button-1 {
+        width: 50%;
+    }
+
+    .button-2 {
+        width: 50%;
+    }
+
+    .button-3 {
+        width: 50%;
+    }
+
+    .button-4 {
+        width: 50%;
+    }
 }
