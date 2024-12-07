@@ -1,6 +1,3 @@
-console.log("signup.js is active");
-
-
 document.addEventListener('DOMContentLoaded', function() {
     
     // define form element
@@ -58,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         password = checkPasswordField.value;
         const minChar = 8;
             // 
-        console.log(`password ${password}`)
+
 
         hideError(checkPasswordField);
 
@@ -79,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     confirmPasswordField.addEventListener('input',()=>{
         const confirmPassword = confirmPasswordField.value;
-        console.log(`confirmPassword ${confirmPassword}`)
+
          hideError(confirmPasswordField)
          if(confirmPassword !== password){
             displayError(confirmPasswordField,"Your passwords do not match!")
@@ -119,8 +116,4 @@ document.addEventListener('DOMContentLoaded', function() {
         field.classList.remove('invalid');
     }
 
-    // email confirmation
-    // checkusername
-    // password
-    // password confirmation
 });

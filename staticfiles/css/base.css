@@ -49,7 +49,7 @@ a{
 
 /* set text to black even if href if missing */
 a:not([href]) {
-    color: #0D1A3A;
+    color: white;
 }
 
 /* Specific */
@@ -331,6 +331,11 @@ tr:hover {
 /* Tutorial images */
 .tutorial-image{
     max-width: 100%;
+    text-align: center;
+    border: 5px solid #EFC958;
+    border-radius: 20px;
+    max-width: 450px;
+
 }
 
 /* Media Queries */

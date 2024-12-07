@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("confirm delete account js")
+
     const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
     const deleteAccountForm = document.querySelector('.delete-account-form');
 
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // addevent listner to confirm click
     confirmDeleteBtn.addEventListener('click', function () {
-        console.log("Confirm Delete Button clicked");
+
         deleteAccountForm.submit(); // submit form when clicked
     });
 });

@@ -1,6 +1,5 @@
 
 document.addEventListener('DOMContentLoaded', function(){
-console.log('running')
 
   const latitudeField = document.getElementById("userLatitude")
   const longitudeField = document.getElementById("userLongitude")

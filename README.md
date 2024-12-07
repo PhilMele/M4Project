@@ -3,13 +3,12 @@ add that if the transaction is not paid, button leave should still show.
 Problem: Once a transaction was made and paid. Somehow the user got loggedout during payment and the model didnt get updated with `paid = true`. Only seem to happen on local after I havent connected in a while.
 Error: when I click on Enter, the console shows a brief error message and then disapear
 javascript error on index page due to geolocation
-Correct 500 error when normal user clicks on parking manager dashboard : if user doesnt have permission, redirect to home
 user cannot enter parking if car registration is not populated + userprofile as a whole
 Add back button to all pages
 create filtr that only shows activated parkings to user
 create a button to tell the parking managert o activate parking
 parking can only be activiated with rates have been populated and cannot be 0.
-add footer
+
 fix check-out siccess message at Noneafter selecting manually what parking userchecks in
 fix logout problem when scanning qr code. Might be SSL certificate realted problem.
 Check validators for sign up
@@ -95,6 +94,9 @@ View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target=
    - [Heroku Deployment](#heroku-deployment)
 8. [Credits](#credits)
 
+## Getting Started
+
+
 
 ## 1. User Experience <a name="ux"></a>
 
@@ -125,7 +127,7 @@ No time spent in the outside cold.
 **User Management**
 * As a user, I want to create an account.
 * As a parking user, I want to be able to register my car registration number against my account.
-* As a parking user, I want to be able to edit my account details.
+* As a parking user, I want to be able to edit and delete my account details.
 * As a parking user, I want to be able to mark myself as a user of the parking by clicking on a button to show what time I arrived.
 * As a parking user, I want to automatically mark my entry and exit using geofencing to reduce manual effort.
 * As a parking user, I want to select my parking should geolocation fails.
@@ -138,6 +140,7 @@ No time spent in the outside cold.
 * As a platform, I want to charge the customer based on the time difference between their arrival and departure, multiplied by the hourly fee.
 * As a platform, I want to validate the user's location to ensure they are within the parking zone when they mark their arrival or departure.
 * As a platform, I want to securely store and process users' sensitive information, like payment details.
+* As a platform I want to enable payment through a third party platform like Stripe
 
 **Parking Manager**
 * As a parking manager, I want to have a dedicated space to manage my parking from the account I have created.
