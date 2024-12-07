@@ -1760,12 +1760,15 @@ The project includes a back button, in `base.html`.
 This back button has two features:
 * It redirects the user back to the previous page using the user history :`onClick="javascript:history.go(-1)`
 * It is hidden on index and parking_manager_dashboard pages using `request.path`
+* It also redirects to a different page on certain cases when the previous page is likely to be a form.
+
 
 The credits for this feature goe to the links listed below.
 
 Credits & Useful Links:
 * Back button - https://stackoverflow.com/questions/524992/how-to-implement-a-back-link-on-django-templates
 * Excluding pages from button display - https://stackoverflow.com/questions/41129551/django-creating-an-if-statement-based-on-the-request-path-not-working
+* `request.resolver_match` : https://medium.com/@iamalisaleh/how-to-get-the-current-url-within-a-django-template-8270b977f280
 
 Suggestion for improvement: this solution is not perfect, as a user could click on `back` button after a form submission and be return to the form submission page. The naviation could be improve by adding a tree of links the user had gone through to end up on the current page. This would give the user the option to decide where to go.
 

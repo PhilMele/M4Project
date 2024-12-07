@@ -1,0 +1,28 @@
+{% block base_navigation_block %}
+<div class="navigation">
+    <!-- If user is on user account, redirects home -->
+    {% if request.resolver_match.url_name == 'user-account' %}
+        <a href="{% url 'home' %}">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a> 
+    <!-- Back buttons is index after succesful payment -->
+    {% elif request.resolver_match.url_name == 'payment-successful'%}
+        <a href="{% url 'home' %}">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a> 
+    {% elif request.resolver_match.url_name == 'payment-cancelled' %}
+        <a href="{% url 'home' %}">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a> 
+    {% elif request.resolver_match.url_name == 'parking-info' %}
+        <a href="{% url 'home' %}">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a> 
+    <!-- not the above options and not listed in path below: redict to previous page -->
+    {% elif request.path != '/' and request.path != '/parking_management/parking_manager_dashboard/' %}
+        <a onClick="javascript:history.go(-1)">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a> 
+    {% endif %}
+    </div>
+    {% endblock %}

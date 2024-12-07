@@ -34,7 +34,6 @@
         <script src="https://js.stripe.com/v3/"></script>
 
         <!-- Custom Javascript -->
-        <script src="{% static 'js/scripts.js' %}"></script>
         <script src="{% static 'js/fade_alert.js' %}"></script>
 
         <!-- Google Fonts -->
@@ -77,20 +76,14 @@
     {% endblock %}
     <hr>
     <main>
-    <div class="container h-100">
- 
-    {% if request.path != '/' and request.path != '/parking_management/parking_manager_dashboard/' %}
-        <div class="navigation">
-            <a onClick="javascript:history.go(-1)">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-            </a>
+        <div class="container h-100">
+        {% block base_navigation_block %}
+            {% include 'base_navigation_block/base_navigation_block.html' %}
+        {% endblock %}
+
+        {% block content %}
+        {% endblock %}
         </div>
-    {% endif %}
-
-    {% block content %}
-
-    {% endblock %}
-    </div>
     </main>
     <hr>
     {% block base_footer_block %}
