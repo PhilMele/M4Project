@@ -61,6 +61,10 @@ a:not([href]) {
     text-align: center;
 }
 
+.pad-right-0{
+    padding-right: 0;
+}
+
 /* Authentication */
 .auth-container{
     max-width: 800px;
@@ -318,6 +322,13 @@ tr:hover {
 .error-height{
     height: 50vh !important; 
 }
+
+/* Tutorial images */
+.tutorial-image{
+    max-width: 100%;
+}
+
+/* Media Queries */
 @media (min-width: 768px) {
     .large-screen-btn-display {
         display: flex;

@@ -16,7 +16,8 @@ class ParkingForm(forms.ModelForm):
                 message="Latitude must be a valid number (e.g., -90.0 to 90.0) and up to 9 decimals."
             )
         ],
-        widget=forms.TextInput(attrs={'aria-label': 'Latitude', 'placeholder': 'Enter latitude'})
+        widget=forms.TextInput(attrs={'aria-label': 'Latitude', 'placeholder': 'Enter latitude'}),
+        label='' 
     )
 
     longitude = forms.CharField(
@@ -26,7 +27,8 @@ class ParkingForm(forms.ModelForm):
                 message="Longitude must be a valid number (e.g., -180.0 to 180.0) and up to 9 decimals."
             )
         ],
-        widget=forms.TextInput(attrs={'aria-label': 'Longitude', 'placeholder': 'Enter longitude'})
+        widget=forms.TextInput(attrs={'aria-label': 'Longitude', 'placeholder': 'Enter longitude'}),
+        label='' 
     )
 
 

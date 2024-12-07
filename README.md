@@ -39,6 +39,7 @@ design redirect page
 bugs - the logo image on email does not show on certain messaging system like outlook
 bugs - the javascript validator are capital sensitive and will show a warning taht two email addresses dont match if one email has a capital and the other doesnt, but the authentictaion system will accept it.
 Some alluath templates are not customised (if user that dont exist request a passwordm they still get the basic allauth template for it)
+check with Gareth if buttons in parking manager dashboard is acceptable
 
 # M4Project - GeoPay
 

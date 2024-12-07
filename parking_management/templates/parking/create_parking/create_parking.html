@@ -8,7 +8,7 @@
 
 <form method="post">
     {% csrf_token %}
-    
+    <h2>Parking Address Section</h2>
     <div class="create-parking-form-group">
         <label for="id_name" class="sr-only">Parking Name</label>
         {{ parkingform.name|as_crispy_field }}
@@ -49,23 +49,35 @@
         {{ parkingform.country|as_crispy_field }}
     </div>
     
+    <!-- Geolocation -->
+    <h2>Geolocation Section</h2>
+    <span class="small-text right-align">How do it work? <i id="toggle-help" class="fa-solid fa-circle-info"></i></span>
+    
+    <div id="help-parking-during-rate" style="display: none;">
+        <p class="small-text"><b>First step</b> - Enter your parking location on Google Maps.</p>
+        <p class="small-text"><b>Second step</b> - Click right on the red marker.</p>
+        <p class="small-text"><b>Third step</b> - Click left on the top row, it will copy the values</p>
+        <p class="small-text"><b>Fourth step</b> - Paste the first value in "latitude" field, and your second value in "longitude"</p>
+        <p class="small-text"><b>Note</b> - The values are longer than they appear on Google map. For accuracy, it is better to copy and paste them rather than enter them manually.</p>
+        <img src="https://geopay-app.s3.eu-north-1.amazonaws.com/images/tutorial/geolocation-tutorial.webp" class="tutorial-image">
+    </div>
     <div class="create-parking-form-group">
-        <label for="id_latitude" class="sr-only">Latitude</label>
+        <label for="id_latitude" class="">Latitude</label>
         {{ parkingform.latitude|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        <label for="id_longitude" class="sr-only">Longitude</label>
+        <label for="id_longitude" class="">Longitude</label>
         {{ parkingform.longitude|as_crispy_field }}
     </div>
     
     <div class="create-parking-form-group">
-        <label for="id_radius" class="sr-only">Radius</label>
+        <label for="id_radius" class="">Radius in meters (min 50 meters)</label>
         {{ parkingform.radius|as_crispy_field }}
     </div>
 
     <div class="create-parking-form-group">
-        <label for="id_max_capacity" class="sr-only">Max Capacity</label>
+        <label for="id_max_capacity" class="">Max Capacity</label>
         {{ parkingform.max_capacity|as_crispy_field }}
     </div>
     
@@ -78,5 +90,5 @@
 
 {%endblock%}
 {% block postloadjs %}
-
+<script src="{% static 'js/add_rate.js' %}"></script>
 {% endblock %}
