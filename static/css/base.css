@@ -331,6 +331,11 @@ tr:hover {
 /* Tutorial images */
 .tutorial-image{
     max-width: 100%;
+    text-align: center;
+    border: 5px solid #EFC958;
+    border-radius: 20px;
+    max-width: 450px;
+
 }
 
 /* Media Queries */

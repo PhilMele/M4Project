@@ -41,6 +41,7 @@ bugs - the javascript validator are capital sensitive and will show a warning ta
 Some alluath templates are not customised (if user that dont exist request a passwordm they still get the basic allauth template for it)
 check with Gareth if buttons in parking manager dashboard is acceptable
 check with gareth back button is accepatble solution
+make exception to back button: for succesfull and cancell payement + user account
 
 # M4Project - GeoPay
 
