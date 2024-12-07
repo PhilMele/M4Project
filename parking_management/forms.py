@@ -31,6 +31,12 @@ class ParkingForm(forms.ModelForm):
         label='' 
     )
 
+    radius = forms.IntegerField(
+        validators=[MinValueValidator(50, message="Radius must be at least 50.")], 
+        widget=forms.NumberInput(attrs={'aria-label': 'Radius', 'placeholder': 'Enter parking radius.'}),
+        label=''
+    )
+
 
     class Meta:
         model = Parking
