@@ -6,6 +6,10 @@
     {% trans "Confirm Email Address" %}
 {% endblock head_title %}
 {% block content %}
+<div class="container center">
+    {% block logo %}
+        {% include 'allauth/elements/logo.html' %}
+    {% endblock %}
     {% element h1 %}
         {% trans "Confirm Email Address" %}
     {% endelement %}
@@ -16,13 +20,15 @@
                 {% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an email address for user {{ user_display }}.{% endblocktrans %}
             {% endelement %}
             {% url 'account_confirm_email' confirmation.key as action_url %}
-            {% element form method="post" action=action_url %}
+            {% element form method="post" action=action_url class="justify-content-center" %}
                 {% slot actions %}
                     {% csrf_token %}
                     {{ redirect_field }}
-                    {% element button type="submit" %}
-                        {% trans 'Confirm' %}
-                    {% endelement %}
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn button-1 justify-content-center">
+                            {% trans 'Confirm' %}
+                        </button>
+                    </div>
                 {% endslot %}
             {% endelement %}
         {% else %}
@@ -36,4 +42,5 @@
             {% blocktrans %}This email confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new email confirmation request</a>.{% endblocktrans %}
         {% endelement %}
     {% endif %}
+</div>
 {% endblock content %}
