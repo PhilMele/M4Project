@@ -34,6 +34,8 @@ re-add fields to all forms
 check if payment confirmation email is sent twice again
 In history setcion: add pagination + filter to make the search of specific transaction easier.
 Add Favicon
+email veirication - design template
+design redirect page
 
 
 # M4Project - GeoPay
