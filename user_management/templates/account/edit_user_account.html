@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <h1>Your Account</h1>
+
+    <!-- UserProfile form -->
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="create-parking-form-group">
+            <label for="id_phone_number" class="sr-only">Phone Number</label>
+            {{ form.phone_number|as_crispy_field }}
+        </div>
+
+        <div class="create-parking-form-group">
+            <label for="id_car_registration" class="sr-only">Car Registration</label>
+            {{ form.car_registration|as_crispy_field }}
+        </div>
+
+        <div class="create-parking-form-group">
+            <label for="id_street_address1" class="sr-only">Street Address 1</label>
+            {{ form.street_address1|as_crispy_field }}
+        </div>
+
+        <div class="create-parking-form-group">
+            <label for="id_street_address2" class="sr-only">Street Address 2</label>
+            {{ form.street_address2|as_crispy_field }}
+        </div>
+
+        <div class="create-parking-form-group">
+            <label for="id_city" class="sr-only">City</label>
+            {{ form.city|as_crispy_field }}
+        </div>
+
+        <div class="create-parking-form-group">
+            <label for="id_county" class="sr-only">County</label>
+            {{ form.county|as_crispy_field }}
+        </div>
+
+        <div class="create-parking-form-group">
+            <label for="id_postcode" class="sr-only">Postcode</label>
+            {{ form.postcode|as_crispy_field }}
+        </div>
+
+        <div class="create-parking-form-group">
+            <label for="id_country" class="sr-only">Country</label>
+            {{ form.country|as_crispy_field }}
+        </div>
+
+        <div class="justify-content-center d-flex">
+            <button type="submit" class="btn button-1 justify-content-center">Save</button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}

@@ -10,6 +10,8 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('', views.index, name='home'),
     path('user_account/', views.user_account, name='user-account'),
+    path('edit_user_account/', views.edit_user_account, name='edit-user-account'),
+    path('delete_user_account/', views.delete_user_account, name='delete-user-account'),
     path('accounts/signup/', CustomSignupView.as_view(), name='account_signup'),
 
     # Error hanlder testing

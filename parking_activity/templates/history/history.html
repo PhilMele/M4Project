@@ -47,6 +47,11 @@
         
     </div>
     <hr>
+    {% empty %}
+    <!-- Transaction loop is empty -->
+    <div class="row table-row-div d-flex align-items-center justify-content-center">
+        <p>No transactions found. You haven’t made any parking transactions yet.</p>
+    </div>
     {% endfor %}  
 </div>
 {% endblock %}

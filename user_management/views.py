@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -8,6 +8,8 @@ from parking_activity.models import (Stay,
                                     UserProfile)
 from .forms import UserProfileForm
 from django.contrib import messages
+
+from django.contrib.auth.models import User
 
 # error handlin imports
 from django.http import HttpRequest
@@ -85,6 +87,13 @@ def index(request):
         'car_reg':car_reg})
 
 def user_account(request):
+    user_profile = get_object_or_404(UserProfile, id=request.user.userprofile.id)
+    print(f'user_profile = {user_profile.phone_number}')
+
+    return render(request, 'account/user_account.html', {
+        'user_profile':user_profile})
+
+def edit_user_account(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=user_profile)
@@ -94,7 +103,17 @@ def user_account(request):
             return redirect('user-account')  
     else:
         form = UserProfileForm(instance=user_profile)
-    return render(request, 'account/user_account.html', {'form': form})
+    return render(request, 'account/edit_user_account.html', {'form': form})
+
+@login_required
+def delete_user_account(request):
+    if request.method == 'POST':
+        user = get_object_or_404(User, id=request.user.id)
+        user.delete()
+        messages.success(request, "Your account has been deleted.")
+        return redirect('home')
+    return HttpResponseBadRequest("Invalid request method.")
+
 
 # Error Handling
 

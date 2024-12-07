@@ -30,7 +30,8 @@ class UserProfileForm(ModelForm):
         }
 
         widgets = {
-            'phone_number': forms.TextInput(attrs={'aria-label': 'Parking Name', 'placeholder': 'Enter Phone Number'}),
+            'phone_number': forms.TextInput(attrs={'aria-label': 'User Phone Number', 'placeholder': 'Enter Phone Number'}),
+            'car_registration': forms.TextInput(attrs={'aria-label': 'User Car Registration Name', 'placeholder': 'Enter Car registration'}),
             'street_address1': forms.TextInput(attrs={'aria-label': 'Street Address 1', 'placeholder': 'Enter street address 1'}),
             'street_address2': forms.TextInput(attrs={'aria-label': 'Street Address 2', 'placeholder': 'Enter street address 2'}),
             'city': forms.TextInput(attrs={'aria-label': 'City', 'placeholder': 'Enter city'}),

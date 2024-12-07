@@ -3,59 +3,92 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>Your Account</h1>
+<h2 class="text-center">Your Account - {{request.user.username}}</h2>
 
-<div class="container">
-
-    <!-- UserProfile form -->
-    <form method="post">
-        {% csrf_token %}
-
-        <div class="create-parking-form-group">
-            <label for="id_phone_number" class="sr-only">Phone Number</label>
-            {{ form.phone_number|as_crispy_field }}
-        </div>
-
-        <div class="create-parking-form-group">
-            <label for="id_car_registration" class="sr-only">Car Registration</label>
-            {{ form.car_registration|as_crispy_field }}
-        </div>
-
-        <div class="create-parking-form-group">
-            <label for="id_street_address1" class="sr-only">Street Address 1</label>
-            {{ form.street_address1|as_crispy_field }}
-        </div>
-
-        <div class="create-parking-form-group">
-            <label for="id_street_address2" class="sr-only">Street Address 2</label>
-            {{ form.street_address2|as_crispy_field }}
-        </div>
-
-        <div class="create-parking-form-group">
-            <label for="id_city" class="sr-only">City</label>
-            {{ form.city|as_crispy_field }}
-        </div>
-
-        <div class="create-parking-form-group">
-            <label for="id_county" class="sr-only">County</label>
-            {{ form.county|as_crispy_field }}
-        </div>
-
-        <div class="create-parking-form-group">
-            <label for="id_postcode" class="sr-only">Postcode</label>
-            {{ form.postcode|as_crispy_field }}
-        </div>
-
-        <div class="create-parking-form-group">
-            <label for="id_country" class="sr-only">Country</label>
-            {{ form.country|as_crispy_field }}
-        </div>
-
-        <div class="center">
-            <button type="submit" class="btn button-1">Edit</button>
-        </div>
-    </form>
-
+<div class="row table-row">
+    <div class="col-12 col-md-4 text-center d-flex align-items-center justify-content-center">
+        
+    </div>
+    <div class="col-12 col-md-8 d-flex align-items-center justify-content-center">
+        <a class="btn button-2 justify-content-center" href="{% url 'edit-user-account' %}">Edit Account</a>
+    </div>
 </div>
 
+
+<div class="row table-row">
+    <div class="col-4 text-center d-flex align-items-center justify-content-center">Email Address</div>
+    <div class="col-8 d-flex align-items-center justify-content-center">{{request.user.email|default:"Not provided"}}</div>
+</div>
+<div class="row table-row">
+    <div class="col-4 text-center d-flex align-items-center justify-content-center">Phone Number</div>
+    <div class="col-8 d-flex align-items-center justify-content-center">{{user_profile.phone_number|default:"Not provided"}}</div>
+</div>
+<div class="row table-row">
+    <div class="col-4 text-center d-flex align-items-center justify-content-center">Car Registration Number</div>
+    <div class="col-8 d-flex align-items-center justify-content-center">{{user_profile.car_registration|default:"Not provided"}}</div>
+</div>
+<div class="row table-row">
+    <div class="col-4 text-center d-flex align-items-center justify-content-center">Addess: 1st Line</div>
+    <div class="col-8 d-flex align-items-center justify-content-center">{{user_profile.street_address1|default:"Not provided"}}</div>
+</div>
+<div class="row table-row">
+    <div class="col-4 text-center d-flex align-items-center justify-content-center">Addess: 2nd Line</div>
+    <div class="col-8 d-flex align-items-center justify-content-center">
+        {% if parking.street_address2 %}
+            {{user_profile.street_address2}}
+        {% endif %}
+    </div>
+</div>
+<div class="row table-row">
+    <div class="col-4 text-center d-flex align-items-center justify-content-center">City</div>
+    <div class="col-8 d-flex align-items-center justify-content-center">{{user_profile.city|default:"Not provided"}}</div>
+</div>
+<div class="row table-row">
+    <div class="col-4 text-center d-flex align-items-center justify-content-center">County</div>
+    <div class="col-8 d-flex align-items-center justify-content-center">{{user_profile.county|default:"Not provided"}}</div>
+</div>
+<div class="row table-row">
+    <div class="col-4 text-center d-flex align-items-center justify-content-center">Postcode</div>
+    <div class="col-8 d-flex align-items-center justify-content-center">{{user_profile.postcode|default:"Not provided"}}</div>
+</div>
+<div class="row table-row">
+    <div class="col-4 text-center d-flex align-items-center justify-content-center">Country</div>
+    <div class="col-8 d-flex align-items-center justify-content-center">{{user_profile.country|default:"Not provided"}}</div>
+</div>
+<hr>
+<!-- Delete parking -->
+<div class="row justify-content-center">
+    <button type="button" class="btn button-3 justify-content-center" data-toggle="modal" data-target="#deleteAccountModal">
+        Delete Account
+    </button>
+    <form method="post" action="{% url 'delete-user-account' %}" class="delete-account-form d-none">
+        {% csrf_token %}
+    </form>
+</div>
+
+<!-- Modal for deletion confirmation -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title black-text" id="deleteAccountModalLabel">Confirm Account Deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body black-text">
+                <p>Are you sure you want to delete your account?</p>
+                <p>This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn button-3" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn button-1" id="confirmDeleteBtn">Yes, delete my account.</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block postloadjs %}
+    <script src="{% static 'js/confirm_delete_user_account.js' %}"></script>
 {% endblock %}
