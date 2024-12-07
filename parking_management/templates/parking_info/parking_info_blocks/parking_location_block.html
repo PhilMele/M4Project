@@ -3,62 +3,62 @@
     <h2 class="text-center">{{parking.name}} - Parking Details</h2>
 
     <div class="row table-row">
-        <div class="col-12 col-md-4 text-center d-flex align-items-center justify-content-center">
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">
             
         </div>
-        <div class="col-12 col-md-8 d-flex align-items-center justify-content-center">
+        <div class="col-6 d-flex align-items-center justify-content-center">
             <a class="btn button-2 justify-content-center" href="{% url 'edit-parking' parking_id=parking.id %}">Edit</a>
         </div>
     </div>
 
 
     <div class="row table-row">
-        <div class="col-4 text-center d-flex align-items-center justify-content-center">Phone Number</div>
-        <div class="col-8 d-flex align-items-center justify-content-center">{{parking.phone_number}}</div>
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">Phone Number</div>
+        <div class="col-6 d-flex align-items-center justify-content-center">{{parking.phone_number}}</div>
     </div>
     <div class="row table-row">
-        <div class="col-4 text-center d-flex align-items-center justify-content-center">Addess: 1st Line</div>
-        <div class="col-8 d-flex align-items-center justify-content-center">{{parking.street_address1}}</div>
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">Addess: 1st Line</div>
+        <div class="col-6 d-flex align-items-center justify-content-center">{{parking.street_address1}}</div>
     </div>
     <div class="row table-row">
-        <div class="col-4 text-center d-flex align-items-center justify-content-center">Addess: 2nd Line</div>
-        <div class="col-8 d-flex align-items-center justify-content-center">
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">Addess: 2nd Line</div>
+        <div class="col-6 d-flex align-items-center justify-content-center">
             {% if parking.street_address2 %}
                 {{parking.street_address2}}
             {% endif %}
         </div>
     </div>
     <div class="row table-row">
-        <div class="col-4 text-center d-flex align-items-center justify-content-center">City</div>
-        <div class="col-8 d-flex align-items-center justify-content-center">{{parking.city}}</div>
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">City</div>
+        <div class="col-6 d-flex align-items-center justify-content-center">{{parking.city}}</div>
     </div>
     <div class="row table-row">
-        <div class="col-4 text-center d-flex align-items-center justify-content-center">County</div>
-        <div class="col-8 d-flex align-items-center justify-content-center">{{parking.county}}</div>
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">County</div>
+        <div class="col-6 d-flex align-items-center justify-content-center">{{parking.county}}</div>
     </div>
     <div class="row table-row">
-        <div class="col-4 text-center d-flex align-items-center justify-content-center">Postcode</div>
-        <div class="col-8 d-flex align-items-center justify-content-center">{{parking.postcode}}</div>
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">Postcode</div>
+        <div class="col-6 d-flex align-items-center justify-content-center">{{parking.postcode}}</div>
     </div>
     <div class="row table-row">
-        <div class="col-4 text-center d-flex align-items-center justify-content-center">Country</div>
-        <div class="col-8 d-flex align-items-center justify-content-center">{{parking.country}}</div>
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">Country</div>
+        <div class="col-6 d-flex align-items-center justify-content-center">{{parking.country}}</div>
     </div>
     <div class="row table-row">
-        <div class="col-4 text-center d-flex align-items-center justify-content-center">Latitude</div>
-        <div class="col-8 d-flex align-items-center justify-content-center">{{parking.latitude}}</div>
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">Latitude</div>
+        <div class="col-6 d-flex align-items-center justify-content-center">{{parking.latitude}}</div>
     </div>
     <div class="row table-row">
-        <div class="col-4 text-center d-flex align-items-center justify-content-center">Longitude</div>
-        <div class="col-8 d-flex align-items-center justify-content-center">{{parking.longitude}}</div>
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">Longitude</div>
+        <div class="col-6 d-flex align-items-center justify-content-center">{{parking.longitude}}</div>
     </div>
     <div class="row table-row">
-        <div class="col-4 text-center d-flex align-items-center justify-content-center">Radius</div>
-        <div class="col-8 d-flex align-items-center justify-content-center">{{parking.radius}}</div>
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">Radius</div>
+        <div class="col-6 d-flex align-items-center justify-content-center">{{parking.radius}}</div>
     </div>
     <div class="row table-row">
-        <div class="col-4 text-center d-flex align-items-center justify-content-center">Capacity</div>
-        <div class="col-8 d-flex align-items-center justify-content-center">{{parking.max_capacity}}</div>
+        <div class="col-6 text-center d-flex align-items-center justify-content-center">Capacity</div>
+        <div class="col-6 d-flex align-items-center justify-content-center">{{parking.max_capacity}}</div>
     </div>
     <hr>
     <!-- Delete parking -->
