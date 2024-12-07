@@ -86,6 +86,8 @@ def index(request):
         'long':long,
         'car_reg':car_reg})
 
+
+@login_required
 def user_account(request):
     user_profile = get_object_or_404(UserProfile, id=request.user.userprofile.id)
     print(f'user_profile = {user_profile.phone_number}')
@@ -93,6 +95,8 @@ def user_account(request):
     return render(request, 'account/user_account.html', {
         'user_profile':user_profile})
 
+
+@login_required
 def edit_user_account(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
@@ -104,6 +108,7 @@ def edit_user_account(request):
     else:
         form = UserProfileForm(instance=user_profile)
     return render(request, 'account/edit_user_account.html', {'form': form})
+
 
 @login_required
 def delete_user_account(request):

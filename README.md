@@ -562,7 +562,12 @@ To set up AWS S3 bucket, the following steps need to be followed:
 
 ### 3.4 User Profile <a name="user-profile"></a>
 
-TO BE COMPELTED
+The project includes a user profile page.
+
+This feature is managed by `user_account()` (path: `user_management\views.py`), which displays UserProfile information link to user's UserProfile model object.
+
+This feature is alos supported by `edit_user_account()` and `delete_user_account()`.
+
 
 ### 3.5 User Dashboard <a name="user-dashboard"></a>
 
