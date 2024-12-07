@@ -40,6 +40,7 @@ bugs - the logo image on email does not show on certain messaging system like ou
 bugs - the javascript validator are capital sensitive and will show a warning taht two email addresses dont match if one email has a capital and the other doesnt, but the authentictaion system will accept it.
 Some alluath templates are not customised (if user that dont exist request a passwordm they still get the basic allauth template for it)
 check with Gareth if buttons in parking manager dashboard is acceptable
+check with gareth back button is accepatble solution
 
 # M4Project - GeoPay
 
@@ -74,6 +75,7 @@ View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target=
     - [Decorators](#decorators)
     - [Custom Error Handlers](#error-handler)
     - [Parking Inspector](#parking-inspector)
+    - [Back Button](#back-button)
 4. [Technologies](#tech)
 5. [Testing](#testing)
    - [Validator Testing](#val-testing)
@@ -1734,6 +1736,29 @@ Currently the parking manager can:
 * This feature could benefit from immediate improvement such as the possibility to take a picture of the car and upload on the S3 Bucket for proof. This feature is not implemented yet.
 * Another feature could be to accelerate the detection of illegally parked cars by integration Optical Character Recognition (Optical Character Recognition). This feature could be implemented by using django progressive web app extension. This would allow the parking manager to simply scan each car registration and let the GeoPay look in the database if the parked as checked-in. 
 
+### 3.17 Back Button <a name="back-button"></a>
+
+The project includes a back button, in `base.html`.
+
+    {% if request.path != '/' and request.path != '/parking_management/parking_manager_dashboard/' %}
+        <div class="navigation">
+            <a onClick="javascript:history.go(-1)">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+            </a>
+        </div>
+    {% endif %}
+
+This back button has two features:
+* It redirects the user back to the previous page using the user history :`onClick="javascript:history.go(-1)`
+* It is hidden on index and parking_manager_dashboard pages using `request.path`
+
+The credits for this feature goe to the links listed below.
+
+Credits & Useful Links:
+* Back button - https://stackoverflow.com/questions/524992/how-to-implement-a-back-link-on-django-templates
+* Excluding pages from button display - https://stackoverflow.com/questions/41129551/django-creating-an-if-statement-based-on-the-request-path-not-working
+
+Suggestion for improvement: this solution is not perfect, as a user could click on `back` button after a form submission and be return to the form submission page. The naviation could be improve by adding a tree of links the user had gone through to end up on the current page. This would give the user the option to decide where to go.
 
 ## 4. Technologies <a name="tech"></a>
 

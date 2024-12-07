@@ -20,6 +20,7 @@
     {%endblock%}
 
     {%block extra_css%}
+
     {%endblock%}
 
     {% block corejs %}
@@ -77,11 +78,17 @@
     <hr>
     <main>
     <div class="container h-100">
+ 
+    {% if request.path != '/' and request.path != '/parking_management/parking_manager_dashboard/' %}
+        <div class="navigation">
+            <a onClick="javascript:history.go(-1)">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+            </a>
+        </div>
+    {% endif %}
+
     {% block content %}
 
-
-
-    
     {% endblock %}
     </div>
     </main>
