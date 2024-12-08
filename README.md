@@ -1843,6 +1843,64 @@ Suggestion for improvement: The code could improve by streamlining the series of
 #### 5.1.1 HTML <a name="html"></a>
 #### 5.1.2 CSS <a name="css"></a>
 #### 5.1.3 Javascript <a name="js"></a>
+
+<details>
+    <summary>activate parking helper</summary>
+    <p>
+        <img src="static/images/readme_images/testing/jshint/jshint-activate-parking-helper.png" alt="activate_parking_helper" />
+    </p>
+</details>
+
+<details>
+    <summary>add rate</summary>
+    <p>
+        <img src="static/images/readme_images/testing/jshint/jshint-add-rate.png" alt="activate_parking_helper" />
+    </p>
+</details>
+
+<details>
+    <summary>confirm delete user account</summary>
+    <p>
+        <img src="static/images/readme_images/testing/jshint/jshint-confirm-delete-user-account.png" alt="jshint-confirm-delete-user-account" />
+    </p>
+</details>
+
+<details>
+    <summary>fade alert</summary>
+    <p>
+        <img src="static/images/readme_images/testing/jshint/jshint-fade-alert.png" alt="fade-alert" />
+    </p>
+</details>
+
+<details>
+    <summary>geolocation</summary>
+    <p>
+        <img src="static/images/readme_images/testing/jshint/jshint-geolocation.png" alt="geolocation" />
+    </p>
+</details>
+
+<details>
+    <summary>parking fee</summary>
+    <p>
+        <img src="static/images/readme_images/testing/jshint/jshint-parking-fee.png" alt="parking-fee" />
+    </p>
+</details>
+
+<details>
+    <summary>provide car reg</summary>
+    <p>
+        <img src="static/images/readme_images/testing/jshint/jshint-provide-car-reg.png" alt="provide-car-reg" />
+    </p>
+    <p>Note: var bootstrap is raised as an undefined variable. This is because JSHint does not have access to base.html where the variable is defined through the bootstrap library</p>
+</details>
+
+<details>
+    <summary>signup</summary>
+    <p>
+        <img src="static/images/readme_images/testing/jshint/jshint-signup.png" alt="signup" />
+    </p>
+</details>
+
 #### 5.1.3 Python <a name="py"></a>
 ### 5.2 Lighthouse Testing <a name="lighthouse-testing"></a>
 
