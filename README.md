@@ -41,6 +41,9 @@ Some alluath templates are not customised (if user that dont exist request a pas
 check with Gareth if buttons in parking manager dashboard is acceptable
 check with gareth back button is accepatble solution
 make exception to back button: for succesfull and cancell payement + user account
+Bug - back button doesnt work after using lighthouse testing.
+Fix Add registration button for small screen (set it to w-50 under 400px)
+Fix hover on pasking e=inspctor tab turning white and cant see text
 
 # M4Project - GeoPay
 
@@ -1842,6 +1845,139 @@ Suggestion for improvement: The code could improve by streamlining the series of
 #### 5.1.3 Javascript <a name="js"></a>
 #### 5.1.3 Python <a name="py"></a>
 ### 5.2 Lighthouse Testing <a name="lighthouse-testing"></a>
+
+<details>
+    <summary>LOGIN</summary>
+    <p>
+        <h3>Mobile</h3>
+        <img src="static/images/readme_images/testing/lighthouse/login/lighthouse-login-mobile.png" alt="login mobile" />
+    </p>
+    <p>
+        <h3>Desktop</h3>
+        <img src="static/images/readme_images/testing/lighthouse/login/lighthouse-login-desktop.png" alt="login desktop" />
+    </p>
+</details>
+
+<details>
+    <summary>Register</summary>
+    <p>
+        <h3>Mobile</h3>
+        <img src="static/images/readme_images/testing/lighthouse/register/lighthouse-register-mobile.png" alt="register mobile" />
+    </p>
+    <p>
+        <h3>Desktop</h3>
+        <img src="static/images/readme_images/testing/lighthouse/register/lighthouse-register-desktop.png" alt="register desktop" />
+    </p>
+</details>
+
+<details>
+    <summary>User Dashboard</summary>
+    <p>
+        <h3>Mobile</h3>
+        <img src="static/images/readme_images/testing/lighthouse/user_dashboard/lighthouse-user-dashboard-mobile.png" alt="userdashboard mobile" />
+    </p>
+    <p>
+        <h3>Desktop</h3>
+        <img src="static/images/readme_images/testing/lighthouse/user_dashboard/lighthouse-user-dashboard-desktop.png" alt="userdashboard desktop" />
+    </p>
+</details>
+
+<details>
+    <summary>Check In Dashboard</summary>
+    <p>
+        <h3>Mobile</h3>
+        <img src="static/images/readme_images/testing/lighthouse/check_in/lighthouse-check-in-mobile.png" alt="check-in-mobile mobile" />
+    </p>
+    <p>
+        <h3>Desktop</h3>
+        <img src="static/images/readme_images/testing/lighthouse/check_in/lighthouse-check-in-desktop.png" alt="check-in desktop" />
+    </p>
+</details>
+
+<details>
+    <summary>History</summary>
+    <p>
+        <h3>Mobile</h3>
+        <img src="static/images/readme_images/testing/lighthouse/history/lighthouse-history-mobile.png" alt="history mobile" />
+    </p>
+    <p>
+        <h3>Desktop</h3>
+        <img src="static/images/readme_images/testing/lighthouse/history/lighthouse-history-desktop.png" alt="History desktop" />
+    </p>
+</details>
+
+<details>
+    <summary>Account</summary>
+    <p>
+        <h3>Mobile</h3>
+        <img src="static/images/readme_images/testing/lighthouse/account/lighthouse-account-mobile.png" alt="account mobile" />
+    </p>
+    <p>
+        <h3>Desktop</h3>
+        <img src="static/images/readme_images/testing/lighthouse/account/lighthouse-account-desktop.png" alt="account desktop" />
+    </p>
+</details>
+
+<details>
+    <summary>Parking Manager Dashboard</summary>
+    <p>
+        <h3>Mobile</h3>
+        <img src="static/images/readme_images/testing/lighthouse/parking_manager_dashboard/lighthouse-parking-manager-dashboard-mobile.png" alt="Parking Manager Dashboard mobile" />
+    </p>
+    <p>
+        <h3>Desktop</h3>
+        <img src="static/images/readme_images/testing/lighthouse/parking_manager_dashboard/lighthouse-parking-manager-dashboard-desktop.png" alt="Parking Manager Dashboard desktop" />
+    </p>
+</details>
+
+<details>
+    <summary>Create Parking</summary>
+    <p>
+        <h3>Mobile</h3>
+        <img src="static/images/readme_images/testing/lighthouse/create_parking/lighthouse-create-parking-mobile.png" alt="create parking mobile" />
+    </p>
+    <p>
+        <h3>Desktop</h3>
+        <img src="static/images/readme_images/testing/lighthouse/create_parking/lighthouse-create-parking-desktop.png" alt="create parking desktop" />
+    </p>
+</details>
+
+<details>
+    <summary>Parking Info</summary>
+    <p>
+        <h3>Mobile</h3>
+        <img src="static/images/readme_images/testing/lighthouse/parking_info/lighthouse-parking-info-mobile.png" alt="parking info mobile" />
+    </p>
+    <p>
+        <h3>Desktop</h3>
+        <img src="static/images/readme_images/testing/lighthouse/parking_info/lighthouse-parking-info-desktop.png" alt="parking info desktop" />
+    </p>
+</details>
+
+<details>
+    <summary>Parking Inspector</summary>
+    <p>
+        <h3>Mobile</h3>
+        <img src="static/images/readme_images/testing/lighthouse/parking_inspector/lighthouse-parking-inspector-mobile.png" alt="parking inspector mobile" />
+    </p>
+    <p>
+        <h3>Desktop</h3>
+        <img src="static/images/readme_images/testing/lighthouse/parking_inspector/lighthouse-parking-inspector-desktop.png" alt="parking inspector desktop" />
+    </p>
+</details>
+
+<details>
+    <summary>Add Rate</summary>
+    <p>
+        <h3>Mobile</h3>
+        <img src="static/images/readme_images/testing/lighthouse/add_Rate/lighthouse-add-rate-mobile.png" alt="add rate mobile" />
+    </p>
+    <p>
+        <h3>Desktop</h3>
+        <img src="static/images/readme_images/testing/lighthouse/add_Rate/lighthouse-add-rate-desktop.png" alt="add rate desktop" />
+    </p>
+</details>
+
 
 ### 5.3 User Testing <a name="user-testing"></a>
 
