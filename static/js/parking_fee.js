@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 fetchRates();
             }
             
-        })
+        });
 
     }
     
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function(){
             .then(data =>{
                 renderRatesTable(data);
             })
-            .catch(error => console.error("theres an error when getting the rates", error))
+            .catch(error => console.error("theres an error when getting the rates", error));
         }   
     }
 
@@ -40,13 +40,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
         // get the body of the table
         const table = document.getElementById("ratesTable");
-        const tbody = document.querySelector("table tbody")
+        const tbody = document.querySelector("table tbody");
         tbody.innerHTML = "";
 
         if(data.length>0){
             
             // shows table
-            table.style.display ="table"
+            table.style.display ="table";
             // Adds data to table rwos
 
             data.forEach(rate=>{
@@ -61,13 +61,13 @@ document.addEventListener('DOMContentLoaded', function(){
                 tbody.appendChild(tableRow);
             });
         }else{
-            table.style.display = "none"
+            table.style.display = "none";
         }
     }
     
     // only trigger fetchRates() if parking_id is not null
     // to avoid 404 error in console
     if (parkingId !== "null"){
-        fetchRates()
+        fetchRates();
     }
-  })
+  });
