@@ -1749,19 +1749,44 @@ Currently the parking manager can:
 
 The project includes a back button, in `base.html`.
 
-    {% if request.path != '/' and request.path != '/parking_management/parking_manager_dashboard/' %}
-        <div class="navigation">
-            <a onClick="javascript:history.go(-1)">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-            </a>
-        </div>
-    {% endif %}
-
 This back button has two features:
 * It redirects the user back to the previous page using the user history :`onClick="javascript:history.go(-1)`
 * It is hidden on index and parking_manager_dashboard pages using `request.path`
 * It also redirects to a different page on certain cases when the previous page is likely to be a form.
 
+<details>
+<summary>Click to see code details</summary>
+    <p>
+    {% block base_navigation_block %}
+        <div class="navigation">
+        <!-- If user is on user account, redirects home -->
+        {% if request.resolver_match.url_name == 'user-account' %}
+            <a href="{% url 'home' %}">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+            </a> 
+        <!-- Back buttons is index after succesful payment -->
+        {% elif request.resolver_match.url_name == 'payment-successful'%}
+            <a href="{% url 'home' %}">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+            </a> 
+        {% elif request.resolver_match.url_name == 'payment-cancelled' %}
+            <a href="{% url 'home' %}">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+            </a> 
+        {% elif request.resolver_match.url_name == 'parking-info' %}
+            <a href="{% url 'home' %}">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+            </a> 
+        <!-- not the above options and not listed in path below: redict to previous page -->
+        {% elif request.path != '/' and request.path != '/parking_management/parking_manager_dashboard/' %}
+            <a onClick="javascript:history.go(-1)">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+            </a> 
+        {% endif %}
+        </div>
+    {% endblock %}
+    </p>
+</details>
 
 The credits for this feature goe to the links listed below.
 
@@ -1770,7 +1795,18 @@ Credits & Useful Links:
 * Excluding pages from button display - https://stackoverflow.com/questions/41129551/django-creating-an-if-statement-based-on-the-request-path-not-working
 * `request.resolver_match` : https://medium.com/@iamalisaleh/how-to-get-the-current-url-within-a-django-template-8270b977f280
 
-Suggestion for improvement: this solution is not perfect, as a user could click on `back` button after a form submission and be return to the form submission page. The naviation could be improve by adding a tree of links the user had gone through to end up on the current page. This would give the user the option to decide where to go.
+Suggestion for improvement: The code could improve by streamlining the series of `elif` statement into a single `if`. For some reason the below code was generating an error.
+
+    {% if request.resolver_match.url_name == 'user-account' or 
+        request.resolver_match.url_name == 'payment-successful' or 
+        request.resolver_match.url_name == 'payment-cancelled' or 
+        request.resolver_match.url_name == 'parking-info' %}
+        <a href="{% url 'home' %}">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a>
+    {% else %}
+    ...
+    {%endif%}
 
 ## 4. Technologies <a name="tech"></a>
 
@@ -1960,6 +1996,9 @@ Final note: everytime the static folder is changed, in particular for css, `pyth
 * Procfile encoding: https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
 * Django Deployment: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
 * Regex Synthax: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+* Back button - https://stackoverflow.com/questions/524992/how-to-implement-a-back-link-on-django-templates
+* Excluding pages from button display - https://stackoverflow.com/questions/41129551/django-creating-an-if-statement-based-on-the-request-path-not-working
+* `request.resolver_match` : https://medium.com/@iamalisaleh/how-to-get-the-current-url-within-a-django-template-8270b977f280
 
 **In additon**, there is a large number of stackoverflow, reddits and github posts that I should credit but didnt take note of them as I was trying out different solutions.
 
