@@ -1,5 +1,5 @@
 {% block base_navigation_block %}
-<div class="navigation">
+<div class="navigation pad-bot-10">
     <!-- If user is on user account, redirects home -->
     {% if request.resolver_match.url_name == 'user-account' %}
         <a href="{% url 'home' %}">

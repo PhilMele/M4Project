@@ -9,15 +9,14 @@ create filtr that only shows activated parkings to user
 create a button to tell the parking managert o activate parking
 parking can only be activiated with rates have been populated and cannot be 0.
 
-fix check-out siccess message at Noneafter selecting manually what parking userchecks in
+
 fix logout problem when scanning qr code. Might be SSL certificate realted problem.
-Check validators for sign up
-check validators for login when email or password is wrong
+
+
 check all code meets indentions standard and spaces
 add validator to make sure parking is null 0 or negative
 change navbar for manager to remove uneeded elements
 imrpoevemt: parking insepctor can be imporved with OCR and connecting to a CRM to issue PCR
-add labels to form fields
 add check to prevent activating parking if no rate is available
 add autamtaed email when order is paid
 add placeholders on user dashboard if no parking is available
@@ -44,6 +43,9 @@ make exception to back button: for succesfull and cancell payement + user accoun
 Bug - back button doesnt work after using lighthouse testing.
 Fix Add registration button for small screen (set it to w-50 under 400px)
 Fix hover on pasking e=inspctor tab turning white and cant see text
+Imrpoevement deisgn - parking info could be improve. too much space is taken for the first 3 sections. All could fit in 1 line with header in a row above.
+Imrpoevement deisgn - parking info could be improve. Applicable rates could also be brought over 1 line and collapse into 2 rows based on screen size
+ask Gareth about label of hidden fields in html checker
 
 # M4Project - GeoPay
 
@@ -1841,6 +1843,310 @@ Suggestion for improvement: The code could improve by streamlining the series of
 ## 5. Testing <a name="testing"></a>
 ### 5.1 Validator Testing <a name="val-testing"></a>
 #### 5.1.1 HTML <a name="html"></a>
+
+<details>
+    <summary>check_in_info_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-check-in-info-block.png" alt="check-in-info-block" />
+    </p>
+</details>
+
+<details>
+    <summary>check_out_info_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-check-out-info-block.png" alt="check-out-info-block" />
+    </p>
+</details>
+
+<details>
+    <summary>fee_info_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-fee-info-block.png" alt="fee-info-block" />
+    </p>
+</details>
+
+<details>
+    <summary>parking_name_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-parking-name-block.png" alt="parking-name-block" />
+    </p>
+</details>
+
+<details>
+    <summary>transaction_id_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-transaction-id-block.png" alt="transaction-id-block" />
+    </p>
+</details>
+
+<details>
+    <summary>history.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-history.png" alt="history" />
+    </p>
+</details>
+
+<details>
+    <summary>payment_cancelled.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-payment-cancelled.png" alt="payment-cancelled" />
+    </p>
+</details>
+
+<details>
+    <summary>payment_successful.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-payment-successful.png" alt="payment-successful" />
+    </p>
+</details>
+
+<details>
+    <summary>check_in_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-check-in-block.png" alt="check-in-block" />
+    </p>
+</details>
+
+<details>
+    <summary>enter_parking_manually_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-enter-parking-manually-block.png" alt="enter-parking-manually-block" />
+    </p>
+</details>
+
+<details>
+    <summary>instructions_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-instructions-block.png" alt="instructions-block" />
+    </p>
+</details>
+
+<details>
+    <summary>parking_rates_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-parking-rates-block.png" alt="parking-rates-block" />
+    </p>
+</details>
+
+<details>
+    <summary>enter.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-enter.png" alt="enter" />
+    </p>
+</details>
+
+<details>
+    <summary>create_parking_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-create-parking-block.png" alt="create-parking-block" />
+    </p>
+</details>
+
+<details>
+    <summary>manager_dashboard_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-manager-dashboard-block.png" alt="manager-dashboard-block" />
+    </p>
+</details>
+
+<details>
+    <summary>create_parking.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-create-parking.png" alt="create-parking" />
+    </p>
+</details>
+
+<details>
+    <summary>edit_parking.html (part 1)</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-edit-parking1.png" alt="edit-parking" />
+    </p>
+</details>
+
+<details>
+    <summary>edit_parking.html (part 2)</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-edit-parking2.png" alt="edit-parking" />
+    </p>
+</details>
+
+<details>
+    <summary>edit_parking.html (part 3)</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-edit-parking3.png" alt="edit-parking" />
+    </p>
+</details>
+
+<details>
+    <summary>parking_info_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-parking-info-block.png" alt="parking-info-block" />
+    </p>
+</details>
+
+<details>
+    <summary>parking_location_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-parking-location-block.png" alt="parking-location-block" />
+    </p>
+</details>
+
+<details>
+    <summary>parking_rates_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-parking-rates-block-parking-info.png" alt="parking-rates-block-parking-info" />
+    </p>
+</details>
+
+<details>
+    <summary>parking_info.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-parking-info.png" alt="parking-info" />
+    </p>
+</details>
+
+<details>
+    <summary>cars_checked_in.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-cars-checked-in.png" alt="cars-checked-in" />
+    </p>
+</details>
+
+<details>
+    <summary>illegally_parked_cars.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-illegally-parked-cars.png" alt="illegally-parked-cars" />
+    </p>
+</details>
+
+<details>
+    <summary>register_illegal_car.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-register-illegal-car.png" alt="register-illegal-car" />
+    </p>
+</details>
+
+<details>
+    <summary>parking_inspector.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-parking-inspector.png" alt="parking-inspector" />
+    </p>
+</details>
+
+<details>
+    <summary>add_rate.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-add-rate.png" alt="add-rate" />
+    </p>
+</details>
+
+<details>
+    <summary>edit_rate.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-edit-rate.png" alt="edit-rate" />
+    </p>
+</details>
+
+<details>
+    <summary>edit_user_account.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-edit-user-account.png" alt="edit-user-account" />
+    </p>
+</details>
+
+<details>
+    <summary>user_account.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-user-account.png" alt="user-account" />
+    </p>
+</details>
+
+<details>
+    <summary>400.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-400e.png" alt="400e" />
+    </p>
+</details>
+
+<details>
+    <summary>403.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-403e.png" alt="403e" />
+    </p>
+</details>
+
+<details>
+    <summary>404.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-404e.png" alt="404e" />
+    </p>
+</details>
+
+<details>
+    <summary>500.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-500e.png" alt="500e" />
+    </p>
+</details>
+
+<details>
+    <summary>check_in_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-check-in-block-user-management.png" alt="check-in-block" />
+    </p>
+</details>
+
+<details>
+    <summary>check_in_out_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-check-in-out-block.png" alt="check-in-out-block" />
+    </p>
+</details>
+
+<details>
+    <summary>check_out_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-check-out-block.png" alt="check-out-block" />
+    </p>
+</details>
+
+<details>
+    <summary>enter_registration_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-enter-registration-block.png" alt="enter-registration-block" />
+    </p>
+</details>
+
+<details>
+    <summary>registration_prompt_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-registration-prompt-block.png" alt="registration-prompt-block" />
+    </p>
+</details>
+
+<details>
+    <summary>account_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-account-block.png" alt="account-block" />
+    </p>
+</details>
+
+<details>
+    <summary>history_block.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-history-block.png" alt="history-block" />
+    </p>
+</details>
+
+<details>
+    <summary>index.html</summary>
+    <p>
+        <img src="static/images/readme_images/testing/html/html-index.png" alt="index" />
+    </p>
+</details>
+
+
+
 #### 5.1.2 CSS <a name="css"></a>
 #### 5.1.3 Javascript <a name="js"></a>
 
@@ -2028,11 +2334,11 @@ Suggestion for improvement: The code could improve by streamlining the series of
     <summary>Add Rate</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/add_Rate/lighthouse-add-rate-mobile.png" alt="add rate mobile" />
+        <img src="static/images/readme_images/testing/lighthouse/add_rate/lighthouse-add-rate-mobile.png" alt="add rate mobile" />
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/add_Rate/lighthouse-add-rate-desktop.png" alt="add rate desktop" />
+        <img src="static/images/readme_images/testing/lighthouse/add_rate/lighthouse-add-rate-desktop.png" alt="add rate desktop" />
     </p>
 </details>
 
