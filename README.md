@@ -185,7 +185,7 @@ Wireframes initially designer for the project are available below.
 <details>
     <summary style="color: white; background: black; padding: 5px;">Click to see wireframes</summary>
     <p align="center">>
-        <img style="background:grey; padding:10px" src="static/images/readme_images/wireframes/wireframes.png" alt="wireframes" />
+        <kbd><img style="background:grey; padding:10px" src="static/images/readme_images/wireframes/wireframes.png" alt="wireframes" /></kbd>
     </p>
 </details>
 
@@ -194,7 +194,7 @@ Wireframes initially designer for the project are available below.
 <details>
     <summary style="color: white; background: black; padding: 5px;">Click to see ER Diargram</summary>
     <p>
-        <img src="static/images/readme_images/erd.png" alt="erd" />
+        <kbd><img src="static/images/readme_images/erd.png" alt="erd" /></kbd>
     </p>
 </details>
 
@@ -583,7 +583,7 @@ This feature is alos supported by `edit_user_account()` and `delete_user_account
 ### 3.5 User Dashboard <a name="user-dashboard"></a>
 
 <p align="center">
-   <img width="50%" src="static/images/readme_images/ui/user_dashboard/user-dashboard.png">
+   <kbd><img width="200" src="static/images/readme_images/ui/user_dashboard/user-dashboard.png"></kbd>
 </p>
 
 The user dashbaord can be found in `user_management\templates\home\index.html` and is managed by `index()`.
@@ -636,7 +636,7 @@ From this dashboard, the parking manager can:
 At the bottom of the template, `activate_parking_helper.js` provides a reminder to activate the parking, and how to do it.
 
 <p align="center">
-   <img width="200" src="static/images/readme_images/ui/parking_manager_dashboard/parking-manager-dashboard.png">
+   <kbd><img width="200" src="static/images/readme_images/ui/parking_manager_dashboard/parking-manager-dashboard.png"></kbd>
 </p>
 
 
@@ -917,7 +917,7 @@ Editing and deleting an specific `rate_id` is managed by respectively:
 * `delete_parking()` (path: `parking_management/views.py`)
 
 <p align="center">
-   <img width="200" src="static/images/readme_images/ui/parking_info/parking-info-rates.png">
+   <kbd><img width="200" src="static/images/readme_images/ui/parking_info/parking-info-rates.png"></kbd>
 </p>
 
 ### 3.11 Check-In Parking : Geolocation <a name="check-in"></a>
@@ -1078,7 +1078,7 @@ Through `parking_fee.js`, `fetchRates()` collects dynamically applicables rates 
 These objects are then returned back to `fetchRates()` in json format, before being rendererd in a table through `renderRatesTable()`.
 
 <p align="center">
-   <img width="200" src="static/images/readme_images/ui/check_in/check-in.png">
+   <kbd><img width="200" src="static/images/readme_images/ui/check_in/check-in.png"></kbd>
 </p>
 
 
@@ -1119,8 +1119,8 @@ These objects are then returned back to `fetchRates()` in json format, before be
 </details>
     
 
-> [!TIP]`TypeError:
-> the initial code was returning an error. It seems that Json expects a dictionaryy by default. To correct this problem `safe` is set to `False` (`safe = False`), which allows to return a list instead.
+> [!TIP]`TypeError
+> The initial code was returning an error. It seems that Json expects a dictionaryy by default. To correct this problem `safe` is set to `False` (`safe = False`), which allows to return a list instead.
 
 
 **What happens if `parking_id` is None as a parameter?**
@@ -1525,11 +1525,14 @@ After creating the price_object, a Stripe checkout session is initialized. The s
 Finally, the stay_id model object is updated with the Stripe checkout session ID for tracking, and the user is redirected to the Stripe-hosted checkout page.
 
 <details> <summary style="color: white; background: black; padding: 5px;">Click to see code</summary> <p>
+
+```python
     stay = Stay.objects.get(id=stay_id)
     stay.stripe_checkout_id = checkout_session.id
     stay.save()
 
     return redirect(checkout_session.url)
+```
 </p> </details>
 
 
@@ -1627,7 +1630,7 @@ Successful confirmation will eventually trigger an payment confirmation email be
 </details>
 
 <p align="center">
-   <img width="50%" src="static/images/readme_images/ui/payment_confirmation_email/payment-confirmation-email.png">
+   <kbd><img width="200" src="static/images/readme_images/ui/payment_confirmation_email/payment-confirmation-email.png"></kbd>
 </p>
 
 
@@ -1900,301 +1903,301 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 <details>
     <summary style="color: white; background: black; padding: 5px;">check_in_info_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-check-in-info-block.png" alt="check-in-info-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-check-in-info-block.png" alt="check-in-info-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">check_out_info_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-check-out-info-block.png" alt="check-out-info-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-check-out-info-block.png" alt="check-out-info-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">fee_info_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-fee-info-block.png" alt="fee-info-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-fee-info-block.png" alt="fee-info-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">parking_name_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-parking-name-block.png" alt="parking-name-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-parking-name-block.png" alt="parking-name-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">transaction_id_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-transaction-id-block.png" alt="transaction-id-block" />
+       <kbd><img src="static/images/readme_images/testing/html/html-transaction-id-block.png" alt="transaction-id-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">history.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-history.png" alt="history" />
+        <kbd><img src="static/images/readme_images/testing/html/html-history.png" alt="history" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">payment_cancelled.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-payment-cancelled.png" alt="payment-cancelled" />
+        <kbd><img src="static/images/readme_images/testing/html/html-payment-cancelled.png" alt="payment-cancelled" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">payment_successful.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-payment-successful.png" alt="payment-successful" />
+       <kbd><img src="static/images/readme_images/testing/html/html-payment-successful.png" alt="payment-successful" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">check_in_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-check-in-block.png" alt="check-in-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-check-in-block.png" alt="check-in-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">enter_parking_manually_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-enter-parking-manually-block.png" alt="enter-parking-manually-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-enter-parking-manually-block.png" alt="enter-parking-manually-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">instructions_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-instructions-block.png" alt="instructions-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-instructions-block.png" alt="instructions-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">parking_rates_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-parking-rates-block.png" alt="parking-rates-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-parking-rates-block.png" alt="parking-rates-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">enter.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-enter.png" alt="enter" />
+        <kbd><img src="static/images/readme_images/testing/html/html-enter.png" alt="enter" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">create_parking_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-create-parking-block.png" alt="create-parking-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-create-parking-block.png" alt="create-parking-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">manager_dashboard_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-manager-dashboard-block.png" alt="manager-dashboard-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-manager-dashboard-block.png" alt="manager-dashboard-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">create_parking.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-create-parking.png" alt="create-parking" />
+        <kbd><img src="static/images/readme_images/testing/html/html-create-parking.png" alt="create-parking" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">edit_parking.html (part 1)</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-edit-parking1.png" alt="edit-parking" />
+        <kbd><img src="static/images/readme_images/testing/html/html-edit-parking1.png" alt="edit-parking" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">edit_parking.html (part 2)</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-edit-parking2.png" alt="edit-parking" />
+        <kbd><img src="static/images/readme_images/testing/html/html-edit-parking2.png" alt="edit-parking" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">edit_parking.html (part 3)</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-edit-parking3.png" alt="edit-parking" />
+        <kbd><img src="static/images/readme_images/testing/html/html-edit-parking3.png" alt="edit-parking" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">parking_info_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-parking-info-block.png" alt="parking-info-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-parking-info-block.png" alt="parking-info-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">parking_location_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-parking-location-block.png" alt="parking-location-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-parking-location-block.png" alt="parking-location-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">parking_rates_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-parking-rates-block-parking-info.png" alt="parking-rates-block-parking-info" />
+        <kbd><img src="static/images/readme_images/testing/html/html-parking-rates-block-parking-info.png" alt="parking-rates-block-parking-info" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">parking_info.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-parking-info.png" alt="parking-info" />
+        <kbd><img src="static/images/readme_images/testing/html/html-parking-info.png" alt="parking-info" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">cars_checked_in.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-cars-checked-in.png" alt="cars-checked-in" />
+        <kbd><img src="static/images/readme_images/testing/html/html-cars-checked-in.png" alt="cars-checked-in" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">illegally_parked_cars.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-illegally-parked-cars.png" alt="illegally-parked-cars" />
+        <kbd><img src="static/images/readme_images/testing/html/html-illegally-parked-cars.png" alt="illegally-parked-cars" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">register_illegal_car.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-register-illegal-car.png" alt="register-illegal-car" />
+        <kbd><img src="static/images/readme_images/testing/html/html-register-illegal-car.png" alt="register-illegal-car" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">parking_inspector.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-parking-inspector.png" alt="parking-inspector" />
+        <kbd><img src="static/images/readme_images/testing/html/html-parking-inspector.png" alt="parking-inspector" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">add_rate.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-add-rate.png" alt="add-rate" />
+        <kbd><img src="static/images/readme_images/testing/html/html-add-rate.png" alt="add-rate" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">edit_rate.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-edit-rate.png" alt="edit-rate" />
+        <kbd><img src="static/images/readme_images/testing/html/html-edit-rate.png" alt="edit-rate" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">edit_user_account.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-edit-user-account.png" alt="edit-user-account" />
+        <kbd><img src="static/images/readme_images/testing/html/html-edit-user-account.png" alt="edit-user-account" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">user_account.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-user-account.png" alt="user-account" />
+        <kbd><img src="static/images/readme_images/testing/html/html-user-account.png" alt="user-account" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">400.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-400e.png" alt="400e" />
+        <kbd><img src="static/images/readme_images/testing/html/html-400e.png" alt="400e" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">403.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-403e.png" alt="403e" />
+        <kbd><img src="static/images/readme_images/testing/html/html-403e.png" alt="403e" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">404.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-404e.png" alt="404e" />
+        <kbd><img src="static/images/readme_images/testing/html/html-404e.png" alt="404e" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">500.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-500e.png" alt="500e" />
+        <kbd><img src="static/images/readme_images/testing/html/html-500e.png" alt="500e" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">check_in_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-check-in-block-user-management.png" alt="check-in-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-check-in-block-user-management.png" alt="check-in-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">check_in_out_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-check-in-out-block.png" alt="check-in-out-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-check-in-out-block.png" alt="check-in-out-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">check_out_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-check-out-block.png" alt="check-out-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-check-out-block.png" alt="check-out-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">enter_registration_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-enter-registration-block.png" alt="enter-registration-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-enter-registration-block.png" alt="enter-registration-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">registration_prompt_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-registration-prompt-block.png" alt="registration-prompt-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-registration-prompt-block.png" alt="registration-prompt-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">account_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-account-block.png" alt="account-block" />
+        <kbd><img src="static/images/readme_images/testing/html/html-account-block.png" alt="account-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">history_block.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-history-block.png" alt="history-block" />
+       <kbd><img src="static/images/readme_images/testing/html/html-history-block.png" alt="history-block" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">index.html</summary>
     <p>
-        <img src="static/images/readme_images/testing/html/html-index.png" alt="index" />
+        <kbd><img src="static/images/readme_images/testing/html/html-index.png" alt="index" /></kbd>
     </p>
 </details>
 
@@ -2204,49 +2207,49 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 <details>
     <summary style="color: white; background: black; padding: 5px;">activate parking helper</summary>
     <p>
-        <img src="static/images/readme_images/testing/jshint/jshint-activate-parking-helper.png" alt="activate_parking_helper" />
+        <kbd><img src="static/images/readme_images/testing/jshint/jshint-activate-parking-helper.png" alt="activate_parking_helper" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">add rate</summary>
     <p>
-        <img src="static/images/readme_images/testing/jshint/jshint-add-rate.png" alt="activate_parking_helper" />
+        <kbd><img src="static/images/readme_images/testing/jshint/jshint-add-rate.png" alt="activate_parking_helper" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">confirm delete user account</summary>
     <p>
-        <img src="static/images/readme_images/testing/jshint/jshint-confirm-delete-user-account.png" alt="jshint-confirm-delete-user-account" />
+        <kbd><img src="static/images/readme_images/testing/jshint/jshint-confirm-delete-user-account.png" alt="jshint-confirm-delete-user-account" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">fade alert</summary>
     <p>
-        <img src="static/images/readme_images/testing/jshint/jshint-fade-alert.png" alt="fade-alert" />
+        <kbd><img src="static/images/readme_images/testing/jshint/jshint-fade-alert.png" alt="fade-alert" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">geolocation</summary>
     <p>
-        <img src="static/images/readme_images/testing/jshint/jshint-geolocation.png" alt="geolocation" />
+       <kbd><img src="static/images/readme_images/testing/jshint/jshint-geolocation.png" alt="geolocation" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">parking fee</summary>
     <p>
-        <img src="static/images/readme_images/testing/jshint/jshint-parking-fee.png" alt="parking-fee" />
+        <kbd><img src="static/images/readme_images/testing/jshint/jshint-parking-fee.png" alt="parking-fee" /></kbd>
     </p>
 </details>
 
 <details>
     <summary style="color: white; background: black; padding: 5px;">provide car reg</summary>
     <p>
-        <img src="static/images/readme_images/testing/jshint/jshint-provide-car-reg.png" alt="provide-car-reg" />
+        <kbd><img src="static/images/readme_images/testing/jshint/jshint-provide-car-reg.png" alt="provide-car-reg" /></kbd>
     </p>
     <p>Note: var bootstrap is raised as an undefined variable. This is because JSHint does not have access to base.html where the variable is defined through the bootstrap library</p>
 </details>
@@ -2254,7 +2257,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 <details>
     <summary style="color: white; background: black; padding: 5px;">signup</summary>
     <p>
-        <img src="static/images/readme_images/testing/jshint/jshint-signup.png" alt="signup" />
+        <kbd><img src="static/images/readme_images/testing/jshint/jshint-signup.png" alt="signup" /></kbd>
     </p>
 </details>
 
@@ -2265,11 +2268,11 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
     <summary style="color: white; background: black; padding: 5px;">LOGIN</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/login/lighthouse-login-mobile.png" alt="login mobile" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/login/lighthouse-login-mobile.png" alt="login mobile" /></kbd>
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/login/lighthouse-login-desktop.png" alt="login desktop" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/login/lighthouse-login-desktop.png" alt="login desktop" /></kbd>
     </p>
 </details>
 
@@ -2277,11 +2280,11 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
     <summary style="color: white; background: black; padding: 5px;">Register</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/register/lighthouse-register-mobile.png" alt="register mobile" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/register/lighthouse-register-mobile.png" alt="register mobile" /></kbd>
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/register/lighthouse-register-desktop.png" alt="register desktop" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/register/lighthouse-register-desktop.png" alt="register desktop" /></kbd>
     </p>
 </details>
 
@@ -2289,11 +2292,11 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
     <summary style="color: white; background: black; padding: 5px;">User Dashboard</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/user_dashboard/lighthouse-user-dashboard-mobile.png" alt="userdashboard mobile" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/user_dashboard/lighthouse-user-dashboard-mobile.png" alt="userdashboard mobile" /></kbd>
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/user_dashboard/lighthouse-user-dashboard-desktop.png" alt="userdashboard desktop" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/user_dashboard/lighthouse-user-dashboard-desktop.png" alt="userdashboard desktop" /></kbd>
     </p>
 </details>
 
@@ -2301,11 +2304,11 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
     <summary style="color: white; background: black; padding: 5px;">Check In Dashboard</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/check_in/lighthouse-check-in-mobile.png" alt="check-in-mobile mobile" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/check_in/lighthouse-check-in-mobile.png" alt="check-in-mobile mobile" /></kbd>
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/check_in/lighthouse-check-in-desktop.png" alt="check-in desktop" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/check_in/lighthouse-check-in-desktop.png" alt="check-in desktop" /></kbd>
     </p>
 </details>
 
@@ -2313,11 +2316,11 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
     <summary style="color: white; background: black; padding: 5px;">History</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/history/lighthouse-history-mobile.png" alt="history mobile" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/history/lighthouse-history-mobile.png" alt="history mobile" /></kbd>
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/history/lighthouse-history-desktop.png" alt="History desktop" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/history/lighthouse-history-desktop.png" alt="History desktop" /></kbd>
     </p>
 </details>
 
@@ -2325,11 +2328,11 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
     <summary style="color: white; background: black; padding: 5px;">Account</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/account/lighthouse-account-mobile.png" alt="account mobile" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/account/lighthouse-account-mobile.png" alt="account mobile" /></kbd>
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/account/lighthouse-account-desktop.png" alt="account desktop" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/account/lighthouse-account-desktop.png" alt="account desktop" /></kbd>
     </p>
 </details>
 
@@ -2337,11 +2340,11 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
     <summary style="color: white; background: black; padding: 5px;">Parking Manager Dashboard</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/parking_manager_dashboard/lighthouse-parking-manager-dashboard-mobile.png" alt="Parking Manager Dashboard mobile" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/parking_manager_dashboard/lighthouse-parking-manager-dashboard-mobile.png" alt="Parking Manager Dashboard mobile" /></kbd>
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/parking_manager_dashboard/lighthouse-parking-manager-dashboard-desktop.png" alt="Parking Manager Dashboard desktop" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/parking_manager_dashboard/lighthouse-parking-manager-dashboard-desktop.png" alt="Parking Manager Dashboard desktop" /></kbd>
     </p>
 </details>
 
@@ -2349,11 +2352,11 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
     <summary style="color: white; background: black; padding: 5px;">Create Parking</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/create_parking/lighthouse-create-parking-mobile.png" alt="create parking mobile" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/create_parking/lighthouse-create-parking-mobile.png" alt="create parking mobile" /></kbd>
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/create_parking/lighthouse-create-parking-desktop.png" alt="create parking desktop" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/create_parking/lighthouse-create-parking-desktop.png" alt="create parking desktop" /></kbd>
     </p>
 </details>
 
@@ -2361,11 +2364,11 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
     <summary style="color: white; background: black; padding: 5px;">Parking Info</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/parking_info/lighthouse-parking-info-mobile.png" alt="parking info mobile" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/parking_info/lighthouse-parking-info-mobile.png" alt="parking info mobile" /></kbd>
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/parking_info/lighthouse-parking-info-desktop.png" alt="parking info desktop" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/parking_info/lighthouse-parking-info-desktop.png" alt="parking info desktop" /></kbd>
     </p>
 </details>
 
@@ -2373,11 +2376,11 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
     <summary style="color: white; background: black; padding: 5px;">Parking Inspector</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/parking_inspector/lighthouse-parking-inspector-mobile.png" alt="parking inspector mobile" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/parking_inspector/lighthouse-parking-inspector-mobile.png" alt="parking inspector mobile" /></kbd>
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/parking_inspector/lighthouse-parking-inspector-desktop.png" alt="parking inspector desktop" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/parking_inspector/lighthouse-parking-inspector-desktop.png" alt="parking inspector desktop" /></kbd>
     </p>
 </details>
 
@@ -2385,11 +2388,11 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
     <summary style="color: white; background: black; padding: 5px;">Add Rate</summary>
     <p>
         <h3>Mobile</h3>
-        <img src="static/images/readme_images/testing/lighthouse/add_rate/lighthouse-add-rate-mobile.png" alt="add rate mobile" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/add_rate/lighthouse-add-rate-mobile.png" alt="add rate mobile" /></kbd>
     </p>
     <p>
         <h3>Desktop</h3>
-        <img src="static/images/readme_images/testing/lighthouse/add_rate/lighthouse-add-rate-desktop.png" alt="add rate desktop" />
+        <kbd><img src="static/images/readme_images/testing/lighthouse/add_rate/lighthouse-add-rate-desktop.png" alt="add rate desktop" /></kbd>
     </p>
 </details>
 
@@ -2435,7 +2438,7 @@ This may have been specific to my local setup, but I had to use : pip install ps
 (Documentation: https://pypi.org/project/psycopg2-binary/). My requirements.txt file lists : psycopg2-binary==2.9.9
 
 In settings.py, edit `DATABASES` variables to the following to point to the new local postgres database:
-
+```python
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -2446,6 +2449,7 @@ In settings.py, edit `DATABASES` variables to the following to point to the new 
             'PORT': '5432', 
         }
     }
+```
 
 > [!IMPORTANT] 
 > You will need to run your migration again (`python manage.py migrate`) and recreate a new superuser. All data will be lost.
@@ -2453,7 +2457,7 @@ In settings.py, edit `DATABASES` variables to the following to point to the new 
 Once this is done, you will want your data stored in a your .env file, to avoid secret keys being publicly available when pushing the project to github and adapting the variables to their environement (local, staging, production...). To do this, do the following:
 * enter `pip install python-decouple`
 * modify your settings.py to look like this:
-
+```python
     from decouple import config
 
     DATABASES = {
@@ -2466,9 +2470,11 @@ Once this is done, you will want your data stored in a your .env file, to avoid 
             'PORT': config('DB_PORT', default='5432'),
         }
     }
+```
 
 * Add values to variables to .env file. Note these dont need to be in string format, as they are considered strings by default. For this project, values need to attached to the following variables:
 
+```python
     # stripe
     STRIPE_PUBLIC_KEY_TEST = 'value'
     STRIPE_SECRET_KEY_TEST ='value'
@@ -2479,6 +2485,7 @@ Once this is done, you will want your data stored in a your .env file, to avoid 
     # for gmail
     EMAIL_HOST_USER = 'value'
     EMAIL_HOST_PASSWORD = 'value'
+```
 
 > [!NOTE]
 > Credits - Instal postgres on local: https://www.postgresql.org/download/<br>
@@ -2507,15 +2514,19 @@ To solve this problem: create a new Procfile through a Notepad, selected encodin
 
 In your settings.py add:
 
+```python
     DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+```
 
 In your Heroku Variable add `DJANGO_DEBUG` as `False`.
 
 By default, if this is not specified, the server will consider as a development environement.
 
 Add whitenoise in settings.py to middleware list
-
+```python 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+```
+
 > [!TIP]
 > `MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.`. Adding whitenoise corrected the error. See below for process to adding whitenoise.
 
