@@ -1,8 +1,6 @@
 TODO:
 Problem: Once a transaction was made and paid. Somehow the user got loggedout during payment and the model didnt get updated with `paid = true`. Only seem to happen on local after I havent connected in a while.
 
-
-
 fix logout problem when scanning qr code. Might be SSL certificate realted problem.
 
 
@@ -205,20 +203,22 @@ Wireframes initially designer for the project are available below.
 <details>
 <summary style="color: white; background: black; padding: 5px;">Click to ER Diargram dependency installation process</summary>
 <p>
+
 ERD was generated using django extension `Graphviz`.
 
 To install `Graphviz` these steps were followed:
-    * run: `pip install django-extensions`
-    * run: `winget install Graphviz`
-    * add:
+* run: `pip install django-extensions`
+* run: `winget install Graphviz`
+* add:
 
         INSTALLED_APPS = [
         ...
         'django_extensions'
         ]
 
-    * run: `pip install pydotplus`
-    * run: `python manage.py graph_models -a -o erd.png`
+* run: `pip install pydotplus`
+* run: `python manage.py graph_models -a -o erd.png`
+
 </p>
 </details>
 
@@ -332,6 +332,8 @@ This process is managed in user_management app through `CustomSignupView()`.
 <details>
 <summary style="color: white; background: black; padding: 5px;">Click to see `CustomSignupView()`</summary>
 <p>
+
+```python
     from django.contrib.auth.forms import UserCreationForm
     from django.contrib.auth import login
     from allauth.account.views import SignupView
@@ -350,6 +352,8 @@ This process is managed in user_management app through `CustomSignupView()`.
             login(self.request, user)
             return redirect('home')
         return super().form_valid(form)
+```
+
 </p>
 </details>
 
@@ -361,6 +365,7 @@ Your the project files, the following changes need to be made:
 <summary style="color: white; background: black; padding: 5px;">Click to see `settings.py` content</summary>
 <p>
 
+```python
    TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -424,6 +429,7 @@ Your the project files, the following changes need to be made:
     ACCOUNT_USERNAME_MIN_LENGTH = 4
     LOGIN_URL = '/accounts/login/'
     LOGIN_REDIRECT_URL = '/'
+```
 </p>
 </details>
 
@@ -433,6 +439,7 @@ Your the project files, the following changes need to be made:
 <summary style="color: white; background: black; padding: 5px;">urls.py (app level)</summary>
 <p>
 
+```python
     # allauth view paths
     from .views import CustomSignupView
 
@@ -440,6 +447,7 @@ Your the project files, the following changes need to be made:
         ...
         path('accounts/signup/', CustomSignupView.as_view(), name='account_signup'),
     ]
+```
 </p>
 </details>  
 
@@ -447,12 +455,15 @@ Your the project files, the following changes need to be made:
 <summary style="color: white; background: black; padding: 5px;">urls.py (project level)</summary>
 <p>
 
+```python
     urlpatterns = [
        
         # Allauth package
         path('accounts/', include('allauth.urls')),
         
     ]
+```
+
 </p>
 </details>
 
@@ -480,6 +491,7 @@ Some changes were needed in settings.py, which are detailed below.
 <summary style="color: white; background: black; padding: 5px;">Click to see changes in settings.py</summary>
 <p>
 
+```python
     # Email
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'smtp.gmail.com'
@@ -489,6 +501,7 @@ Some changes were needed in settings.py, which are detailed below.
     EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https' 
     DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
+```
 
 </p>
 </details>
@@ -517,6 +530,7 @@ Update settings.py to handle statics and media files.
 <summary style="color: white; background: black; padding: 5px;">Click to see changes in settings.py</summary>
 <p>
 
+```python
     import os
     from pathlib import Path
 
@@ -533,6 +547,7 @@ Update settings.py to handle statics and media files.
 
     # Static file storage for production
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+```
 
 </p>
 </details>
@@ -544,9 +559,11 @@ In `urls.py` (project level) add settings to serve media files in developement.
 <summary style="color: white; background: black; padding: 5px;">Click to see changes in `urls.py`</summary>
 <p>
 
+```python
     urlpatterns = [
     ...
     ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+```
 
 </p>
 </details>
@@ -757,6 +774,7 @@ How does Regex work:
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -766,6 +784,8 @@ How does Regex work:
 
         # make  street_address2 not required
         self.fields['street_address2'].required = False
+```
+
 </p>
 </details>
 
@@ -795,6 +815,7 @@ Activating and deactivating parking is enabled with `activate_parking()`. Taking
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     @require_POST
     @login_required
     def activate_parking(request, parking_id):
@@ -823,6 +844,7 @@ Activating and deactivating parking is enabled with `activate_parking()`. Taking
 
         messages.success(request, f"{parking.name} has been {'activated' if parking.active else 'deactivated'}.")
         return redirect('parking-info', parking_id=parking_id)
+```
 
 </p>
 </details>
@@ -835,9 +857,11 @@ The button that triggers this function on the template under :
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     <div class="col">
         <a class="btn button-2 full-width" href="{% url 'parking-info' parking_id=item.parking.id %}">Info</a>
     </div>
+```
 
 </p>
 </details>
@@ -850,11 +874,13 @@ The button that triggers this function on the template under :
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     if not rate_exist:
         print('rate_exist is empty')
         messages.error(request, f"Add a rate before activating parking.")
         return redirect('parking-info', parking_id=parking.id)
-    
+```
+
 </p>
 </details>
 
@@ -876,10 +902,12 @@ This variable is then returned on the template in `parking_info.html`, via `park
 <summary style="color: white; background: black; padding: 5px;">Click to see parking_info.html</summary>
 <p>
 
+```html
     {% block parking_info_block %}
         {% include 'parking_info/parking_info_blocks/parking_info_block.html' %}
     {% endblock %}
-    
+```
+
 </p>
 </details>
 
@@ -888,12 +916,14 @@ This variable is then returned on the template in `parking_info.html`, via `park
 <summary style="color: white; background: black; padding: 5px;">Click to see parking_info_block.html</summary>
 <p>
 
+```html
     <div class="row d-flex align-items-center justify-content-center">
         <span>
             {{stay_objects_count}}/{{parking.max_capacity}}
         </span>
     </div>
-    
+ ```
+ 
 </p>
 </details>
 
@@ -965,6 +995,7 @@ The form contains validators ensuring:
 <summary style="color: white; background: black; padding: 5px;">Click to see parking_info_block.html</summary>
 <p>
 
+```python
     class RateForm(ModelForm):
 
         rate_name = forms.CharField(
@@ -984,7 +1015,9 @@ The form contains validators ensuring:
             widget=forms.TextInput(attrs={'placeholder': 'Enter applicable rate'}),
             validators=[MinValueValidator(0.01)]  # prevents user to under values under or equal to 0 
         )
-    
+
+ ```
+
 </p>
 </details>
   
@@ -1058,6 +1091,7 @@ If the user profile has a car registration number, the user will be able to acce
 <summary style="color: white; background: black; padding: 5px;">Click to see parking_info_block.html</summary>
 <p>
 
+```python
     <div class="col-12 col-md-4 mt-3 mt-md-0">
         <form action="{% url 'get_parking_location' %}" class="w-100" method="POST">
             {% csrf_token %}
@@ -1068,7 +1102,8 @@ If the user profile has a car registration number, the user will be able to acce
             </button>
         </form>
     </div>
-    
+```
+
 </p>
 </details>
 
@@ -1081,12 +1116,14 @@ The role of `get_parking_location()` is to look for a matching geolocation betwe
 
 In order to do so, `get_parking_location()` collects the values in `user_latitude` and `user_longitude` variables which are fed by the hidden input fields populate by the javascript function.
 
+```python
     if request.method == "POST":
         # capture user current location
         user_latitude = request.POST.get('latitude')
         user_longitude = request.POST.get('longitude')
         print(f'user_latitude = {user_latitude}')
         print(f'user_longitude = {user_longitude}')
+```
 
 > [!NOTE]
 >Credits -  `getLocation()` is a copy of `HTML Geolocation API` from W3Schools (https://www.w3schools.com/html/html5_geolocation.asp
@@ -1106,14 +1143,18 @@ In the event, no parking_id could be returned, `parking_id` is set as None by de
 
 **views.py:**
 
+```python
     @login_required
     def enter(request, parking_id=None):
         ...
+```
 
 **urls.py:**
 
+```python
     path('enter/', views.enter, name='enter'),
     path('enter/<int:parking_id>/', views.enter, name='enter_with_parking_id'),
+```
 
 > [!NOTE]
 > Credits - HTML Geolocation API: https://www.w3schools.com/html/html5_geolocation.asp
@@ -1154,7 +1195,9 @@ In the event, no parking_id could be returned, `parking_id` is set as None by de
 
 Set values in the same format:
 
+```python
     parking_radius = float(parking.radius)
+```
 
 > [!TIP]
 >`TypeError: User geolocation innacuracy: unless a mobile phone is used for testing, the accuracy of the geolocation varies between 3m to 888m. I found that from my laptop a range of 900m was comfortable to capture a nearby geofence.
@@ -1179,6 +1222,7 @@ Through `parking_fee.js`, `fetchRates()` collects dynamically applicables rates 
 <summary style="color: white; background: black; padding: 5px;">Click to see `get_parking_rates()`</summary>
 <p>
 
+```python
     def get_parking_rates(request, parking_id):
         print(f'get_parking_rates parking id = {get_parking_rates}')
         rates = Rate.objects.filter(parking_name_id = parking_id).values(
@@ -1187,6 +1231,7 @@ Through `parking_fee.js`, `fetchRates()` collects dynamically applicables rates 
             'rate',
         )
         return JsonResponse(list(rates), safe=False)
+```
 
 </p>
 </details>
@@ -1205,6 +1250,7 @@ These objects are then returned back to `fetchRates()` in json format, before be
 <summary style="color: white; background: black; padding: 5px;">Click to see `renderRatesTable()`</summary>
 <p>
 
+```python
     function renderRatesTable(data){
 
         // get the body of the table
@@ -1234,11 +1280,13 @@ These objects are then returned back to `fetchRates()` in json format, before be
         }
     }
 
+```
+
 </p>
 </details>
     
 
-> [!TIP]`TypeError
+> [!TIP]
 > The initial code was returning an error. It seems that Json expects a dictionaryy by default. To correct this problem `safe` is set to `False` (`safe = False`), which allows to return a list instead.
 
 
@@ -1259,6 +1307,7 @@ This drop down menu is generated in the template:
 <summary style="color: white; background: black; padding: 5px;">Click to see template form</summary>
 <p>
 
+```python
     <form method="post">
         {% csrf_token %}
         <div class="enter-form center">
@@ -1280,6 +1329,7 @@ This drop down menu is generated in the template:
             <input class="button-1 btn " type="submit" value="Check-In">
         </div>
     </form>
+```
 
 </p>
 </details> 
@@ -1291,7 +1341,7 @@ Upon selection by the user the `parking_id` is captured by an event listener, wh
 <summary style="color: white; background: black; padding: 5px;">Click to see script</summary>
 <p>
 
-
+```python
     // look for changes if the user has selected a parking manually
     const manuallySelectedParking = document.getElementById('parking-select');
     console.log("manuallySelectedParking=", manuallySelectedParking);
@@ -1310,6 +1360,7 @@ Upon selection by the user the `parking_id` is captured by an event listener, wh
         })
 
     }
+```
 
 </p>
 </details>
@@ -1324,8 +1375,8 @@ This final phase is managed by `enter()` which handles both scenarios of having 
 > The check-in process was by far the most challenging part of the project. A big acknowledgment to Gareth McGirr and Stackoverflow for the help.
 
 > [!NOTE]
-> Gareth Mc Girr (mentor) who guided through this process
-> Stackoverflow: https://dev.to/chryzcode/django-json-response-safe-false-4f9i
+> Credits - Gareth Mc Girr (mentor) who guided through this process<br>
+> Credits - Stackoverflow: https://dev.to/chryzcode/django-json-response-safe-false-4f9i
 
 ### 3.12 Check-Out Parking <a name="check-out"></a>
 
@@ -1343,11 +1394,13 @@ The display management of these two buttons is hanlded in `index()` through var 
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     #look up if user has already an existing Stay object
     #and exclude objects that is matched with a LeaveParking object 
     existing_stay_obj = Stay.objects.filter(user=request.user.userprofile).exclude(
         id__in=LeaveParking.objects.values_list('stay_id', flat=True)
     )
+```
 
 </p>
 </details>
@@ -1367,6 +1420,7 @@ Using the `stay_id` parameter, it creates a LeaveParking objects, child to its S
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     # Retrieve the existing Stay object
     try:
         stay = Stay.objects.get(id=stay_id, user=request.user.userprofile)
@@ -1377,7 +1431,7 @@ Using the `stay_id` parameter, it creates a LeaveParking objects, child to its S
             parking_name=stay.parking_name,
             stay=stay,
         )
-
+```
 
 </p>
 </details>
@@ -1393,6 +1447,7 @@ The function will then compare both timestamps to extract the user's stay durati
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     #retrieve enter timestamp
     enter_time = EnterParking.objects.get(stay=stay_id)
     print(f'enter_time = {enter_time.timestamp_enter}')
@@ -1408,13 +1463,16 @@ The function will then compare both timestamps to extract the user's stay durati
     # Convert total_stay_time to hours
     total_stay_time_hours = Decimal(total_stay_time.total_seconds()) / Decimal(3600)
     print(f'total_stay_time in hours = {total_stay_time_hours}')
+```
 
 </p>
 </details>
 
 Var `total_stay_time_hours` is then used to calculte the applicable fee.
 
+```python
     applicable_fee = calculate_user_fee(stay, total_stay_time_hours)
+```
 
 **Phase 2 - User Fee calculation**
 
@@ -1430,9 +1488,11 @@ Following this steps, the applicable rates to relevant parking objects are ident
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     #look for applicate rate for parking ID and total stay again rate.hour_range
         rate_available = Rate.objects.filter(parking_name=stay.parking_name).order_by('hour_range')
         print(f'rate_available = {rate_available}')
+```
 
 </p>
 </details>
@@ -1444,6 +1504,7 @@ Once these rates are identified, the functions proceeds to match the appropriate
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     #return applicable fee
     #create variable to attach closest rate to it during loop
     closest_rate = None
@@ -1457,6 +1518,7 @@ Once these rates are identified, the functions proceeds to match the appropriate
     #apply the latest rate on the list
     if closest_rate is None and rate_available.exists():
         closest_rate = rate_available.last()
+```
 
 </p>
 </details>
@@ -1467,6 +1529,7 @@ Once `closest_rate` is defined, the applicable fee can be calculated and returne
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     if closest_rate:
         print(f'closest rate is {closest_rate}')
         applicable_fee = closest_rate.rate * roundedup_total_stay_time_hours
@@ -1475,6 +1538,8 @@ Once `closest_rate` is defined, the applicable fee can be calculated and returne
     else:
         print('Looks like there is a problem!')
         return None
+```
+
 </p>
 </details>
 
@@ -1486,12 +1551,15 @@ This phase is handled by `fee_form()` and managed by `leave()`, passing `applica
 <summary style="color: white; background: black; padding: 5px;">Click see to leave() code section redirecting to fee_form()</summary>
 <p>
 
+```python
     if applicable_fee:
         print(f'applicable_fee is {applicable_fee}')
         fee_form(request, applicable_fee, stay_id)
         return payment(request,applicable_fee, stay_id)
     else:
         print(f'no applicable fee')
+```
+
 </p>
 </details>
 
@@ -1501,6 +1569,7 @@ The role of this function is retrieve the stay object id, and add the calculated
 <summary style="color: white; background: black; padding: 5px;">Click to fee_form() code</summary>
 <p>
 
+```python
     # add Fee value to stay_id
     @login_required     
     def fee_form(request, applicable_fee,stay_id ):
@@ -1510,7 +1579,9 @@ The role of this function is retrieve the stay object id, and add the calculated
             stay.save()
             print(f"Stay object {stay_id} updated with calculated_fee: {stay.calculated_fee}")
         except Stay.DoesNotExist:
-            print('Stay object does not exist')         
+            print('Stay object does not exist')  
+```
+
 </p>
 </details>
 
@@ -1532,10 +1603,12 @@ The function will start by collecting the `STRIPE_SECRET_KEY_TEST` from .env fil
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     #set API key the begining to avoid 
     #"Error in payment process:No API key provided."
         stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
         amount_int = int(applicable_fee*100)
+```
 
 </p>
 </details>
@@ -1546,6 +1619,7 @@ The function looks for existing stripe ID, in the UserProfile model object.
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     #check if userprofile already has a stripe id
     # Create a customer if not already created
         if not request.user.userprofile.stripe_customer_id:
@@ -1554,7 +1628,8 @@ The function looks for existing stripe ID, in the UserProfile model object.
             )
             request.user.userprofile.stripe_customer_id = customer.id
             request.user.userprofile.save()
-                
+ ```
+
 </p>
 </details>
 
@@ -1564,6 +1639,7 @@ A local variable `price_object` is defined. The role of this variable is to crea
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     #create a price object in stripe
         price_object = stripe.Price.create(
             unit_amount=amount_int,
@@ -1572,7 +1648,8 @@ A local variable `price_object` is defined. The role of this variable is to crea
                 "name":"Parking Fee"
             }
         )
-                
+```
+
 </p>
 </details>
 
@@ -1668,6 +1745,7 @@ After successful payment, Stripe will send a query back to the server and starts
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     @csrf_exempt
     def stripe_webhook(request):
 
@@ -1689,7 +1767,8 @@ After successful payment, Stripe will send a query back to the server and starts
             print(f"Signature verification failed: {str(e)}")  # Log the error for debugging
             return HttpResponse(status=400)
         ...
-                
+```
+
 </p>
 </details>
 
@@ -1700,12 +1779,14 @@ Following successful validation, Stripe will look to push payment confirmation t
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     # retrieve user payment record
     stay = Stay.objects.get(stripe_checkout_id=session_id)
     line_items = stripe.checkout.Session.list_line_items(session_id,limit=1)
     stay.paid = True
     stay.save()
-                
+```
+
 </p>
 </details>
 
@@ -1717,6 +1798,7 @@ Successful confirmation will eventually trigger an payment confirmation email be
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
+```python
     subject = "Payment Confirmation"
                 context = {
                     'username': stay.user.user.username,
@@ -1744,7 +1826,8 @@ Successful confirmation will eventually trigger an payment confirmation email be
                 except Exception as e:
                     logger.error('Error sending email: %s', str(e))
                 print('email is sent')
-                
+ ```
+
 </p>
 </details>
 
@@ -1811,11 +1894,13 @@ It allows to force a user to be authenticated before accessing a specific functi
 
 With the exception of login and register templates, all other function have a decorator.
 
+```python
     from django.contrib.auth.decorators import login_required
 
         @login_required
         def index(request):
         ...
+```
 
 Other decorators in use: 
 * `@csrf_exempt` - to remove the need for CSRF token in Stripe callback
@@ -1843,6 +1928,7 @@ Templates are located in: `user_management\templates\errors`
 <summary style="color: white; background: black; padding: 5px;">Click to see code for urls.py (project level)</summary>
 <p>
 
+```python
     from django.conf.urls import handler404, handler500, handler403, handler400
 
     urlpatterns = [....
@@ -1852,7 +1938,8 @@ Templates are located in: `user_management\templates\errors`
     handler500 = 'user_management.views.handler500'
     handler403 = 'user_management.views.handler403'
     handler400 = 'user_management.views.handler400'
-                
+ ```
+
 </p>
 </details>
 
@@ -1860,6 +1947,7 @@ Templates are located in: `user_management\templates\errors`
 <summary style="color: white; background: black; padding: 5px;">Click to see code for views.py (app level)</summary>
 <p>
 
+```python
     def handler404(request, exception):
         """ Handle 404 errors and render the custom 404 error page """
         return render(request, 'errors/404.html', status=404)
@@ -1893,7 +1981,8 @@ Templates are located in: `user_management\templates\errors`
     def test_400_error(request):
         """ Raise a test exception for the 400 error handler """
         raise SuspiciousOperation("Test 400 error")
-            
+  ```
+
 </p>
 </details>
 
@@ -1931,6 +2020,7 @@ This back button has two features:
 <summary style="color: white; background: black; padding: 5px;">Click to see code details</summary>
 <p>
 
+```python
     {% block base_navigation_block %}
         <div class="navigation">
         <!-- If user is on user account, redirects home -->
@@ -1959,6 +2049,7 @@ This back button has two features:
         {% endif %}
         </div>
     {% endblock %}
+```
 
 </p>
 </details>
@@ -1972,6 +2063,7 @@ The credits for this feature goe to the links listed below.
 
 Suggestion for improvement: The code could improve by streamlining the series of `elif` statement into a single `if`. For some reason the below code was generating an error.
 
+```html
     {% if request.resolver_match.url_name == 'user-account' or 
         request.resolver_match.url_name == 'payment-successful' or 
         request.resolver_match.url_name == 'payment-cancelled' or 
@@ -1982,6 +2074,7 @@ Suggestion for improvement: The code could improve by streamlining the series of
     {% else %}
     ...
     {%endif%}
+```
 
 ## 4. Technologies <a name="tech"></a>
 
@@ -2576,6 +2669,7 @@ In settings.py, edit `DATABASES` variables to the following to point to the new 
 Once this is done, you will want your data stored in a your .env file, to avoid secret keys being publicly available when pushing the project to github and adapting the variables to their environement (local, staging, production...). To do this, do the following:
 * enter `pip install python-decouple`
 * modify your settings.py to look like this:
+
 ```python
     from decouple import config
 

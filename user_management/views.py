@@ -6,10 +6,12 @@ from parking_activity.models import (Stay,
                                     EnterParking,
                                     LeaveParking,
                                     UserProfile)
+from parking_management.models import Parking
 from .forms import UserProfileForm
 from django.contrib import messages
 
 from django.contrib.auth.models import User
+
 
 # error handlin imports
 from django.http import HttpRequest
@@ -120,19 +122,44 @@ def edit_user_account(request):
         form = UserProfileForm(instance=user_profile)
     return render(request, 'account/edit_user_account.html', {'form': form})
 
+def is_parking_manager(request):
+    print(f'request.user.userprofile.user_type: {request.user.userprofile.user_type}')
+    if request.user.userprofile.user_type != 2:
+        return False
+    return True
+
+def has_checked_in_users(request):
+    if is_parking_manager(request):
+        # list all parkings under management
+        parking_portfolio = Parking.objects.filter(user=request.user.userprofile)
+        for parking in parking_portfolio:
+            stay_objects_count = Stay.objects.filter(
+                parking_name = parking,
+                paid = False
+            ).count()
+            if stay_objects_count > 0:
+                return True
 
 @login_required
 def delete_user_account(request):
-
-    # check if user is already checked-in
-    # look up if user has already an existing Stay object
-    # and exclude objects that is matched with a LeaveParking object 
-    existing_stay_obj = Stay.objects.filter(user=request.user.userprofile).exclude(
-        id__in=LeaveParking.objects.values_list('stay_id', flat=True)
-    )
-    if existing_stay_obj:
-        messages.error(request, "Your cannot your user profile whilst checked-in.")
-        return redirect('user-account')  
+    # if is parking user
+    if not is_parking_manager(request): 
+        # check if user is already checked-in
+        # look up if user has already an existing Stay object
+        # and exclude objects that is matched with a LeaveParking object 
+        existing_stay_obj = Stay.objects.filter(user=request.user.userprofile).exclude(
+            id__in=LeaveParking.objects.values_list('stay_id', flat=True)
+        )
+        if existing_stay_obj:
+            messages.error(request, "Your delete your account whilst checked-in.")
+            return redirect('user-account')
+    # if is parking manager
+    # prevent account deletion if cars are checked-in
+    else:
+        has_user = has_checked_in_users(request)
+        if has_checked_in_users(request):
+            messages.error(request, "You cannot delete your account while users are checked in.")
+            return redirect('user-account')
 
     if request.method == 'POST':
         user = get_object_or_404(User, id=request.user.id)
