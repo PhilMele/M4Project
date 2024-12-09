@@ -168,23 +168,23 @@ Icons and images are hosted on S3 Bucket:
 Wireframes initially designer for the project are available below.
 
 <details>
-    <summary>Click to see wireframes</summary>
+    <summary style="color: white; background: black; padding: 5px;">Click to see wireframes</summary>
     <p>
-        <img src="static/images/readme_images/wireframes/wireframes.png" alt="wireframes" />
+        <img style="background:grey; padding:10px" src="static/images/readme_images/wireframes/wireframes.png" alt="wireframes" />
     </p>
 </details>
 
 ### 2.5 Databases <a name="databases"></a>
 
 <details>
-    <summary>Click to see ER Diargram</summary>
+    <summary style="color: white; background: black; padding: 5px;">Click to see ER Diargram</summary>
     <p>
         <img src="static/images/readme_images/erd.png" alt="erd" />
     </p>
 </details>
 
 <details>
-<summary>Click to ER Diargram dependency installation process</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to ER Diargram dependency installation process</summary>
 <p>
 ERD was generated using django extension `Graphviz`.
 
@@ -209,7 +209,7 @@ The databases are split across 3 diffrent apps:
 * `parking_management`.
 
 <details>
-<summary>Click to see `user_management` app models</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see `user_management` app models</summary>
 <p>
 
 | **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
@@ -230,7 +230,7 @@ The databases are split across 3 diffrent apps:
 </details>
 
 <details>
-<summary>Click to see `parking_management` app models</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see `parking_management` app models</summary>
 <p>
 
 | **Model**     | **Field Name**      | **Field Type**       | **Description**                                                   |
@@ -269,7 +269,7 @@ The databases are split across 3 diffrent apps:
 </details>
 
 <details>
-<summary>Click to see `parking_activity` app models</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see `parking_activity` app models</summary>
 <p>
 
 | **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
@@ -311,7 +311,7 @@ As a result, a custom register view has been written up in order to display aler
 This process is managed in user_management app through `CustomSignupView()`.
 
 <details>
-<summary>Click to see `CustomSignupView()`</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see `CustomSignupView()`</summary>
 <p>
     from django.contrib.auth.forms import UserCreationForm
     from django.contrib.auth import login
@@ -339,7 +339,7 @@ In order to install allauth, the following dependencies need to be installed by 
 Your the project files, the following changes need to be made:
 
 <details>
-<summary>Click to see `settings.py` content</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see `settings.py` content</summary>
 <p>
 
    TEMPLATES = [
@@ -411,7 +411,7 @@ Your the project files, the following changes need to be made:
 
 
 <details>
-<summary>urls.py (app level)</summary>
+<summary style="color: white; background: black; padding: 5px;">urls.py (app level)</summary>
 <p>
 
     # allauth view paths
@@ -425,7 +425,7 @@ Your the project files, the following changes need to be made:
 </details>  
 
 <details>
-<summary>urls.py (project level)</summary>
+<summary style="color: white; background: black; padding: 5px;">urls.py (project level)</summary>
 <p>
 
     urlpatterns = [
@@ -459,7 +459,7 @@ In order to enable emails sending, a gmail address was created and the credentia
 Some changes were needed in settings.py, which are detailed below.
 
 <details>
-<summary>Click to see changes in settings.py</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see changes in settings.py</summary>
 <p>
 
     # Email
@@ -497,7 +497,7 @@ Install required libraries: run `pip install django-storages boto3 whitenoise`
 Update settings.py to handle statics and media files.
 
 <details>
-<summary>Click to see changes in settings.py</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see changes in settings.py</summary>
 <p>
 
     import os
@@ -524,7 +524,7 @@ In `urls.py` (project level) add settings to serve media files in developement.
 
 
 <details>
-<summary>Click to see changes in `urls.py`</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see changes in `urls.py`</summary>
 <p>
 
     urlpatterns = [
@@ -590,7 +590,7 @@ The template includes `geolocation.js`, which capture the user's geolocation to 
 Supported by `provide_car_reg.js`, the function also restricts users from checking in, if they havent provided their car registration:
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
     car_reg = False
     if request.user.userprofile.car_registration:
@@ -634,7 +634,7 @@ This feature uses a django for: `ParkingForm()` which looks to populate fields d
 With regards to latitude and longitude fields, the form implements a restriction with Regex patterns, and only accepts digits and `-` signs, to ensure values are properly implemented.
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
     class ParkingForm(forms.ModelForm):
         # restricts values in lat lng fields to didgits only
@@ -676,7 +676,7 @@ How does Regex work:
 
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     def __init__(self, *args, **kwargs):
@@ -714,7 +714,7 @@ For a user to check-in a parking, the parking needs to be `activate`.
 Activating and deactivating parking is enabled with `activate_parking()`. Taking `parking_id` as a parameter, it either switch the parking on and off.
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     @require_POST
@@ -754,7 +754,7 @@ The button that triggers this function on the template under :
 
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     <div class="col">
@@ -768,7 +768,7 @@ The button that triggers this function on the template under :
 **Note**: Parking objects cannot be activated unless they are provided at least with 1 applicable rate. This rule is set in force in both backend, where the logic will check if the an existing rate has been attached to this `parking_id` and display an error message, and in the front end by hiding the "Activate" button.
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     if not rate_exist:
@@ -794,7 +794,7 @@ This variable is then returned on the template in `parking_info.html`, via `park
 
 
 <details>
-<summary>Click to see parking_info.html</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see parking_info.html</summary>
 <p>
 
     {% block parking_info_block %}
@@ -806,7 +806,7 @@ This variable is then returned on the template in `parking_info.html`, via `park
 
 
 <details>
-<summary>Click to see parking_info_block.html</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see parking_info_block.html</summary>
 <p>
 
     <div class="row d-flex align-items-center justify-content-center">
@@ -850,7 +850,7 @@ The form contains validators ensuring:
 * rate value is above 0.
 
 <details>
-<summary>Click to see parking_info_block.html</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see parking_info_block.html</summary>
 <p>
 
     class RateForm(ModelForm):
@@ -910,7 +910,7 @@ If the user profile has a car registration number, the user will be able to acce
 
 
 <details>
-<summary>Click to see parking_info_block.html</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see parking_info_block.html</summary>
 <p>
 
     <div class="col-12 col-md-4 mt-3 mt-md-0">
@@ -1028,7 +1028,7 @@ Through `parking_fee.js`, `fetchRates()` collects dynamically applicables rates 
 
 
 <details>
-<summary>Click to see `get_parking_rates()`</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see `get_parking_rates()`</summary>
 <p>
 
     def get_parking_rates(request, parking_id):
@@ -1052,7 +1052,7 @@ These objects are then returned back to `fetchRates()` in json format, before be
 
 
 <details>
-<summary>Click to see `renderRatesTable()`</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see `renderRatesTable()`</summary>
 <p>
 
     function renderRatesTable(data){
@@ -1105,7 +1105,7 @@ This drop down menu is generated in the template:
 
 
 <details>
-<summary>Click to see template form</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see template form</summary>
 <p>
 
     <form method="post">
@@ -1137,7 +1137,7 @@ Upon selection by the user the `parking_id` is captured by an event listener, wh
 
 
 <details>
-<summary>Click to see script</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see script</summary>
 <p>
 
 
@@ -1188,7 +1188,7 @@ The display management of these two buttons is hanlded in `index()` through var 
 
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     #look up if user has already an existing Stay object
@@ -1212,7 +1212,7 @@ Using the `stay_id` parameter, it creates a LeaveParking objects, child to its S
 
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     # Retrieve the existing Stay object
@@ -1238,7 +1238,7 @@ The function will then compare both timestamps to extract the user's stay durati
 
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     #retrieve enter timestamp
@@ -1275,7 +1275,7 @@ The function starts by rounding up `total_stay_time_hours` to next hour : if a u
 Following this steps, the applicable rates to relevant parking objects are identified.
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     #look for applicate rate for parking ID and total stay again rate.hour_range
@@ -1289,7 +1289,7 @@ Once these rates are identified, the functions proceeds to match the appropriate
 
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     #return applicable fee
@@ -1312,7 +1312,7 @@ Once these rates are identified, the functions proceeds to match the appropriate
 Once `closest_rate` is defined, the applicable fee can be calculated and returned to `leave()` under variable: `applicable_fee`.
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     if closest_rate:
@@ -1331,7 +1331,7 @@ Once `closest_rate` is defined, the applicable fee can be calculated and returne
 This phase is handled by `fee_form()` and managed by `leave()`, passing `applicable_fee` and `stay_id` as parameters. 
 
 <details>
-<summary>Click see to leave() code section redirecting to fee_form()</summary>
+<summary style="color: white; background: black; padding: 5px;">Click see to leave() code section redirecting to fee_form()</summary>
 <p>
 
     if applicable_fee:
@@ -1346,7 +1346,7 @@ This phase is handled by `fee_form()` and managed by `leave()`, passing `applica
 The role of this function is retrieve the stay object id, and add the calculated fee to it, before redirecting the user back to `leave()` for payment handling.
 
 <details>
-<summary>Click to fee_form() code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to fee_form() code</summary>
 <p>
 
     # add Fee value to stay_id
@@ -1377,7 +1377,7 @@ The function will start by collecting the `STRIPE_SECRET_KEY_TEST` from .env fil
 
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     #set API key the begining to avoid 
@@ -1391,7 +1391,7 @@ The function will start by collecting the `STRIPE_SECRET_KEY_TEST` from .env fil
 The function looks for existing stripe ID, in the UserProfile model object.
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     #check if userprofile already has a stripe id
@@ -1409,7 +1409,7 @@ The function looks for existing stripe ID, in the UserProfile model object.
 A local variable `price_object` is defined. The role of this variable is to create object in Stripe for future use.
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     #create a price object in stripe
@@ -1435,7 +1435,7 @@ Payment handling is managed through a Stripe integration, detailed below.
 The process starts with the `payment()` function, which takes `applicable_fee` and `stay_id` as parameters. This function begins by retrieving the `STRIPE_SECRET_KEY_TEST` from the `.env` file and converting the `applicable_fee` from pounds to pence (as required by Stripe). 
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
     # Set API key to avoid "No API key provided" error
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
@@ -1444,7 +1444,7 @@ The process starts with the `payment()` function, which takes `applicable_fee` a
 
 The function checks if the user has an existing Stripe customer ID in their profile (UserProfile model). If not, it creates a new customer on Stripe and saves the ID to the user's profile.
 
-<details> <summary>Click to see code</summary> <p>
+<details> <summary style="color: white; background: black; padding: 5px;">Click to see code</summary> <p>
     if not request.user.userprofile.stripe_customer_id:
         customer = stripe.Customer.create(
             email=request.user.email
@@ -1455,7 +1455,7 @@ The function checks if the user has an existing Stripe customer ID in their prof
 
 A price_object is created to represent the payment amount and currency on Stripe. This object is essential for generating the checkout session.
 
-<details> <summary>Click to see code</summary> <p>
+<details> <summary style="color: white; background: black; padding: 5px;">Click to see code</summary> <p>
     price_object = stripe.Price.create(
         unit_amount=amount_int,  # Amount in pence
         currency="gbp",          # British Pounds
@@ -1467,7 +1467,7 @@ A price_object is created to represent the payment amount and currency on Stripe
 
 After creating the price_object, a Stripe checkout session is initialized. The session includes the price details, payment method options, and success or cancellation URLs. Stripe returns the user to these URLs based on payment status.
 
-<details><summary>Click to see code</summary> <p>
+<details><summary style="color: white; background: black; padding: 5px;">Click to see code</summary> <p>
     checkout_session = stripe.checkout.Session.create(
         payment_method_types=['card'],
         line_items=[{
@@ -1483,7 +1483,7 @@ After creating the price_object, a Stripe checkout session is initialized. The s
 
 Finally, the stay_id model object is updated with the Stripe checkout session ID for tracking, and the user is redirected to the Stripe-hosted checkout page.
 
-<details> <summary>Click to see code</summary> <p>
+<details> <summary style="color: white; background: black; padding: 5px;">Click to see code</summary> <p>
     stay = Stay.objects.get(id=stay_id)
     stay.stripe_checkout_id = checkout_session.id
     stay.save()
@@ -1502,7 +1502,7 @@ After successful payment, Stripe will send a query back to the server and starts
 
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     @csrf_exempt
@@ -1534,7 +1534,7 @@ After successful payment, Stripe will send a query back to the server and starts
 Following successful validation, Stripe will look to push payment confirmation to the server, updating the `stay_id` object from False to True.
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     # retrieve user payment record
@@ -1551,7 +1551,7 @@ Following successful validation, Stripe will look to push payment confirmation t
 Successful confirmation will eventually trigger an payment confirmation email being sent to the user.
 
 <details>
-<summary>Click to see code</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
 
     subject = "Payment Confirmation"
@@ -1664,7 +1664,7 @@ Templates are located in: `user_management\templates\errors`
 ![rendering](static/images/readme_images/ui/custom_error_handler/404-custom-error-handler.png)
 
 <details>
-<summary>Click to see code for urls.py (project level)</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code for urls.py (project level)</summary>
 <p>
 
     from django.conf.urls import handler404, handler500, handler403, handler400
@@ -1681,7 +1681,7 @@ Templates are located in: `user_management\templates\errors`
 </details>
 
 <details>  
-<summary>Click to see code for views.py (app level)</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code for views.py (app level)</summary>
 <p>
 
     def handler404(request, exception):
@@ -1752,7 +1752,7 @@ This back button has two features:
 * It also redirects to a different page on certain cases when the previous page is likely to be a form.
 
 <details>
-<summary>Click to see code details</summary>
+<summary style="color: white; background: black; padding: 5px;">Click to see code details</summary>
 <p>
 
     {% block base_navigation_block %}
@@ -1844,301 +1844,301 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 * Element `<head>` is missing: this is also provided in `base.html`
 
 <details>
-    <summary>check_in_info_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">check_in_info_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-check-in-info-block.png" alt="check-in-info-block" />
     </p>
 </details>
 
 <details>
-    <summary>check_out_info_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">check_out_info_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-check-out-info-block.png" alt="check-out-info-block" />
     </p>
 </details>
 
 <details>
-    <summary>fee_info_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">fee_info_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-fee-info-block.png" alt="fee-info-block" />
     </p>
 </details>
 
 <details>
-    <summary>parking_name_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">parking_name_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-parking-name-block.png" alt="parking-name-block" />
     </p>
 </details>
 
 <details>
-    <summary>transaction_id_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">transaction_id_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-transaction-id-block.png" alt="transaction-id-block" />
     </p>
 </details>
 
 <details>
-    <summary>history.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">history.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-history.png" alt="history" />
     </p>
 </details>
 
 <details>
-    <summary>payment_cancelled.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">payment_cancelled.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-payment-cancelled.png" alt="payment-cancelled" />
     </p>
 </details>
 
 <details>
-    <summary>payment_successful.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">payment_successful.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-payment-successful.png" alt="payment-successful" />
     </p>
 </details>
 
 <details>
-    <summary>check_in_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">check_in_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-check-in-block.png" alt="check-in-block" />
     </p>
 </details>
 
 <details>
-    <summary>enter_parking_manually_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">enter_parking_manually_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-enter-parking-manually-block.png" alt="enter-parking-manually-block" />
     </p>
 </details>
 
 <details>
-    <summary>instructions_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">instructions_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-instructions-block.png" alt="instructions-block" />
     </p>
 </details>
 
 <details>
-    <summary>parking_rates_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">parking_rates_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-parking-rates-block.png" alt="parking-rates-block" />
     </p>
 </details>
 
 <details>
-    <summary>enter.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">enter.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-enter.png" alt="enter" />
     </p>
 </details>
 
 <details>
-    <summary>create_parking_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">create_parking_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-create-parking-block.png" alt="create-parking-block" />
     </p>
 </details>
 
 <details>
-    <summary>manager_dashboard_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">manager_dashboard_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-manager-dashboard-block.png" alt="manager-dashboard-block" />
     </p>
 </details>
 
 <details>
-    <summary>create_parking.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">create_parking.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-create-parking.png" alt="create-parking" />
     </p>
 </details>
 
 <details>
-    <summary>edit_parking.html (part 1)</summary>
+    <summary style="color: white; background: black; padding: 5px;">edit_parking.html (part 1)</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-edit-parking1.png" alt="edit-parking" />
     </p>
 </details>
 
 <details>
-    <summary>edit_parking.html (part 2)</summary>
+    <summary style="color: white; background: black; padding: 5px;">edit_parking.html (part 2)</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-edit-parking2.png" alt="edit-parking" />
     </p>
 </details>
 
 <details>
-    <summary>edit_parking.html (part 3)</summary>
+    <summary style="color: white; background: black; padding: 5px;">edit_parking.html (part 3)</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-edit-parking3.png" alt="edit-parking" />
     </p>
 </details>
 
 <details>
-    <summary>parking_info_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">parking_info_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-parking-info-block.png" alt="parking-info-block" />
     </p>
 </details>
 
 <details>
-    <summary>parking_location_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">parking_location_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-parking-location-block.png" alt="parking-location-block" />
     </p>
 </details>
 
 <details>
-    <summary>parking_rates_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">parking_rates_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-parking-rates-block-parking-info.png" alt="parking-rates-block-parking-info" />
     </p>
 </details>
 
 <details>
-    <summary>parking_info.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">parking_info.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-parking-info.png" alt="parking-info" />
     </p>
 </details>
 
 <details>
-    <summary>cars_checked_in.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">cars_checked_in.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-cars-checked-in.png" alt="cars-checked-in" />
     </p>
 </details>
 
 <details>
-    <summary>illegally_parked_cars.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">illegally_parked_cars.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-illegally-parked-cars.png" alt="illegally-parked-cars" />
     </p>
 </details>
 
 <details>
-    <summary>register_illegal_car.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">register_illegal_car.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-register-illegal-car.png" alt="register-illegal-car" />
     </p>
 </details>
 
 <details>
-    <summary>parking_inspector.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">parking_inspector.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-parking-inspector.png" alt="parking-inspector" />
     </p>
 </details>
 
 <details>
-    <summary>add_rate.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">add_rate.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-add-rate.png" alt="add-rate" />
     </p>
 </details>
 
 <details>
-    <summary>edit_rate.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">edit_rate.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-edit-rate.png" alt="edit-rate" />
     </p>
 </details>
 
 <details>
-    <summary>edit_user_account.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">edit_user_account.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-edit-user-account.png" alt="edit-user-account" />
     </p>
 </details>
 
 <details>
-    <summary>user_account.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">user_account.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-user-account.png" alt="user-account" />
     </p>
 </details>
 
 <details>
-    <summary>400.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">400.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-400e.png" alt="400e" />
     </p>
 </details>
 
 <details>
-    <summary>403.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">403.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-403e.png" alt="403e" />
     </p>
 </details>
 
 <details>
-    <summary>404.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">404.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-404e.png" alt="404e" />
     </p>
 </details>
 
 <details>
-    <summary>500.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">500.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-500e.png" alt="500e" />
     </p>
 </details>
 
 <details>
-    <summary>check_in_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">check_in_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-check-in-block-user-management.png" alt="check-in-block" />
     </p>
 </details>
 
 <details>
-    <summary>check_in_out_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">check_in_out_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-check-in-out-block.png" alt="check-in-out-block" />
     </p>
 </details>
 
 <details>
-    <summary>check_out_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">check_out_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-check-out-block.png" alt="check-out-block" />
     </p>
 </details>
 
 <details>
-    <summary>enter_registration_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">enter_registration_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-enter-registration-block.png" alt="enter-registration-block" />
     </p>
 </details>
 
 <details>
-    <summary>registration_prompt_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">registration_prompt_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-registration-prompt-block.png" alt="registration-prompt-block" />
     </p>
 </details>
 
 <details>
-    <summary>account_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">account_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-account-block.png" alt="account-block" />
     </p>
 </details>
 
 <details>
-    <summary>history_block.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">history_block.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-history-block.png" alt="history-block" />
     </p>
 </details>
 
 <details>
-    <summary>index.html</summary>
+    <summary style="color: white; background: black; padding: 5px;">index.html</summary>
     <p>
         <img src="static/images/readme_images/testing/html/html-index.png" alt="index" />
     </p>
@@ -2148,49 +2148,49 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 #### 5.1.3 Javascript <a name="js"></a>
 
 <details>
-    <summary>activate parking helper</summary>
+    <summary style="color: white; background: black; padding: 5px;">activate parking helper</summary>
     <p>
         <img src="static/images/readme_images/testing/jshint/jshint-activate-parking-helper.png" alt="activate_parking_helper" />
     </p>
 </details>
 
 <details>
-    <summary>add rate</summary>
+    <summary style="color: white; background: black; padding: 5px;">add rate</summary>
     <p>
         <img src="static/images/readme_images/testing/jshint/jshint-add-rate.png" alt="activate_parking_helper" />
     </p>
 </details>
 
 <details>
-    <summary>confirm delete user account</summary>
+    <summary style="color: white; background: black; padding: 5px;">confirm delete user account</summary>
     <p>
         <img src="static/images/readme_images/testing/jshint/jshint-confirm-delete-user-account.png" alt="jshint-confirm-delete-user-account" />
     </p>
 </details>
 
 <details>
-    <summary>fade alert</summary>
+    <summary style="color: white; background: black; padding: 5px;">fade alert</summary>
     <p>
         <img src="static/images/readme_images/testing/jshint/jshint-fade-alert.png" alt="fade-alert" />
     </p>
 </details>
 
 <details>
-    <summary>geolocation</summary>
+    <summary style="color: white; background: black; padding: 5px;">geolocation</summary>
     <p>
         <img src="static/images/readme_images/testing/jshint/jshint-geolocation.png" alt="geolocation" />
     </p>
 </details>
 
 <details>
-    <summary>parking fee</summary>
+    <summary style="color: white; background: black; padding: 5px;">parking fee</summary>
     <p>
         <img src="static/images/readme_images/testing/jshint/jshint-parking-fee.png" alt="parking-fee" />
     </p>
 </details>
 
 <details>
-    <summary>provide car reg</summary>
+    <summary style="color: white; background: black; padding: 5px;">provide car reg</summary>
     <p>
         <img src="static/images/readme_images/testing/jshint/jshint-provide-car-reg.png" alt="provide-car-reg" />
     </p>
@@ -2198,7 +2198,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary>signup</summary>
+    <summary style="color: white; background: black; padding: 5px;">signup</summary>
     <p>
         <img src="static/images/readme_images/testing/jshint/jshint-signup.png" alt="signup" />
     </p>
@@ -2208,7 +2208,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 ### 5.2 Lighthouse Testing <a name="lighthouse-testing"></a>
 
 <details>
-    <summary>LOGIN</summary>
+    <summary style="color: white; background: black; padding: 5px;">LOGIN</summary>
     <p>
         <h3>Mobile</h3>
         <img src="static/images/readme_images/testing/lighthouse/login/lighthouse-login-mobile.png" alt="login mobile" />
@@ -2220,7 +2220,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary>Register</summary>
+    <summary style="color: white; background: black; padding: 5px;">Register</summary>
     <p>
         <h3>Mobile</h3>
         <img src="static/images/readme_images/testing/lighthouse/register/lighthouse-register-mobile.png" alt="register mobile" />
@@ -2232,7 +2232,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary>User Dashboard</summary>
+    <summary style="color: white; background: black; padding: 5px;">User Dashboard</summary>
     <p>
         <h3>Mobile</h3>
         <img src="static/images/readme_images/testing/lighthouse/user_dashboard/lighthouse-user-dashboard-mobile.png" alt="userdashboard mobile" />
@@ -2244,7 +2244,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary>Check In Dashboard</summary>
+    <summary style="color: white; background: black; padding: 5px;">Check In Dashboard</summary>
     <p>
         <h3>Mobile</h3>
         <img src="static/images/readme_images/testing/lighthouse/check_in/lighthouse-check-in-mobile.png" alt="check-in-mobile mobile" />
@@ -2256,7 +2256,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary>History</summary>
+    <summary style="color: white; background: black; padding: 5px;">History</summary>
     <p>
         <h3>Mobile</h3>
         <img src="static/images/readme_images/testing/lighthouse/history/lighthouse-history-mobile.png" alt="history mobile" />
@@ -2268,7 +2268,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary>Account</summary>
+    <summary style="color: white; background: black; padding: 5px;">Account</summary>
     <p>
         <h3>Mobile</h3>
         <img src="static/images/readme_images/testing/lighthouse/account/lighthouse-account-mobile.png" alt="account mobile" />
@@ -2280,7 +2280,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary>Parking Manager Dashboard</summary>
+    <summary style="color: white; background: black; padding: 5px;">Parking Manager Dashboard</summary>
     <p>
         <h3>Mobile</h3>
         <img src="static/images/readme_images/testing/lighthouse/parking_manager_dashboard/lighthouse-parking-manager-dashboard-mobile.png" alt="Parking Manager Dashboard mobile" />
@@ -2292,7 +2292,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary>Create Parking</summary>
+    <summary style="color: white; background: black; padding: 5px;">Create Parking</summary>
     <p>
         <h3>Mobile</h3>
         <img src="static/images/readme_images/testing/lighthouse/create_parking/lighthouse-create-parking-mobile.png" alt="create parking mobile" />
@@ -2304,7 +2304,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary>Parking Info</summary>
+    <summary style="color: white; background: black; padding: 5px;">Parking Info</summary>
     <p>
         <h3>Mobile</h3>
         <img src="static/images/readme_images/testing/lighthouse/parking_info/lighthouse-parking-info-mobile.png" alt="parking info mobile" />
@@ -2316,7 +2316,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary>Parking Inspector</summary>
+    <summary style="color: white; background: black; padding: 5px;">Parking Inspector</summary>
     <p>
         <h3>Mobile</h3>
         <img src="static/images/readme_images/testing/lighthouse/parking_inspector/lighthouse-parking-inspector-mobile.png" alt="parking inspector mobile" />
@@ -2328,7 +2328,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary>Add Rate</summary>
+    <summary style="color: white; background: black; padding: 5px;">Add Rate</summary>
     <p>
         <h3>Mobile</h3>
         <img src="static/images/readme_images/testing/lighthouse/add_rate/lighthouse-add-rate-mobile.png" alt="add rate mobile" />
