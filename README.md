@@ -41,9 +41,9 @@ View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target=
 
 ## Getting Started
 
-The project was built with the aim of being used from small to large screen and is fully responsive.
+The project was built with the aim of being used from small to large screens and is fully responsive.
 
-However one of the feature requires accurate geolocation on the customer side.
+However one of the core feature requires accurate geolocation, on the customer side.
 
 Once you have setup a parking under the desired geolocation, as parking manager, please scan the QR code to access the deployed project from your mobile phone.
 
@@ -493,10 +493,9 @@ Finally as django provides an email template in plain text, this template was ov
 
 Django will by default look for an html file before retouring the the txt file.
 
-This template was built using a template found on: https://tabular.email/
 
 > [!NOTE]
-> Credits - Email templates: https://tabular.email/
+> Credits - This template was built using a template found on: https://tabular.email/
 
 ### 3.3 Media Files : AWS S3 Bucket <a name="media-files"></a>
 
@@ -565,11 +564,12 @@ To set up AWS S3 bucket, the following steps need to be followed:
     `pip install django-storages`
     `pip install boto3`
 * In setting.py:
-
+    ```python
     INSTALLED_APPS = [
         #S3 bucket
         'storages',
     ]
+    ```
 
 ### 3.4 User Profile <a name="user-profile"></a>
 
@@ -582,8 +582,9 @@ This feature is alos supported by `edit_user_account()` and `delete_user_account
 
 ### 3.5 User Dashboard <a name="user-dashboard"></a>
 
-![rendering](static/images/readme_images/ui/user_dashboard/user-dashboard.png)
-
+<p align="center">
+   <img width="50%" src="static/images/readme_images/ui/user_dashboard/user-dashboard.png">
+</p>
 
 The user dashbaord can be found in `user_management\templates\home\index.html` and is managed by `index()`.
 
@@ -606,9 +607,12 @@ Supported by `provide_car_reg.js`, the function also restricts users from checki
 <details>
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
-    car_reg = False
-    if request.user.userprofile.car_registration:
-        car_reg= True
+
+```python
+car_reg = False
+if request.user.userprofile.car_registration:
+    car_reg= True
+```
 </p>
 </details>
 
@@ -631,7 +635,10 @@ From this dashboard, the parking manager can:
 
 At the bottom of the template, `activate_parking_helper.js` provides a reminder to activate the parking, and how to do it.
 
-![rendering](static/images/readme_images/ui/parking_manager_dashboard/parking-manager-dashboard.png)
+<p align="center">
+   <img width="200" src="static/images/readme_images/ui/parking_manager_dashboard/parking-manager-dashboard.png">
+</p>
+
 
 ### 3.7 Create Parking<a name="create-parking"></a>
 
@@ -650,27 +657,30 @@ With regards to latitude and longitude fields, the form implements a restriction
 <details>
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
-    class ParkingForm(forms.ModelForm):
-        # restricts values in lat lng fields to didgits only
-        latitude = forms.CharField(
-            validators=[
-                RegexValidator(
-                    regex=r'^([+-]?)((90(\.0{1,9})?)|([1-8]?[0-9])(\.\d{1,9})?)$',  # Allows latitude with up to 9 decimals
-                    message="Latitude must be a valid number (e.g., -90.0 to 90.0 and up to 9 decimals)."
-                )
-            ],
-            widget=forms.TextInput(attrs={'aria-label': 'Latitude', 'placeholder': 'Enter latitude'})
-        )
 
-        longitude = forms.CharField(
-            validators=[
-                RegexValidator(
-                    regex=r'^([+-]?)((180(\.0{1,9})?)|((1[0-7][0-9])|([1-9]?[0-9]))(\.\d{1,9})?)$',  # Allows longitude with up to 9 decimals
-                    message="Longitude must be a valid number (e.g., -180.0 to 180.0 and up to 9 decimals)."
-                )
-            ],
-            widget=forms.TextInput(attrs={'aria-label': 'Longitude', 'placeholder': 'Enter longitude'})
-        )
+```python
+class ParkingForm(forms.ModelForm):
+    # restricts values in lat lng fields to didgits only
+    latitude = forms.CharField(
+        validators=[
+            RegexValidator(
+                regex=r'^([+-]?)((90(\.0{1,9})?)|([1-8]?[0-9])(\.\d{1,9})?)$',  # Allows latitude with up to 9 decimals
+                message="Latitude must be a valid number (e.g., -90.0 to 90.0 and up to 9 decimals)."
+            )
+        ],
+        widget=forms.TextInput(attrs={'aria-label': 'Latitude', 'placeholder': 'Enter latitude'})
+    )
+
+    longitude = forms.CharField(
+        validators=[
+            RegexValidator(
+                regex=r'^([+-]?)((180(\.0{1,9})?)|((1[0-7][0-9])|([1-9]?[0-9]))(\.\d{1,9})?)$',  # Allows longitude with up to 9 decimals
+                message="Longitude must be a valid number (e.g., -180.0 to 180.0 and up to 9 decimals)."
+            )
+        ],
+        widget=forms.TextInput(attrs={'aria-label': 'Longitude', 'placeholder': 'Enter longitude'})
+    )
+```
 </p>
 </details>
 
@@ -906,8 +916,9 @@ Editing and deleting an specific `rate_id` is managed by respectively:
 * `edit_parking()` (path: `parking_management/views.py`)
 * `delete_parking()` (path: `parking_management/views.py`)
 
-![rendering](static/images/readme_images/ui/parking_info/parking-info-rates.png)
-
+<p align="center">
+   <img width="200" src="static/images/readme_images/ui/parking_info/parking-info-rates.png">
+</p>
 
 ### 3.11 Check-In Parking : Geolocation <a name="check-in"></a>
 
@@ -1066,7 +1077,9 @@ Through `parking_fee.js`, `fetchRates()` collects dynamically applicables rates 
 
 These objects are then returned back to `fetchRates()` in json format, before being rendererd in a table through `renderRatesTable()`.
 
-![rendering](static/images/readme_images/ui/check_in/check-in.png)
+<p align="center">
+   <img width="200" src="static/images/readme_images/ui/check_in/check-in.png">
+</p>
 
 
 <details>
@@ -1444,10 +1457,6 @@ A local variable `price_object` is defined. The role of this variable is to crea
 </p>
 </details>
 
-
-
-Following **Phase 1 - Payment**
-
 Following the successful completion of `fee_form()`, the user is returned to `leave()` for payment handling.
 
 Payment handling is managed through a Stripe integration, detailed below.
@@ -1457,25 +1466,33 @@ The process starts with the `payment()` function, which takes `applicable_fee` a
 <details>
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
 <p>
+
+```python
     # Set API key to avoid "No API key provided" error
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     amount_int = int(applicable_fee * 100)  # Convert pounds to pence
+```
 </p> </details>
 
 The function checks if the user has an existing Stripe customer ID in their profile (UserProfile model). If not, it creates a new customer on Stripe and saves the ID to the user's profile.
 
 <details> <summary style="color: white; background: black; padding: 5px;">Click to see code</summary> <p>
+
+```python
     if not request.user.userprofile.stripe_customer_id:
         customer = stripe.Customer.create(
             email=request.user.email
         )
         request.user.userprofile.stripe_customer_id = customer.id
         request.user.userprofile.save()
+```
 </p> </details>
 
 A price_object is created to represent the payment amount and currency on Stripe. This object is essential for generating the checkout session.
 
 <details> <summary style="color: white; background: black; padding: 5px;">Click to see code</summary> <p>
+
+```python
     price_object = stripe.Price.create(
         unit_amount=amount_int,  # Amount in pence
         currency="gbp",          # British Pounds
@@ -1483,11 +1500,14 @@ A price_object is created to represent the payment amount and currency on Stripe
             "name": "Parking Fee"
         }
     )
+```
 </p> </details>
 
 After creating the price_object, a Stripe checkout session is initialized. The session includes the price details, payment method options, and success or cancellation URLs. Stripe returns the user to these URLs based on payment status.
 
 <details><summary style="color: white; background: black; padding: 5px;">Click to see code</summary> <p>
+
+```python
     checkout_session = stripe.checkout.Session.create(
         payment_method_types=['card'],
         line_items=[{
@@ -1499,6 +1519,7 @@ After creating the price_object, a Stripe checkout session is initialized. The s
         success_url=settings.REDIRECT_DOMAIN + 'parking_activity/payment_successful?session_id={CHECKOUT_SESSION_ID}',
         cancel_url=settings.REDIRECT_DOMAIN + 'parking_activity/payment_cancelled',
     )
+```
 </p> </details>
 
 Finally, the stay_id model object is updated with the Stripe checkout session ID for tracking, and the user is redirected to the Stripe-hosted checkout page.
@@ -1605,7 +1626,10 @@ Successful confirmation will eventually trigger an payment confirmation email be
 </p>
 </details>
 
-![rendering](static/images/readme_images/ui/payment_confirmation_email/payment-confirmation-email.png)
+<p align="center">
+   <img width="50%" src="static/images/readme_images/ui/payment_confirmation_email/payment-confirmation-email.png">
+</p>
+
 
 > [!TIP]`TypeError: `stripe_webhook not found`. As my webhook view in not included in my main app, the console logs were showing a failed attempt at retrieving `stripe_webhook` path. The issue was solved by adding the name to the webhook path in the Stripe platform: `https://[domain-name]/parking_activity/stripe_webhook/`. 
 
@@ -1625,6 +1649,7 @@ The improve the layout of the forms, the project includes the use of crispy form
 
 * In Installed_apps (**Settings.py**) add:
 
+    ```python
     INSTALLED_APPS = [
         'django.contrib.admin',
         ...
@@ -1633,15 +1658,24 @@ The improve the layout of the forms, the project includes the use of crispy form
         'crispy_bootstrap5',
 
     ]
+    ```
 * In Settings.py, add:
 
+```python
     CRISPY_TEMPLATE_PACK = 'bootstrap5'
+```
 
 * add to template:
+
+```html
     {% load crispy_forms_tags %}
+```
 
 * add to form fields:
+
+```html
     {{ variable|as_crispy_field }}
+```
 
 > [!NOTE]
 > Credits - Documentation: https://django-crispy-forms.readthedocs.io/en/latest/
@@ -1662,8 +1696,8 @@ With the exception of login and register templates, all other function have a de
         ...
 
 Other decorators in use: 
-* @csrf_exempt - to remove the need for CSRF token in Stripe callback
-* @require_POST - restricts a view to only accept POST methods 
+* `@csrf_exempt` - to remove the need for CSRF token in Stripe callback
+* `@require_POST` - restricts a view to only accept POST methods 
 
 > [!NOTE]
 > Credits - Documentation: https://docs.djangoproject.com/en/5.1/topics/http/decorators/
