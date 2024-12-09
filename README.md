@@ -439,7 +439,7 @@ Your the project files, the following changes need to be made:
 
 A migration will be required at the end.
 
-[!NOTE]:
+> [!NOTE]
 > Credits - Documentation : https://docs.allauth.org/en/latest/installation/quickstart.html
 
 
@@ -480,8 +480,8 @@ Django will by default look for an html file before retouring the the txt file.
 
 This template was built using a template found on: https://tabular.email/
 
-[!NOTE]:
-> Credits-  Email templates: https://tabular.email/
+> [!NOTE]
+> Credits - Email templates: https://tabular.email/
 
 ### 3.3 Media Files : AWS S3 Bucket <a name="media-files"></a>
 
@@ -660,8 +660,8 @@ With regards to latitude and longitude fields, the form implements a restriction
 </details>
 
 
-[!NOTE]: 
-> Credits - This regex synthax is credited to Stackoverflow post: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+> [!NOTE]
+> Credits - This regex synthax is credited to Stackoverflow post: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates<br>
 
 How does Regex work:
 * ^: Defines the start of the string.
@@ -942,7 +942,7 @@ In order to do so, `get_parking_location()` collects the values in `user_latitud
         print(f'user_latitude = {user_latitude}')
         print(f'user_longitude = {user_longitude}')
 
-[!NOTE]: 
+> [!NOTE]
 >Credits -  `getLocation()` is a copy of `HTML Geolocation API` from W3Schools (https://www.w3schools.com/html/html5_geolocation.asp
 )
 
@@ -969,21 +969,23 @@ In the event, no parking_id could be returned, `parking_id` is set as None by de
     path('enter/', views.enter, name='enter'),
     path('enter/<int:parking_id>/', views.enter, name='enter_with_parking_id'),
 
-[!NOTE]:
+> [!NOTE]
 > Credits - HTML Geolocation API: https://www.w3schools.com/html/html5_geolocation.asp
 
 > [!TIP]
-> `Uncaught TypeError: Cannot set properties of null (setting 'innerHTML')`. This as a result of the script being uploaded at the begining of the template, before the element exists.
+> `Uncaught TypeError: Cannot set properties of null (setting 'innerHTML')`. This occurs when the script is loaded at the beginning of the template, before the element exists.
 >
->This problem was solved by moving the js file to the bottom of the body of the index.html template:
+> This problem was solved by moving the JS file to the bottom of the `<body>` in the `index.html` template:
 >
->    {%block content%}
->        ...
->    {%endblock%}
+> ```html
+> {% block content %}
+>     ...
+> {% endblock %}
 >
->    {% block postloadjs %}
->        <script src="{% static 'js/geolocation.js' %}"></script>
->    {% endblock %}
+> {% block postloadjs %}
+>     <script src="{% static 'js/geolocation.js' %}"></script>
+> {% endblock %}
+> ```
 
 
 **Error encountered** `TypeError: float() argument must be a string or a real number, not 'set'`: following Igor-S answer on stackoverflow, I encountered this error.
@@ -1588,9 +1590,9 @@ Successful confirmation will eventually trigger an payment confirmation email be
 
 **error encountered**: `stripe_webhook not found`. As my webhook view in not included in my main app, the console logs were showing a failed attempt at retrieving `stripe_webhook` path. The issue was solved by adding the name to the webhook path in the Stripe platform: `https://[domain-name]/parking_activity/stripe_webhook/`. 
 
-[!NOTE]
-> Overall Stripe Integration: The tutorial provided by the course material wasnt adapted to what I was looking for. Instead I followed the tutorial from this video (https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s) and made a number of changes to suit my project.
-> `stripe_webhook not found`: The solution was brough to me by RyanM on Stackoverflow after I posted my question: https://stackoverflow.com/questions/79256457/django-stripe-webhook-not-found/79256537#79256537 
+> [!NOTE]
+> Overall Stripe Integration: The tutorial provided by the course material wasnt adapted to what I was looking for. Instead I followed the tutorial from this video (https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s) and made a number of changes to suit my project.<br>
+> `stripe_webhook not found`: The solution was brough to me by RyanM on Stackoverflow after I posted my question: https://stackoverflow.com/questions/79256457/django-stripe-webhook-not-found/79256537#79256537 <br>
 
 
 ### 3.14 Crispy Forms <a name="cripsy"></a>
@@ -1789,9 +1791,9 @@ This back button has two features:
 The credits for this feature goe to the links listed below.
 
 > [!NOTE]
-> Credits - Back button - https://stackoverflow.com/questions/524992/how-to-implement-a-back-link-on-django-templates
-> Credits - Excluding pages from button display - https://stackoverflow.com/questions/41129551/django-creating-an-if-statement-based-on-the-request-path-not-working
-> Credits -  `request.resolver_match` : https://medium.com/@iamalisaleh/how-to-get-the-current-url-within-a-django-template-8270b977f280
+> Credits - Back button - https://stackoverflow.com/questions/524992/how-to-implement-a-back-link-on-django-templates<br>
+> Credits - Excluding pages from button display - https://stackoverflow.com/questions/41129551/django-creating-an-if-statement-based-on-the-request-path-not-working<br>
+> Credits -  `request.resolver_match` : https://medium.com/@iamalisaleh/how-to-get-the-current-url-within-a-django-template-8270b977f280<br>
 
 Suggestion for improvement: The code could improve by streamlining the series of `elif` statement into a single `if`. For some reason the below code was generating an error.
 
@@ -2425,8 +2427,8 @@ Once this is done, you will want your data stored in a your .env file, to avoid 
     EMAIL_HOST_PASSWORD = 'value'
 
 > [!NOTE]
-> Credits - Instal postgres on local: https://www.postgresql.org/download/
->Credits - Extra Documentation: https://pypi.org/project/psycopg2-binary/
+> Credits - Instal postgres on local: https://www.postgresql.org/download/<br>
+> Credits - Extra Documentation: https://pypi.org/project/psycopg2-binary/<br>
 
 ### 5.1 Heroku Deployment <a name="heroku-deployment"></a>
 
@@ -2444,7 +2446,7 @@ In order to setup django for deployment on Heroku, the following steps were foll
 To solve this problem: create a new Procfile through a Notepad, selected encoding UTF-8 and called it Procfile.txt in the same location as the actual Procfile. I then deleted the previous Procfile and renamed Procfile.txt to Procfile.
 
 > [!NOTE]
-> Credits - Procfile encoding solution: https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
+> Credits - Procfile encoding solution: https://stackoverflow.com/questions/19846342/unable-to-parse-procfile<br>
 
 
 **Setup production environement**
@@ -2474,9 +2476,9 @@ Add whitenoise in settings.py to middleware list
 Final note: everytime the static folder is changed, in particular for css, `python manage.py collectstatic` needs to be run from the console to push the changes to staticfiles.
 
 > [!NOTE]
-> Credits - https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
-> Credits - https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
-> Credits - https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
+> Credits - https://stackoverflow.com/questions/19846342/unable-to-parse-procfile<br>
+> Credits - https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment<br>
+> Credits - https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment<br>
 
 
 ## 8. Credits <a name="credits"></a>
@@ -2565,14 +2567,19 @@ Steps:
 
 > [!TIP]
 > Errors encountered:
-> "Error in payment process:No API key provided."
-> This was fixed by adding initialising the API key at the begining of the logic:
->     @login_required
->     def payment(request,applicable_fee,stay_id):
->        try:
->            #set API key the begining to avoid 
->            #"Error in payment process:No API key provided."
->            stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+> 
+> `"Error in payment process: No API key provided."`
+> 
+> This was fixed by initialising the API key at the beginning of the logic:
+> 
+> ```python
+> @login_required
+> def payment(request, applicable_fee, stay_id):
+>     try:
+>         # Set API key at the beginning to avoid 
+>         # "Error in payment process: No API key provided."
+>         stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+> ```
 
 Add Stripe cutsomer ID in profile model:
 
@@ -2696,15 +2703,18 @@ Add whitenoise in settings.py to middleware list
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 > [!TIP]
-> `MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.`. whitenoise wasnot installed. Adding whitenoise corrected the error.
+> `MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.`. Adding whitenoise corrected the error. See below for process to adding whitenoise.
 
 > [!TIP]
-> If .css file is not loading in production. Move `'whitenoise.middleware.WhiteNoiseMiddleware',` to the top.
->    MIDDLEWARE = [
->        'django.middleware.security.SecurityMiddleware',
->        #whitenoise package : used for production to be set at the top
->        'whitenoise.middleware.WhiteNoiseMiddleware',    
-    ]
+> If the `.css` file is not loading in production, move `'whitenoise.middleware.WhiteNoiseMiddleware'` to the top.
+> 
+> ```python
+> MIDDLEWARE = [
+>     'django.middleware.security.SecurityMiddleware',
+>     # Whitenoise package: used for production, should be set at the top
+>     'whitenoise.middleware.WhiteNoiseMiddleware',
+> ]
+> ```
 
 > [!NOTE]
 > Procfile encoding: https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
@@ -2736,14 +2746,14 @@ add to base.html:
         <script src="{% static 'js/geolocation.js' %}"></script>
     {% endblock %}
 
-**Error encountered**: `Uncaught TypeError: Cannot set properties of null (setting 'innerHTML')`. This as a result of the script being uploaded at the begining of the template, before the element exists.
-
-This problem was solved by moving this specific script to the bottom of the body of the template.
-
-* add to index.html:
-
-    <button onclick="getLocation()">Try It</button>
-    <p id="userLocation"></p>
+> [!TIP] `Uncaught TypeError: Cannot set properties of null (setting 'innerHTML')`. This was a result of the script being uploaded at the beginning of the template, before the element exists.  
+> This problem was solved by moving this specific script to the bottom of the body of the template.  
+> Add to `index.html`:
+> 
+> ```html
+> <button onclick="getLocation()">Try It</button>
+> <p id="userLocation"></p>
+> ```
 
 Once this has proven to work. We can proceed by incorporating the user location in the logic of `enter()`.
 
@@ -3038,11 +3048,15 @@ Once the data is collected, it can then be rendered in `enter.html` template wit
         <tbody></tbody>
     </table>
 
-Problem encountered: error generated in the console `404 Page Not Found` when parkingId is null. To cover this, `fetchRates()` in wrapped within an if statement that checks if parkingId is null before triggering `fetchRates()`
 
-    if (parkingId !== "null"){
-        fetchRates()
-    }
+
+> [!TIP] `404 Page Not Found` when `parkingId` is null. To cover this, wrap `fetchRates()` within an if statement that checks if `parkingId` is null before triggering `fetchRates()`.
+> 
+> ```javascript
+> if (parkingId !== "null") {
+>     fetchRates()
+> }
+> ```
 
 > [!NOTE]
 > https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
