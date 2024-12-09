@@ -99,6 +99,17 @@ def user_account(request):
 @login_required
 def edit_user_account(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    # check if user is already checked-in
+    # look up if user has already an existing Stay object
+    # and exclude objects that is matched with a LeaveParking object 
+    existing_stay_obj = Stay.objects.filter(user=request.user.userprofile).exclude(
+        id__in=LeaveParking.objects.values_list('stay_id', flat=True)
+    )
+    if existing_stay_obj:
+        messages.error(request, "Your cannot your user profile whilst checked-in.")
+        return redirect('user-account')  
+
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=user_profile)
         if form.is_valid():  
@@ -112,6 +123,17 @@ def edit_user_account(request):
 
 @login_required
 def delete_user_account(request):
+
+    # check if user is already checked-in
+    # look up if user has already an existing Stay object
+    # and exclude objects that is matched with a LeaveParking object 
+    existing_stay_obj = Stay.objects.filter(user=request.user.userprofile).exclude(
+        id__in=LeaveParking.objects.values_list('stay_id', flat=True)
+    )
+    if existing_stay_obj:
+        messages.error(request, "Your cannot your user profile whilst checked-in.")
+        return redirect('user-account')  
+
     if request.method == 'POST':
         user = get_object_or_404(User, id=request.user.id)
         user.delete()

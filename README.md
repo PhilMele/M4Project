@@ -1,9 +1,7 @@
 TODO:
 Problem: Once a transaction was made and paid. Somehow the user got loggedout during payment and the model didnt get updated with `paid = true`. Only seem to happen on local after I havent connected in a while.
 
-user cannot enter parking if car registration is not populated + userprofile as a whole
 
-create filtr that only shows activated parkings to user
 
 fix logout problem when scanning qr code. Might be SSL certificate realted problem.
 
@@ -14,7 +12,6 @@ add placeholders on user dashboard if no parking is available
 add placeholders on parking manager dashboard if no parking is available
 Gareth - check if its ok to have the venv file avilable on github
 
-in rateform, add a validator that prevents user adding another rate with same hour range
 In history setcion: add pagination + filter to make the search of specific transaction easier.
 Add Favicon
 bugs - the logo image on email does not show on certain messaging system like outlook
@@ -31,15 +28,13 @@ Imrpoevement deisgn - parking info could be improve. too much space is taken for
 Imrpoevement deisgn - parking info could be improve. Applicable rates could also be brought over 1 line and collapse into 2 rows based on screen size
 ask Gareth about label of hidden fields in html checker
 
-prevent rate and parking to be deleted if a user is marked as using the parking
-prevent user from deactivating parking if users are marked as using it
-prevent user from deleting account if they are checked-in
-prevent parking manager from deleting or editing parking rate if user is checked in
 
 List all money made within specific period
 Add filters in transaction for user to retrieve specific transaction easily
 Add visual of parking on map to clarify if latlng coordinates have been entered properly by parking manager
 Rework te way parkign rates are made and create a standard presentation : [value] hour for [value] instead of letting parking manager give it a title
+Some repeats in codes in particular with validators preventing parking user and parking manager taking some actions on checked-in parkings.
+
 # M4Project - GeoPay
 
 <p align="center" width="100%">
@@ -643,6 +638,56 @@ From this dashboard, the parking manager can:
 * access each dedicate parking details page
 
 At the bottom of the template, `activate_parking_helper.js` provides a reminder to activate the parking, and how to do it.
+
+A validator prevents the parking manager from deactivating a parking with cars already checked-in.
+
+
+<details>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
+<p>
+
+```python
+
+@require_POST
+@login_required
+def activate_parking(request, parking_id):
+    if not is_parking_manager(request):
+        return redirect('home')
+
+    parking = get_object_or_404(Parking, id=parking_id)
+
+    # checks the parking has rates applied
+    rate_exist = Rate.objects.filter(parking_name=parking)
+    print(rate_exist)
+    
+    if not rate_exist:
+        print('rate_exist is empty')
+        messages.error(request, f"Add a rate before activating parking.")
+        return redirect('parking-info', parking_id=parking.id)
+
+    has_user = parking_space_available(request, parking_id=parking_id)
+    print(f'has_user = {has_user}')
+    # prevents parking manager from deleting parking obj
+    # when parking users are checked-in
+    if has_user != 0:
+        messages.error(request, "You deactive parking when users are still checked-in. Contact admin.")
+        return redirect('parking-info', parking_id=parking_id)
+
+    # if actiate is true turn it off
+    if parking.active:
+        parking.active = False
+        parking.save()
+    # if activate is off turn it on
+    else:
+        parking.active = True
+        parking.save()
+
+    messages.success(request, f"{parking.name} has been {'activated' if parking.active else 'deactivated'}.")
+    return redirect('parking-info', parking_id=parking_id)
+```
+</p>
+</details>
+
 
 <p align="center">
    <kbd><img width="200" src="static/images/readme_images/ui/parking_manager_dashboard/parking-manager-dashboard.png"></kbd>
