@@ -33,6 +33,9 @@ ask Gareth about label of hidden fields in html checker
 
 # M4Project - GeoPay
 
+
+<img align="center" width="200" src="https://geopay-app.s3.eu-north-1.amazonaws.com/images/logo/geopay-logo.webp">
+
 View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target="_blank">Click Here</a>
 
 # Table of Contents
@@ -764,7 +767,8 @@ The button that triggers this function on the template under :
 </details>
 
 
-**Note**: Parking objects cannot be activated unless they are provided at least with 1 applicable rate. This rule is set in force in both backend, where the logic will check if the an existing rate has been attached to this `parking_id` and display an error message, and in the front end by hiding the "Activate" button.
+> [!IMPORTANT]
+> Parking objects cannot be activated unless they are provided at least with 1 applicable rate. This rule is set in force in both backend, where the logic will check if the an existing rate has been attached to this `parking_id` and display an error message, and in the front end by hiding the "Activate" button.
 
 <details>
 <summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
@@ -988,30 +992,29 @@ In the event, no parking_id could be returned, `parking_id` is set as None by de
 > ```
 
 
-**Error encountered** `TypeError: float() argument must be a string or a real number, not 'set'`: following Igor-S answer on stackoverflow, I encountered this error.
+> [!TIP]
+> `TypeError: float() argument must be a string or a real number, not 'set'`: following Igor-S answer on stackoverflow, I encountered this error.
+> This is because of the use of `({})`, which in Python define a set, rather than parentheses `()`.
+> To fix this error by converting the values into `float`:
+> ```python   
+>    user_location = (float(user_latitude), float(user_longitude))
+>```
 
-This is because of the use of `({})`, which in Python define a set, rather than parentheses `()`.
+> [!TIP]`TypeError: '<=' not supported between instances of 'float' and 'str'`: following the above mentioned example provided on stackoverflow.
+>This error happened because `parking.radius` is a string and `locations_distance` is a float.
+>```python
+>    if locations_distance <= parking_radius:
+>        print(f'You are in {parking.name}')
+>    else:
+>        print(f'You are not in {parking.name}')
+>```
 
-To fix this error by converting the values into `float`:
-    
-    user_location = (float(user_latitude), float(user_longitude))
-
-**Error encountered** `TypeError: '<=' not supported between instances of 'float' and 'str'`: following the above mentioned example provided on stackoverflow.
-
-This error happened because `parking.radius` is a string and `locations_distance` is a float.
-
-    if locations_distance <= parking_radius:
-        print(f'You are in {parking.name}')
-    else:
-        print(f'You are not in {parking.name}')
-
-Both values need to be in the same format:
+Set values in the same format:
 
     parking_radius = float(parking.radius)
 
-**Error encountered** User geolocation innacuracy: unless a mobile phone is used for testing, the accuracy of the geolocation varies between 3m to 888m. I found that from my laptop a range of 900m was comfortable to capture a nearby geofence.
-
-For mobile phone, I had 100% success with a radius set at 50 meters.
+> [!TIP]`TypeError: User geolocation innacuracy: unless a mobile phone is used for testing, the accuracy of the geolocation varies between 3m to 888m. I found that from my laptop a range of 900m was comfortable to capture a nearby geofence.
+> For mobile phone, I had 100% success with a radius set at 50 meters.
 
 **Phase 3 - Validating User Consent to Check-In**
 
@@ -1089,7 +1092,8 @@ These objects are then returned back to `fetchRates()` in json format, before be
 </details>
     
 
-**Error encountered**: the initial code was returning an error. It seems that Json excpts a dictionaryy by default. To correct this problem `safe` is set to `False` (`safe = False`), which allows to return a list instead.
+> [!TIP]`TypeError:
+> the initial code was returning an error. It seems that Json expects a dictionaryy by default. To correct this problem `safe` is set to `False` (`safe = False`), which allows to return a list instead.
 
 
 **What happens if `parking_id` is None as a parameter?**
@@ -1170,11 +1174,12 @@ This final phase is managed by `enter()` which handles both scenarios of having 
 
 **Suggestion for future improvement**: there is one scenario that this project does not cover, is the pssibility of the user being geolocated within an incorrect parking, especially if 2 parking radiuses are overlaping. It would make sense to add a possibility for the user to override the `parking_id` parameter through manual selection.
 
-**Note**: the check-in process was by far the most challenging part of the project. A big acknowledgment to Gareth McGirr and Stackoverflow for the help.
+> [!IMPORTANT]
+> The check-in process was by far the most challenging part of the project. A big acknowledgment to Gareth McGirr and Stackoverflow for the help.
 
-Credits:
-* Gareth Mc Girr (mentor) who guided through this process
-* Stackoverflow: https://dev.to/chryzcode/django-json-response-safe-false-4f9i
+> [!NOTE]
+> Gareth Mc Girr (mentor) who guided through this process
+> Stackoverflow: https://dev.to/chryzcode/django-json-response-safe-false-4f9i
 
 ### 3.12 Check-Out Parking <a name="check-out"></a>
 
@@ -1588,7 +1593,7 @@ Successful confirmation will eventually trigger an payment confirmation email be
 
 ![rendering](static/images/readme_images/ui/payment_confirmation_email/payment-confirmation-email.png)
 
-**error encountered**: `stripe_webhook not found`. As my webhook view in not included in my main app, the console logs were showing a failed attempt at retrieving `stripe_webhook` path. The issue was solved by adding the name to the webhook path in the Stripe platform: `https://[domain-name]/parking_activity/stripe_webhook/`. 
+> [!TIP]`TypeError: `stripe_webhook not found`. As my webhook view in not included in my main app, the console logs were showing a failed attempt at retrieving `stripe_webhook` path. The issue was solved by adding the name to the webhook path in the Stripe platform: `https://[domain-name]/parking_activity/stripe_webhook/`. 
 
 > [!NOTE]
 > Overall Stripe Integration: The tutorial provided by the course material wasnt adapted to what I was looking for. Instead I followed the tutorial from this video (https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s) and made a number of changes to suit my project.<br>
@@ -2394,7 +2399,8 @@ In settings.py, edit `DATABASES` variables to the following to point to the new 
         }
     }
 
-**Note:** You will need to run your migration again (`python manage.py migrate`) and recreate a new superuser. All data will be lost.
+> [!IMPORTANT] 
+> You will need to run your migration again (`python manage.py migrate`) and recreate a new superuser. All data will be lost.
 
 Once this is done, you will want your data stored in a your .env file, to avoid secret keys being publicly available when pushing the project to github and adapting the variables to their environement (local, staging, production...). To do this, do the following:
 * enter `pip install python-decouple`
@@ -2462,18 +2468,22 @@ By default, if this is not specified, the server will consider as a development 
 Add whitenoise in settings.py to middleware list
 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+> [!TIP]
+> `MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.`. Adding whitenoise corrected the error. See below for process to adding whitenoise.
 
-**Error encountered**: `MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.`. whitenoise wasnot installed. Adding whitenoise corrected the error.
+> [!TIP]
+> If the `.css` file is not loading in production, move `'whitenoise.middleware.WhiteNoiseMiddleware'` to the top.
+> 
+> ```python
+> MIDDLEWARE = [
+>     'django.middleware.security.SecurityMiddleware',
+>     # Whitenoise package: used for production, should be set at the top
+>     'whitenoise.middleware.WhiteNoiseMiddleware',
+> ]
+> ```
 
-**Error encountered**: css file not loading in production. This problem was solved by moving `'whitenoise.middleware.WhiteNoiseMiddleware',` to the top.
-
-    MIDDLEWARE = [
-        'django.middleware.security.SecurityMiddleware',
-        #whitenoise package : used for production to be set at the top
-        'whitenoise.middleware.WhiteNoiseMiddleware',    
-    ]
-
-Final note: everytime the static folder is changed, in particular for css, `python manage.py collectstatic` needs to be run from the console to push the changes to staticfiles.
+> [!IMPORTANT] 
+> Everytime the static folder is changed, in particular for css, `python manage.py collectstatic` needs to be run from the console to push the changes to staticfiles.
 
 > [!NOTE]
 > Credits - https://stackoverflow.com/questions/19846342/unable-to-parse-procfile<br>
