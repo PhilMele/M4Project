@@ -241,11 +241,16 @@ def add_rate(request, parking_id):
             ratedata = rateform.save(commit = False)
             ratedata.user = request.user.userprofile
             ratedata.parking_name = parking
-            ratedata.save()
-            messages.success(request,"New rate created successfully.")
-            return redirect('parking-info', parking_id=parking_id)
+            try:
+                # check with model validator object can be saved
+                ratedata.full_clean()
+                ratedata.save()
+                messages.success(request,"New rate created successfully.")
+                return redirect('parking-info', parking_id=parking_id)
+            except ValidationError as e:
+                rateform.add_error(None, e.message)
         else:
-            messages.success(request,"Oops. Something did not work")
+            messages.error(request,"Oops. Something did not work. Read messages in the form, for more information. Alternatively, it might be the hour range you have entered already exist")
     else:
         rateform = RateForm()
 
@@ -267,14 +272,16 @@ def edit_rate(request, parking_id, rate_id):
     if request.method == "POST":
         editrateform = RateForm(request.POST, instance=rate) 
         if editrateform.is_valid():
-            editrateform.save()
-            messages.success(request, "Parking details updated successfully.")
-            return redirect('parking-info', parking_id=parking_id)
-        else:
-        
-            messages.error(request, "There was an issue updating the parking details.")
+            try:
+                editrateform.full_clean()
+                editrateform.save()
+                messages.success(request, "Parking details updated successfully.")
+                return redirect('parking-info', parking_id=parking_id)
+            except ValidationError as e:
+                rateform.add_error(None, e.message)
+        else: 
+            messages.error(request,"Oops. Something did not work. Read messages in the form, for more information.It might be the hour range you have entered already exist")
     else:
-        
         editrateform = RateForm(instance=rate)
 
     return render(request, 'rate/edit_rate/edit_rate.html', {

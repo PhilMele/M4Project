@@ -1,32 +1,19 @@
 TODO:
-add that if the transaction is not paid, button leave should still show.
 Problem: Once a transaction was made and paid. Somehow the user got loggedout during payment and the model didnt get updated with `paid = true`. Only seem to happen on local after I havent connected in a while.
-Error: when I click on Enter, the console shows a brief error message and then disapear
-javascript error on index page due to geolocation
-user cannot enter parking if car registration is not populated + userprofile as a whole
-Add back button to all pages
-create filtr that only shows activated parkings to user
-create a button to tell the parking managert o activate parking
-parking can only be activiated with rates have been populated and cannot be 0.
 
+user cannot enter parking if car registration is not populated + userprofile as a whole
+
+create filtr that only shows activated parkings to user
 
 fix logout problem when scanning qr code. Might be SSL certificate realted problem.
 
 
 check all code meets indentions standard and spaces
-add validator to make sure parking is null 0 or negative
-change navbar for manager to remove uneeded elements
 imrpoevemt: parking insepctor can be imporved with OCR and connecting to a CRM to issue PCR
-add check to prevent activating parking if no rate is available
-add autamtaed email when order is paid
 add placeholders on user dashboard if no parking is available
 add placeholders on parking manager dashboard if no parking is available
-add email verification
-fix error that says you echekc in Parking None if selected manually
-fix success message on payment
-check if its ok to have the venv file avilable on github
-add tutorial on how to add long and lat from google maps to parking latlng
-remove commentedout text in dahsboard blocks if layout is good
+Gareth - check if its ok to have the venv file avilable on github
+
 in rateform, add a validator that prevents user adding another rate with same hour range
 re-add fields to all forms
 check if payment confirmation email is sent twice again
@@ -1558,7 +1545,7 @@ Following successful validation, Stripe will look to push payment confirmation t
 
 Successful confirmation will eventually trigger an payment confirmation email being sent to the user.
 
-
+<details>
 <summary>Click to see code</summary>
 <p>
 
@@ -1671,7 +1658,7 @@ Templates are located in: `user_management\templates\errors`
 
 ![rendering](static/images/readme_images/ui/custom_error_handler/404-custom-error-handler.png)
 
-
+<details>
 <summary>Click to see code for urls.py (project level)</summary>
 <p>
 
@@ -1688,7 +1675,7 @@ Templates are located in: `user_management\templates\errors`
 </p>
 </details>
 
-    
+<details>  
 <summary>Click to see code for views.py (app level)</summary>
 <p>
 
@@ -1761,7 +1748,8 @@ This back button has two features:
 
 <details>
 <summary>Click to see code details</summary>
-    <p>
+<p>
+
     {% block base_navigation_block %}
         <div class="navigation">
         <!-- If user is on user account, redirects home -->
@@ -1790,7 +1778,8 @@ This back button has two features:
         {% endif %}
         </div>
     {% endblock %}
-    </p>
+
+</p>
 </details>
 
 The credits for this feature goe to the links listed below.
@@ -1843,6 +1832,11 @@ Suggestion for improvement: The code could improve by streamlining the series of
 ## 5. Testing <a name="testing"></a>
 ### 5.1 Validator Testing <a name="val-testing"></a>
 #### 5.1.1 HTML <a name="html"></a>
+
+The HTML tests are returning errors and warnings in relations to Django's synthax:
+* Adding `lang` attribute: this is added to `base.html`
+* Starting document with `<!DOCTYPE html>`: this element is also present in `base.html`
+* Element `<head>` is missing: this is also provided in `base.html`
 
 <details>
     <summary>check_in_info_block.html</summary>
@@ -2144,8 +2138,6 @@ Suggestion for improvement: The code could improve by streamlining the series of
         <img src="static/images/readme_images/testing/html/html-index.png" alt="index" />
     </p>
 </details>
-
-
 
 #### 5.1.2 CSS <a name="css"></a>
 #### 5.1.3 Javascript <a name="js"></a>
