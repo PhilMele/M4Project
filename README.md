@@ -15,20 +15,17 @@ add placeholders on parking manager dashboard if no parking is available
 Gareth - check if its ok to have the venv file avilable on github
 
 in rateform, add a validator that prevents user adding another rate with same hour range
-re-add fields to all forms
-check if payment confirmation email is sent twice again
 In history setcion: add pagination + filter to make the search of specific transaction easier.
 Add Favicon
-email veirication - design template
-design redirect page
 bugs - the logo image on email does not show on certain messaging system like outlook
 bugs - the javascript validator are capital sensitive and will show a warning taht two email addresses dont match if one email has a capital and the other doesnt, but the authentictaion system will accept it.
+
 Some alluath templates are not customised (if user that dont exist request a passwordm they still get the basic allauth template for it)
+
 check with Gareth if buttons in parking manager dashboard is acceptable
 check with gareth back button is accepatble solution
-make exception to back button: for succesfull and cancell payement + user account
 Bug - back button doesnt work after using lighthouse testing.
-Fix Add registration button for small screen (set it to w-50 under 400px)
+
 Fix hover on pasking e=inspctor tab turning white and cant see text
 Imrpoevement deisgn - parking info could be improve. too much space is taken for the first 3 sections. All could fit in 1 line with header in a row above.
 Imrpoevement deisgn - parking info could be improve. Applicable rates could also be brought over 1 line and collapse into 2 rows based on screen size
@@ -168,6 +165,14 @@ Icons and images are hosted on S3 Bucket:
 
 ### 2.4 Wireframes <a name="wireframes"></a>
 
+Wireframes initially designer for the project are available below.
+
+<details>
+    <summary>Click to see wireframes</summary>
+    <p>
+        <img src="static/images/readme_images/wireframes/wireframes.png" alt="wireframes" />
+    </p>
+</details>
 
 ### 2.5 Databases <a name="databases"></a>
 
