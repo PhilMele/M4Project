@@ -33,10 +33,24 @@ ask Gareth about label of hidden fields in html checker
 
 # M4Project - GeoPay
 
-
-<img align="center" width="200" src="https://geopay-app.s3.eu-north-1.amazonaws.com/images/logo/geopay-logo.webp">
+<p align="center" width="100%">
+   <img width="200" src="https://geopay-app.s3.eu-north-1.amazonaws.com/images/logo/geopay-logo.webp">
+</p>
 
 View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target="_blank">Click Here</a>
+
+## Getting Started
+
+The project was built with the aim of being used from small to large screen and is fully responsive.
+
+However one of the feature requires accurate geolocation on the customer side.
+
+Once you have setup a parking under the desired geolocation, as parking manager, please scan the QR code to access the deployed project from your mobile phone.
+
+<p align="center" width="100%">
+   <img width="200" src="static\images\readme_images\geopay_qr_code\geopay-qr-code.png">
+</p>
+
 
 # Table of Contents
 
@@ -85,8 +99,6 @@ View the live site: <a href="https://geopay-12a0f6ced11c.herokuapp.com/" target=
    - [Local Deployment](#local-deployment)
    - [Heroku Deployment](#heroku-deployment)
 8. [Credits](#credits)
-
-## Getting Started
 
 
 
@@ -1000,7 +1012,8 @@ In the event, no parking_id could be returned, `parking_id` is set as None by de
 >    user_location = (float(user_latitude), float(user_longitude))
 >```
 
-> [!TIP]`TypeError: '<=' not supported between instances of 'float' and 'str'`: following the above mentioned example provided on stackoverflow.
+> [!TIP]
+>`TypeError: '<=' not supported between instances of 'float' and 'str'`: following the above mentioned example provided on stackoverflow.
 >This error happened because `parking.radius` is a string and `locations_distance` is a float.
 >```python
 >    if locations_distance <= parking_radius:
@@ -1013,7 +1026,8 @@ Set values in the same format:
 
     parking_radius = float(parking.radius)
 
-> [!TIP]`TypeError: User geolocation innacuracy: unless a mobile phone is used for testing, the accuracy of the geolocation varies between 3m to 888m. I found that from my laptop a range of 900m was comfortable to capture a nearby geofence.
+> [!TIP]
+>`TypeError: User geolocation innacuracy: unless a mobile phone is used for testing, the accuracy of the geolocation varies between 3m to 888m. I found that from my laptop a range of 900m was comfortable to capture a nearby geofence.
 > For mobile phone, I had 100% success with a radius set at 50 meters.
 
 **Phase 3 - Validating User Consent to Check-In**
