@@ -199,6 +199,7 @@ def edit_parking(request, parking_id):
         return redirect('home')
 
     parking = get_object_or_404(Parking, id=parking_id)
+    parking_id = parking_id
     
     if request.method == "POST":
         editparkingform = ParkingForm(request.POST, instance=parking)
@@ -214,6 +215,7 @@ def edit_parking(request, parking_id):
 
     return render(request, 'parking/edit_parking/edit_parking.html', {
         'editparkingform': editparkingform,
+        'parking_id':parking_id
     })
 
 
@@ -235,6 +237,7 @@ def add_rate(request, parking_id):
         return redirect('home')
 
     parking = get_object_or_404(Parking, id=parking_id)
+    parking_id = parking_id
     if request.method == "POST":
         rateform = RateForm(request.POST)
         if rateform.is_valid():
@@ -256,6 +259,7 @@ def add_rate(request, parking_id):
 
     return render(request, 'rate/add_rate/add_rate.html', {
         'rateform':rateform,
+        'parking_id':parking_id
         
     })
 
@@ -286,7 +290,9 @@ def edit_rate(request, parking_id, rate_id):
 
     return render(request, 'rate/edit_rate/edit_rate.html', {
         'editrateform': editrateform,
+        'parking_id':parking_id
     })
+
 
 @login_required
 def delete_rate(request, parking_id, rate_id):

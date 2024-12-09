@@ -18,6 +18,18 @@
         <a href="{% url 'home' %}">
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
         </a> 
+    {% elif request.resolver_match.url_name == 'add-rate' %}
+        <a href="{% url 'parking-info' parking_id=parking_id %}">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a> 
+    {% elif request.resolver_match.url_name == 'edit-rate' %}
+    <a href="{% url 'parking-info' parking_id=parking_id %}">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+    </a> 
+    {% elif request.resolver_match.url_name == 'create-parking' %}
+    <a href="{% url 'home' %}">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+    </a> 
     <!-- not the above options and not listed in path below: redict to previous page -->
     {% elif request.path != '/' and request.path != '/parking_management/parking_manager_dashboard/' %}
         <a onClick="javascript:history.go(-1)">
