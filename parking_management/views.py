@@ -225,6 +225,7 @@ def delete_parking(request, parking_id):
         return redirect('home')
 
     parking = get_object_or_404(Parking, id=parking_id, user=request.user.userprofile)
+    
     has_user = parking_space_available(request, parking_id=parking.id)
     print(f'has_user = {has_user}')
     # prevents parking manager from deleting parking obj
@@ -281,6 +282,14 @@ def edit_rate(request, parking_id, rate_id):
     parking_id = parking.id
     print(f'parking_id = {parking_id}')
 
+    has_user = parking_space_available(request, parking_id=parking.id)
+    print(f'has_user = {has_user}')
+    # prevents parking manager from deleting parking obj
+    # when parking users are checked-in
+    if has_user != 0:
+        messages.error(request, "You cannot edit rate when users are still checked-in. Contact admin.")
+        return redirect('parking-info', parking_id=parking_id)
+
     if request.method == "POST":
         editrateform = RateForm(request.POST, instance=rate) 
         if editrateform.is_valid():
@@ -306,6 +315,14 @@ def edit_rate(request, parking_id, rate_id):
 def delete_rate(request, parking_id, rate_id):
     if not is_parking_manager(request):
         return redirect('home')
+
+    has_user = parking_space_available(request, parking_id=parking_id)
+    print(f'has_user = {has_user}')
+    # prevents parking manager from deleting parking obj
+    # when parking users are checked-in
+    if has_user != 0:
+        messages.error(request, "You cannot edit rate when users are still checked-in. Contact admin.")
+        return redirect('parking-info', parking_id=parking_id)
         
     rate = get_object_or_404(Rate, id=rate_id)
     rate.delete()
