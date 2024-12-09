@@ -31,6 +31,15 @@ Imrpoevement deisgn - parking info could be improve. too much space is taken for
 Imrpoevement deisgn - parking info could be improve. Applicable rates could also be brought over 1 line and collapse into 2 rows based on screen size
 ask Gareth about label of hidden fields in html checker
 
+prevent rate and parking to be deleted if a user is marked as using the parking
+prevent user from deactivating parking if users are marked as using it
+prevent user from deleting account if they are checked-in
+prevent parking manager from deleting or editing parking rate if user is checked in
+
+List all money made within specific period
+Add filters in transaction for user to retrieve specific transaction easily
+Add visual of parking on map to clarify if latlng coordinates have been entered properly by parking manager
+Rework te way parkign rates are made and create a standard presentation : [value] hour for [value] instead of letting parking manager give it a title
 # M4Project - GeoPay
 
 <p align="center" width="100%">

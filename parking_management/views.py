@@ -225,6 +225,14 @@ def delete_parking(request, parking_id):
         return redirect('home')
 
     parking = get_object_or_404(Parking, id=parking_id, user=request.user.userprofile)
+    has_user = parking_space_available(request, parking_id=parking.id)
+    print(f'has_user = {has_user}')
+    # prevents parking manager from deleting parking obj
+    # when parking users are checked-in
+    if has_user != 0:
+        messages.error(request, "You cannot delete a parking when users are still checked-in.")
+        return redirect('parking-info', parking_id=parking.id)
+
     parking.delete()
     messages.success(request, "Parking deleted.")
     return redirect('parking-manager-dashboard')
