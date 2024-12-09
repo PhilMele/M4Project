@@ -59,7 +59,13 @@ def activate_parking(request, parking_id):
         messages.error(request, f"Add a rate before activating parking.")
         return redirect('parking-info', parking_id=parking.id)
 
-
+    has_user = parking_space_available(request, parking_id=parking_id)
+    print(f'has_user = {has_user}')
+    # prevents parking manager from deleting parking obj
+    # when parking users are checked-in
+    if has_user != 0:
+        messages.error(request, "You deactive parking when users are still checked-in. Contact admin.")
+        return redirect('parking-info', parking_id=parking_id)
 
     # if actiate is true turn it off
     if parking.active:

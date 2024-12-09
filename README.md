@@ -867,6 +867,39 @@ Upon deletion, object associated to parking_id object <b>will not be deleted</b>
 
 This is set in place, in order to avoid losing history of transactional data done previously, in particular how rates are calculated, and also illegally parked cars.
 
+Validators were setup in each functions views to prevent parking manager deleting parking objects when users are checked-in.
+
+
+<details>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
+<p>
+
+```python
+@login_required
+def delete_parking(request, parking_id):
+    if not is_parking_manager(request):
+        return redirect('home')
+
+    parking = get_object_or_404(Parking, id=parking_id, user=request.user.userprofile)
+    
+    has_user = parking_space_available(request, parking_id=parking.id)
+    print(f'has_user = {has_user}')
+    # prevents parking manager from deleting parking obj
+    # when parking users are checked-in
+    if has_user != 0:
+        messages.error(request, "You cannot delete a parking when users are still checked-in.")
+        return redirect('parking-info', parking_id=parking.id)
+
+    parking.delete()
+    messages.success(request, "Parking deleted.")
+    return redirect('parking-manager-dashboard')
+```
+
+</p>
+</details>
+    
+
+
 **Rates**
 
 Parking Info page displays all applicables rates to selected `parking_id` object.
@@ -924,6 +957,38 @@ Parking rate details are displayed by `parking_info()` through its template.
 Editing and deleting an specific `rate_id` is managed by respectively:
 * `edit_parking()` (path: `parking_management/views.py`)
 * `delete_parking()` (path: `parking_management/views.py`)
+
+Validators were setup in each functions views to prevent parking manager deleting parking objects when users are checked-in.
+
+
+<details>
+<summary style="color: white; background: black; padding: 5px;">Click to see code</summary>
+<p>
+
+```python
+@login_required
+def delete_rate(request, parking_id, rate_id):
+    if not is_parking_manager(request):
+        return redirect('home')
+
+    has_user = parking_space_available(request, parking_id=parking_id)
+    print(f'has_user = {has_user}')
+    # prevents parking manager from deleting parking obj
+    # when parking users are checked-in
+    if has_user != 0:
+        messages.error(request, "You cannot edit rate when users are still checked-in. Contact admin.")
+        return redirect('parking-info', parking_id=parking_id)
+        
+    rate = get_object_or_404(Rate, id=rate_id)
+    rate.delete()
+    messages.success(request, "Rate deleted.")
+    return redirect('parking-info', parking_id=parking_id)
+ ```
+
+</p>
+</details>
+
+
 
 <p align="center">
    <kbd><img width="200" src="static/images/readme_images/ui/parking_info/parking-info-rates.png"></kbd>
