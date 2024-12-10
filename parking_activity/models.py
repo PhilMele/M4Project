@@ -16,7 +16,7 @@ class Stay(models.Model):
     paid = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.id} -{self.user.user.username}"
+        return f"{self.id}"
 
 #note: there is redundancy in some of the FK, but equally adds more visibility from admin panel
 class EnterParking(models.Model):
@@ -26,7 +26,7 @@ class EnterParking(models.Model):
     timestamp_enter = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.id} -{self.user.user.username} - {self.stay}"
+        return f"{self.id}"
 
 class LeaveParking(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
@@ -35,7 +35,7 @@ class LeaveParking(models.Model):
     timestamp_leave = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.id} -{self.user.user.username} - {self.stay}"
+        return f"{self.id}"
 
 #payment logic: credits: https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s
 

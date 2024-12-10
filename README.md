@@ -3,20 +3,17 @@ Problem: Once a transaction was made and paid. Somehow the user got loggedout du
 
 fix logout problem when scanning qr code. Might be SSL certificate realted problem.
 
-move admin address to anothr url
 
 check all code meets indentions standard and spaces
 imrpoevemt: parking insepctor can be imporved with OCR and connecting to a CRM to issue PCR
 add placeholders on user dashboard if no parking is available
-add placeholders on parking manager dashboard if no parking is available
-Gareth - check if its ok to have the venv file avilable on github
 
-In history setcion: add pagination + filter to make the search of specific transaction easier.
 Add Favicon
 bugs - the logo image on email does not show on certain messaging system like outlook
 bugs - the javascript validator are capital sensitive and will show a warning taht two email addresses dont match if one email has a capital and the other doesnt, but the authentictaion system will accept it.
 
 Some alluath templates are not customised (if user that dont exist request a passwordm they still get the basic allauth template for it)
+Add temolate for password reet if user wants to connect with existing email address
 
 check with Gareth if buttons in parking manager dashboard is acceptable
 check with gareth back button is accepatble solution
@@ -35,6 +32,7 @@ Add filters in transaction for user to retrieve specific transaction easily
 Add visual of parking on map to clarify if latlng coordinates have been entered properly by parking manager
 Rework te way parkign rates are made and create a standard presentation : [value] hour for [value] instead of letting parking manager give it a title
 Some repeats in codes in particular with validators preventing parking user and parking manager taking some actions on checked-in parkings.
+Could add a validator if all parking spaces are checked-in to prevent user to do so. Equally why would the parking company refuse to make money?
 
 # M4Project - GeoPay
 
