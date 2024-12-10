@@ -6,6 +6,10 @@ class ParkingAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'user',
+        'latitude',
+        'longitude',
+        'radius',
+        'active'
     )
 
 class RateAdmin(admin.ModelAdmin):

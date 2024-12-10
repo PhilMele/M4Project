@@ -16,7 +16,7 @@ class Stay(models.Model):
     paid = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.id} -{self.user.user.username} - {self.parking_name.name}"
+        return f"{self.id} -{self.user.user.username}"
 
 #note: there is redundancy in some of the FK, but equally adds more visibility from admin panel
 class EnterParking(models.Model):

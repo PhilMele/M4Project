@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = (
         'user',
+        'user_type',
         'car_registration',
     )
 

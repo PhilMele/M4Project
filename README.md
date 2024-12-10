@@ -3,6 +3,7 @@ Problem: Once a transaction was made and paid. Somehow the user got loggedout du
 
 fix logout problem when scanning qr code. Might be SSL certificate realted problem.
 
+move admin address to anothr url
 
 check all code meets indentions standard and spaces
 imrpoevemt: parking insepctor can be imporved with OCR and connecting to a CRM to issue PCR
@@ -26,6 +27,8 @@ Imrpoevement deisgn - parking info could be improve. too much space is taken for
 Imrpoevement deisgn - parking info could be improve. Applicable rates could also be brought over 1 line and collapse into 2 rows based on screen size
 ask Gareth about label of hidden fields in html checker
 
+Add command to collectstatic autmatically at every push
+Do template for email that already exists
 
 List all money made within specific period
 Add filters in transaction for user to retrieve specific transaction easily
@@ -1839,7 +1842,8 @@ Successful confirmation will eventually trigger an payment confirmation email be
 </p>
 
 
-> [!TIP]`TypeError: `stripe_webhook not found`. As my webhook view in not included in my main app, the console logs were showing a failed attempt at retrieving `stripe_webhook` path. The issue was solved by adding the name to the webhook path in the Stripe platform: `https://[domain-name]/parking_activity/stripe_webhook/`. 
+> [!TIP]
+>`TypeError: `stripe_webhook not found`. As my webhook view in not included in my main app, the console logs were showing a failed attempt at retrieving `stripe_webhook` path. The issue was solved by adding the name to the webhook path in the Stripe platform: `https://[domain-name]/parking_activity/stripe_webhook/`. 
 
 > [!NOTE]
 > Overall Stripe Integration: The tutorial provided by the course material wasnt adapted to what I was looking for. Instead I followed the tutorial from this video (https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s) and made a number of changes to suit my project.<br>
@@ -2823,7 +2827,6 @@ Add whitenoise in settings.py to middleware list
 
 > [!NOTE]
 > Credits - https://stackoverflow.com/questions/19846342/unable-to-parse-procfile<br>
-> Credits - https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment<br>
 > Credits - https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment<br>
 
 
