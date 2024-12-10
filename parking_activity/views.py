@@ -290,14 +290,10 @@ def fee_form(request, applicable_fee, stay_id):
 @login_required
 def payment(request, applicable_fee, stay_id):
     try:
-
-        # set API key the begining to avoid
-        # "Error in payment process:No API key provided."
         stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
-        amount_int = int(applicable_fee*100)
+        amount_int = int(applicable_fee * 100)  # Convert to integer for Stripe
 
-        # check if userprofile already has a stripe id
-        # Create a customer if not already created
+        # Check if user already has a stripe customer ID
         if not request.user.userprofile.stripe_customer_id:
             customer = stripe.Customer.create(
                 email=request.user.email
@@ -305,7 +301,7 @@ def payment(request, applicable_fee, stay_id):
             request.user.userprofile.stripe_customer_id = customer.id
             request.user.userprofile.save()
 
-        # create a price object in stripe
+        # Create a price object in Stripe
         price_object = stripe.Price.create(
             unit_amount=amount_int,
             currency="gbp",
@@ -314,35 +310,34 @@ def payment(request, applicable_fee, stay_id):
             }
         )
 
-        # create chekcout session
+        # Create checkout session
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[{
                 'price': price_object.id,
                 'quantity': 1,
-            }, ],
+            }],
             mode='payment',
             customer=request.user.userprofile.stripe_customer_id,
-            'success_url': (
-                settings.REDIRECT_DOMAIN +
-                'parking_activity/payment_successful?' +
-                'session_i={CHECKOUT_SESSION_ID}'
-                ),
-            cancel_url=(
-                settings.REDIRECT_DOMAIN +
-                'parking_activity/payment_cancelled',
-                )
+            success_url=(
+                settings.REDIRECT_DOMAIN + 
+                'parking_activity/payment_successful?session_id=' +
+                '{CHECKOUT_SESSION_ID}'
+            ),
+            cancel_url=settings.REDIRECT_DOMAIN + 'parking_activity/payment_cancelled',
         )
 
-        # update stay model field with strip checkout id
+        # Update the Stay model with the checkout session ID
         stay = Stay.objects.get(id=stay_id)
         stay.stripe_checkout_id = checkout_session.id
         stay.save()
 
-        # returns user to stripe checktout page
+        # Redirect to Stripe checkout page
         return redirect(checkout_session.url)
+
     except Exception as e:
-        return HttpResponse("Error occured in payment processing")
+        logger.error(f"Error occurred in payment processing: {str(e)}")
+        return HttpResponse("Error occurred in payment processing")
 
 
 # stripe payment logic
