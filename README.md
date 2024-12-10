@@ -1,22 +1,20 @@
 TODO:
 
 
-fix logout problem when scanning qr code. Might be SSL certificate realted problem.
-add placeholders on user dashboard if no parking is available
 
 check all code meets indentions standard and spaces
 
-Add Favicon
 
-bugs - the javascript validator are capital sensitive and will show a warning taht two email addresses dont match if one email has a capital and the other doesnt, but the authentictaion system will accept it.
+
+
 
 BUGS
 Bug - back button doesnt work after using lighthouse testing.
 Problem: Once a transaction was made and paid. Somehow the user got loggedout during payment and the model didnt get updated with `paid = true`. Only seem to happen on local after I havent connected in a while.
 bugs - the logo image on email does not show on certain messaging system like outlook desktop, but will show on outloop mobile app.
+bugs - the javascript validator are capital sensitive and will show a warning taht two email addresses dont match if one email has a capital and the other doesnt, but the authentictaion system will accept it.
+Add Favicon
 
-Add command to collectstatic autmatically at every push
-Do template for email that already exists
 
 List all money made within specific period
 Add filters in transaction for user to retrieve specific transaction easily
@@ -29,7 +27,9 @@ Imrpoevement deisgn - parking info could be improve. Applicable rates could also
 ask Gareth about label of hidden fields in html checker
 imrpoevemt: parking insepctor can be imporved with OCR and connecting to a CRM to issue PCR
 success messages get stacked up until user authenticates
-
+Add command to collectstatic autmatically at every push
+fix logout problem when scanning qr code. Might be SSL certificate realted problem.
+Back button without <p> not showing a hand cursor.
 
 # M4Project - GeoPay
 
@@ -2416,6 +2416,14 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 #### 5.1.2 CSS <a name="css"></a>
+
+<details>
+    <summary style="color: white; background: black; padding: 5px;">base.css</summary>
+    <p>
+        <kbd><img src="static/images/readme_images/testing/css/css.png" alt="base.css testing" /></kbd>
+    </p>
+</details>
+
 #### 5.1.3 Javascript <a name="js"></a>
 
 <details>
