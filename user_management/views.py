@@ -182,6 +182,7 @@ def delete_user_account(request):
                 "Your delete your account whilst checked-in.")
 
             return redirect('user-account')
+
     # if is parking manager
     # prevent account deletion if cars are checked-in
     else:
