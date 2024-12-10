@@ -1,7 +1,8 @@
 TODO:
 
 
-
+remove unused code
+remove all print statements
 check all code meets indentions standard and spaces
 
 
@@ -30,6 +31,20 @@ success messages get stacked up until user authenticates
 Add command to collectstatic autmatically at every push
 fix logout problem when scanning qr code. Might be SSL certificate realted problem.
 Back button without <p> not showing a hand cursor.
+
+#note: there is redundancy in some of the FK, but equally adds more visibility from admin panel
+class EnterParking(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
+    parking_name = models.ForeignKey(Parking, on_delete=models.SET_NULL, null=True, blank=True)
+    stay = models.ForeignKey(Stay, on_delete=models.SET_NULL, null=True, blank=True)
+    timestamp_enter = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.id}"
+
+
+
+        
 
 # M4Project - GeoPay
 

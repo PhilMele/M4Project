@@ -18,6 +18,7 @@ class Stay(models.Model):
     def __str__(self):
         return f"{self.id}"
 
+
 #note: there is redundancy in some of the FK, but equally adds more visibility from admin panel
 class EnterParking(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
@@ -28,6 +29,7 @@ class EnterParking(models.Model):
     def __str__(self):
         return f"{self.id}"
 
+
 class LeaveParking(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
     parking_name = models.ForeignKey(Parking, on_delete=models.SET_NULL, null=True, blank=True)
@@ -36,7 +38,4 @@ class LeaveParking(models.Model):
 
     def __str__(self):
         return f"{self.id}"
-
-#payment logic: credits: https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s
-
 
