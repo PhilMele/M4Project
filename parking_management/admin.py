@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Parking, Rate, IllegalParking
 
+
 # Register your models here.
 class ParkingAdmin(admin.ModelAdmin):
     list_display = (
@@ -12,21 +13,24 @@ class ParkingAdmin(admin.ModelAdmin):
         'active'
     )
 
+
 class RateAdmin(admin.ModelAdmin):
     list_display = (
-    'rate_name',
-    'user',
-    'parking_name',
-    'hour_range',
-    'rate'
+        'rate_name',
+        'user',
+        'parking_name',
+        'hour_range',
+        'rate'
     )
 
+
 class IllegalParkingAdmin(admin.ModelAdmin):
-    list_display =(
-    'inspector',
-    'parking_name',
-    'car_reg',
+    list_display = (
+        'inspector',
+        'parking_name',
+        'car_reg',
     )
+
 
 admin.site.register(Parking, ParkingAdmin)
 admin.site.register(Rate, RateAdmin)
