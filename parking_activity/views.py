@@ -45,6 +45,12 @@ def get_parking_location(request):
         messages.error(request, "You need to provide your car registration before checking in. Connect to your profile to add it.")
         return redirect('home')
 
+    # if no active parking, user is redirected to home page
+    is_parking = Parking.objects.filter(active=True)
+    if not is_parking:
+        messages.error(request, "There is no parking available yet.")
+        return redirect('home')
+
     if request.method == "POST":
 
         # capture user current location

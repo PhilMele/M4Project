@@ -1,28 +1,19 @@
 TODO:
-Problem: Once a transaction was made and paid. Somehow the user got loggedout during payment and the model didnt get updated with `paid = true`. Only seem to happen on local after I havent connected in a while.
+
 
 fix logout problem when scanning qr code. Might be SSL certificate realted problem.
-
-
-check all code meets indentions standard and spaces
-imrpoevemt: parking insepctor can be imporved with OCR and connecting to a CRM to issue PCR
 add placeholders on user dashboard if no parking is available
 
+check all code meets indentions standard and spaces
+
 Add Favicon
-bugs - the logo image on email does not show on certain messaging system like outlook
+
 bugs - the javascript validator are capital sensitive and will show a warning taht two email addresses dont match if one email has a capital and the other doesnt, but the authentictaion system will accept it.
 
-Some alluath templates are not customised (if user that dont exist request a passwordm they still get the basic allauth template for it)
-Add temolate for password reet if user wants to connect with existing email address
-
-check with Gareth if buttons in parking manager dashboard is acceptable
-check with gareth back button is accepatble solution
+BUGS
 Bug - back button doesnt work after using lighthouse testing.
-
-Fix hover on pasking e=inspctor tab turning white and cant see text
-Imrpoevement deisgn - parking info could be improve. too much space is taken for the first 3 sections. All could fit in 1 line with header in a row above.
-Imrpoevement deisgn - parking info could be improve. Applicable rates could also be brought over 1 line and collapse into 2 rows based on screen size
-ask Gareth about label of hidden fields in html checker
+Problem: Once a transaction was made and paid. Somehow the user got loggedout during payment and the model didnt get updated with `paid = true`. Only seem to happen on local after I havent connected in a while.
+bugs - the logo image on email does not show on certain messaging system like outlook desktop, but will show on outloop mobile app.
 
 Add command to collectstatic autmatically at every push
 Do template for email that already exists
@@ -33,6 +24,12 @@ Add visual of parking on map to clarify if latlng coordinates have been entered 
 Rework te way parkign rates are made and create a standard presentation : [value] hour for [value] instead of letting parking manager give it a title
 Some repeats in codes in particular with validators preventing parking user and parking manager taking some actions on checked-in parkings.
 Could add a validator if all parking spaces are checked-in to prevent user to do so. Equally why would the parking company refuse to make money?
+Imrpoevement deisgn - parking info could be improve. too much space is taken for the first 3 sections. All could fit in 1 line with header in a row above.
+Imrpoevement deisgn - parking info could be improve. Applicable rates could also be brought over 1 line and collapse into 2 rows based on screen size
+ask Gareth about label of hidden fields in html checker
+imrpoevemt: parking insepctor can be imporved with OCR and connecting to a CRM to issue PCR
+success messages get stacked up until user authenticates
+
 
 # M4Project - GeoPay
 
@@ -691,7 +688,7 @@ def activate_parking(request, parking_id):
     # prevents parking manager from deleting parking obj
     # when parking users are checked-in
     if has_user != 0:
-        messages.error(request, "You deactive parking when users are still checked-in. Contact admin.")
+        messages.error(request, "You cannot deactive parking when users are still checked-in. Contact admin.")
         return redirect('parking-info', parking_id=parking_id)
 
     # if actiate is true turn it off

@@ -190,6 +190,12 @@ a:not([href]) {
     color: white; 
 }
 
+/* Specific to parking inpsector section */
+#parkingInspectorContainer .nav-tabs .nav-link.active {
+    color: black !important;
+    background-color: white;
+}
+
 .navbar-toggler-icon::before {
     font-size: 1.5rem; 
     color: white;
