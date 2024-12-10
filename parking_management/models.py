@@ -37,7 +37,7 @@ class Rate (models.Model):
         # rate validator: checks if rate field value is not already assigned to another 
         # rate object with same parkind_id
         # this is to avoid parking manager creating different rates for the same hour range
-        if Rate.objects.filter(parking_name=self.parking_name, hour_range=self.hour_range).exclude(id=self.id).exists():
+        if Rate.objects.filter(parking_name=self.parking_name, hour_range=self.hour_range).exclude(id=self.id).exclude(parking_name__isnull=True).exists():
             raise ValidationError("An hour range with this value already exists for the selected parking.")
 
     def __str__(self):

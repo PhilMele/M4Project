@@ -320,11 +320,12 @@ def payment(request, applicable_fee, stay_id):
             mode='payment',
             customer=request.user.userprofile.stripe_customer_id,
             success_url=(
-                settings.REDIRECT_DOMAIN + 
+                settings.REDIRECT_DOMAIN +
                 'parking_activity/payment_successful?session_id=' +
                 '{CHECKOUT_SESSION_ID}'
             ),
-            cancel_url=settings.REDIRECT_DOMAIN + 'parking_activity/payment_cancelled',
+            cancel_url=settings.REDIRECT_DOMAIN +
+            'parking_activity/payment_cancelled',
         )
 
         # Update the Stay model with the checkout session ID
