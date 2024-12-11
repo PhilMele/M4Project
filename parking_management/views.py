@@ -4,7 +4,7 @@ from parking_activity.models import Stay
 from .models import Parking, Rate, IllegalParking
 from .forms import ParkingForm, RateForm, IllegalParkingForm
 from django.views.decorators.http import require_POST
-
+from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -291,14 +291,17 @@ def add_rate(request, parking_id):
                     )
                 return redirect('parking-info', parking_id=parking_id)
             except ValidationError as e:
-                rateform.add_error(None, e.message)
+                messages.error(
+                request,
+                "Oops. Something did not work. "
+                "It might be the hour range you have entered "
+                "already exist for another rate.")
         else:
             messages.error(
                 request,
                 "Oops. Something did not work."
                 "Read messages in the form, for more information."
-                "Alternatively, it might be the hour range you have entered"
-                "already exist")
+            )
     else:
         rateform = RateForm()
 

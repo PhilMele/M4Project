@@ -9,7 +9,7 @@ from parking_management.models import Rate, Parking
 from datetime import timedelta
 from decimal import Decimal
 import math
-
+from django.core.exceptions import ValidationError
 # stripe modul imports
 
 from django.conf import settings

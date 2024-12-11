@@ -11,7 +11,7 @@ from parking_activity.models import (
 from parking_management.models import Parking
 from .forms import UserProfileForm
 from django.contrib import messages
-
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 
