@@ -1,51 +1,4 @@
-TODO:
-
-
-remove unused code
-remove all print statements
-check all code meets indentions standard and spaces
-
-
-
-
-
-BUGS
-Bug - back button doesnt work after using lighthouse testing.
-Problem: Once a transaction was made and paid. Somehow the user got loggedout during payment and the model didnt get updated with `paid = true`. Only seem to happen on local after I havent connected in a while.
-bugs - the logo image on email does not show on certain messaging system like outlook desktop, but will show on outloop mobile app.
-bugs - the javascript validator are capital sensitive and will show a warning taht two email addresses dont match if one email has a capital and the other doesnt, but the authentictaion system will accept it.
-Add Favicon
-
-
-List all money made within specific period
-Add filters in transaction for user to retrieve specific transaction easily
-Add visual of parking on map to clarify if latlng coordinates have been entered properly by parking manager
-Rework te way parkign rates are made and create a standard presentation : [value] hour for [value] instead of letting parking manager give it a title
-Some repeats in codes in particular with validators preventing parking user and parking manager taking some actions on checked-in parkings.
-Could add a validator if all parking spaces are checked-in to prevent user to do so. Equally why would the parking company refuse to make money?
-Imrpoevement deisgn - parking info could be improve. too much space is taken for the first 3 sections. All could fit in 1 line with header in a row above.
-Imrpoevement deisgn - parking info could be improve. Applicable rates could also be brought over 1 line and collapse into 2 rows based on screen size
-ask Gareth about label of hidden fields in html checker
-imrpoevemt: parking insepctor can be imporved with OCR and connecting to a CRM to issue PCR
-success messages get stacked up until user authenticates
-Add command to collectstatic autmatically at every push
-fix logout problem when scanning qr code. Might be SSL certificate realted problem.
-Back button without <p> not showing a hand cursor.
-
-#note: there is redundancy in some of the FK, but equally adds more visibility from admin panel
-class EnterParking(models.Model):
-    user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
-    parking_name = models.ForeignKey(Parking, on_delete=models.SET_NULL, null=True, blank=True)
-    stay = models.ForeignKey(Stay, on_delete=models.SET_NULL, null=True, blank=True)
-    timestamp_enter = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.id}"
-
-Sometimes success messages dont show.
-Back button not owrking if get back to previous page from provided url : histoyr is 0.
-
-        
+  
 
 # M4Project - GeoPay
 
@@ -270,7 +223,7 @@ The databases are split across 3 diffrent apps:
 
 | **Model**     | **Field Name**      | **Field Type**       | **Description**                                                   |
 |---------------|---------------------|-----------------------|-------------------------------------------------------------------|
-| **Parking**   | `name`              | CharField             | Name of the parking lot.                                         |
+| **Parking**   | `name`              | CharField             | Name of the parking object.                                         |
 |               | `user`              | ForeignKey            | Links to the `UserProfile` of the parking manager.               |
 |               | `phone_number`      | CharField             | Contact phone number.                                            |
 |               | `street_address1`   | CharField             | First line of the parking's address.                            |
@@ -279,17 +232,17 @@ The databases are split across 3 diffrent apps:
 |               | `county`            | CharField             | County name.                                                     |
 |               | `postcode`          | CharField             | Postal code.                                                     |
 |               | `country`           | CountryField          | Country of the parking location (default: GB).                   |
-|               | `max_capacity`      | IntegerField          | Maximum capacity of the parking lot (default: 50).               |
+|               | `max_capacity`      | IntegerField          | Maximum capacity of the parking object (default: 50).               |
 |               | `latitude`          | CharField             | GPS latitude for geolocation.                                    |
 |               | `longitude`         | CharField             | GPS longitude for geolocation.                                   |
 |               | `radius`            | CharField             | Effective radius for geofencing.                                 |
-|               | `active`            | BooleanField          | Whether the parking lot is active.                               |
+|               | `active`            | BooleanField          | Whether the parking object is active.                               |
 
 | **Model**     | **Field Name**      | **Field Type**       | **Description**                                                   |
 |---------------|---------------------|-----------------------|-------------------------------------------------------------------|
 | **Rate**      | `rate_name`         | CharField             | Name of the rate plan.                                           |
 |               | `user`              | ForeignKey            | Links to the `UserProfile` of the parking manager.               |
-|               | `parking_name`      | ForeignKey            | Links to the related `Parking` lot.                              |
+|               | `parking_name`      | ForeignKey            | Links to the related `Parking` obejct.                              |
 |               | `hour_range`        | IntegerField          | Duration in hours for which the rate applies.                    |
 |               | `rate`              | DecimalField          | Fee for the specified hour range.                                |
 |               | `timestamp_leave`   | DateTimeField         | Timestamp when the rate was applied.                             |
@@ -297,7 +250,7 @@ The databases are split across 3 diffrent apps:
 | **Model**           | **Field Name**      | **Field Type**       | **Description**                                                   |
 |---------------------|---------------------|-----------------------|-------------------------------------------------------------------|
 | **IllegalParking**  | `inspector`        | ForeignKey            | Links to the inspecting `UserProfile`.                           |
-|                     | `parking_name`     | ForeignKey            | Links to the `Parking` lot where the incident occurred.          |
+|                     | `parking_name`     | ForeignKey            | Links to the `Parking` object.          |
 |                     | `car_reg`          | CharField             | Car registration of the offending vehicle.                       |
 
 </p>
@@ -310,7 +263,7 @@ The databases are split across 3 diffrent apps:
 | **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
 |--------------------|--------------------------|-----------------------|-------------------------------------------------------------------|
 | **Stay**          | `user`                  | ForeignKey            | Links to the `UserProfile` of the parking user.                  |
-|                   | `parking_name`          | ForeignKey            | Links to the `Parking` lot.                                      |
+|                   | `parking_name`          | ForeignKey            | Links to the `Parking` object.                                      |
 |                   | `calculated_fee`        | DecimalField          | Fee calculated based on the stay duration.                       |
 |                   | `stripe_checkout_id`    | CharField             | Stripe checkout session ID for the payment.                      |
 |                   | `paid`                  | BooleanField          | Whether the payment has been made.                               |
@@ -318,14 +271,14 @@ The databases are split across 3 diffrent apps:
 | **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
 |--------------------|--------------------------|-----------------------|-------------------------------------------------------------------|
 | **EnterParking**  | `user`                  | ForeignKey            | Links to the `UserProfile` of the parking user.                  |
-|                   | `parking_name`          | ForeignKey            | Links to the `Parking` lot.                                      |
+|                   | `parking_name`          | ForeignKey            | Links to the `Parking` object.                                      |
 |                   | `stay`                  | ForeignKey            | Links to the associated `Stay` record.                           |
 |                   | `timestamp_enter`       | DateTimeField         | Timestamp of entry.                                              |
 
 | **Model**         | **Field Name**           | **Field Type**       | **Description**                                                   |
 |--------------------|--------------------------|-----------------------|-------------------------------------------------------------------|
 | **LeaveParking**  | `user`                  | ForeignKey            | Links to the `UserProfile` of the parking user.                  |
-|                   | `parking_name`          | ForeignKey            | Links to the `Parking` lot.                                      |
+|                   | `parking_name`          | ForeignKey            | Links to the `Parking` object.                                      |
 |                   | `stay`                  | ForeignKey            | Links to the associated `Stay` record.                           |
 |                   | `timestamp_leave`       | DateTimeField         | Timestamp of departure.                                          |
 
@@ -2847,9 +2800,51 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 
 ### 6.1 Current bugs <a name="current-bugs"></a>
 
+This sections lists errors found in the final version:
+* Back Button - the logic in back button to look into history to find the previous page does not work in following scenario: user tries to reach a specific page -> user is redirected to login -> upon succesful login the user is redirect to initial page : in this case the back button will revert back to initial page.
+
+> [!TIP]
+> There might be a solution, by creating an additional exception, saying that if the history does not have have a previous page, return user to home page.
+
+* Back button does not work after using lighthouse testing. I suspect this has something to do with the impact Lighthouse has on history. In this case the user is redirected to a blank url. To repeat the error: go to `parking-info` page, launch lighthouse -> click back button
+
+* In development after payment is made, the user is logged out and needs to log back it to reach success page. I did not manage to reproduce the error in production. I dont think this error would affect the user experience in production, as the wehbook would still be sent by Stripe marking the the transaction as `paid = true` in the Stay model object.
+
+* The logo image on email does not show on certain messaging system. For example, it will not be displayed on outlook for desktop desktop, but will show on outloop mobile app.
+
+* The javascript validator in register.html are capital sensitive. It will show a warning that two email addresses do not match if one email has a capital and the other does not, but the authentictaion system will accept it.
+
+
 ### 6.2 Design & User Experience improvements <a name="design-improvements"></a>
 
+* The History page could be imporved by adding filters, to allow the user to retrieve specific transaction easily
+* `parking-info` template could display a live map of the parking's geolocation, for visual validation. This would ensure the parking manager enters the correct coordinates. This could be done with either google maps, or Leaflet/Folium.
+* I do not like the way parking rates are presented. Leaving the parking manager the possibility to enter a parking rate title, opens too many potential misunderstandings between the parking company and their customers. I think removing the use of "parking_title" and display parking rate under a specific format could make more sense: [value] hour for [value] instead of letting parking manager give it a title
+* `parking-info` could be improved in the way status information could be displayed. Too much space is taken for the first 3 sections, and all could fit into a single line header with the a second row for values.
+* `parking-info` could be improved in the way rates are displayed with a simple bootstrap row, with columns folding back into 2 rows for small screens. I realised too close to project submission.
+
 ### 6.3 Logic improvements & Backend <a name="logic-improvements"></a>
+
+* The process of pushing migration to heroku could be automated when pushing commits to git
+* The process of collecting static could be automated when pushing commits to git
+* On mobile phone, users seems to get logged out if they open another window, or after a few minutes of innactivity. This does not happen on laptops. This affects the user experience, as they need to log back in everytime they want to access the app. A few posts on Stack Overflow seem to indicate this might be due to how sessions are handled, but I could not find a solution to it. This could also be due to the SSL certicate, as it is not implemented, as this is paying feature on heroku.
+* The Back buttons without <p> not showing a hand cursor, which confuses the user whether the element is clickable or not.
+* Additional business logic could be implemented on the parking manager side reporting on money made through GeoPay
+* Additional features on the user side coudl also be implemented, such a loyalty and subscription to reduce prices.
+* Some repeats in codes in particular with validators preventing parking user and parking manager taking some actions on checked-in parkings. A solution would be to create a global function that could be applied to all functions that need it.
+* A validator could be added to check if all parking spaces are checked-in to prevent user to do so.
+* Implementing a Progressive WebApp (PWA) to implement OCR allowing the packing manager to scan car registartion to confirm whether the car registration is registered, or added to the illegally parked cars model.
+* There is redundancy in some of the FK, but equally adds more visibility from admin panel:
+```python
+class EnterParking(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True)
+    parking_name = models.ForeignKey(Parking, on_delete=models.SET_NULL, null=True, blank=True)
+    stay = models.ForeignKey(Stay, on_delete=models.SET_NULL, null=True, blank=True)
+    timestamp_enter = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.id}"
+```
 
 ## 7. Deployment <a name="deployment"></a>
 
@@ -3010,694 +3005,3 @@ Add whitenoise in settings.py to middleware list
 * `request.resolver_match` : https://medium.com/@iamalisaleh/how-to-get-the-current-url-within-a-django-template-8270b977f280
 
 **In additon**, there is a large number of stackoverflow, reddits and github posts that I should credit but didnt take note of them as I was trying out different solutions.
-
-# colour palette
-
-
-Django setup on local:
-* Create `m4project`
-* Open to `m4project` folder from terminal
-* Create a virtual environment: in terminal enter the following command: `python -m venv env`.
-* Activate the virtual environment: `venv/scripts/activate`
-* Install Django : `pip install django`.
-* Create a new Django project: `django-admin startproject m4project`
-* Run the development server: `python manage.py runserver`
-
-GIt ignore setup credits: https://djangowaves.com/tips-tricks/gitignore-for-a-django-project/
-
-## Stripe (credit #payment logic: credits: https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s)
-
-The tutorial provided by the course material wasnt adapted to what I was looking for. Instead I followed the tutorial from this video (https://www.youtube.com/watch?v=hZYWtK2k1P8&t=1s) and made a number of changes to suit my project.
-
-Improvement: I would like payment to be made without the user having to enter their bank details everytime. I initially wanted to code these in the database, but stripe advises against this. As I wantedt o focus on the geofencing element, I accepted this and left the action for future improvements.
-
-Steps:
-
-* Install Stripe `pip install stripe`
-* install Stripe CLI `winget install Stripe.StripeCLI` (for VS Code)
-* Get Stripe secret key + public key : create profile on stripe and find them on dashboard + add to .env file
-* Get `STRIPE_WEBHOOK_SECRET_TEST`: 
-    * Login to stripe form command line: `stripe login`
-    * Enter in command line: `stripe listen --forward-to localhost:8000/stripe_webhook`
-    * Copy paste key in `STRIPE_WEBHOOK_SECRET_TEST: []` in .env file.
-
-    @login_required 
-    def payment(request,applicable_fee, stay_id):
-        stripe.api_key = settings
-        if request.method == 'POST':
-            checkout_session = stripe.checkout.Session.create(
-                payment_method_types = ['cards'],
-                line_items =[
-                    {
-                        'price':applicable_fee,
-                        'quantity':1,
-
-                    },
-                ],
-                mode = 'payment',
-                customer_creation = 'always',
-                succesful_url = settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url = settings.REDIRECT_DOMAIN + '/payment_cancelled',
-            )
-            print(f'checkout_session = {checkout_session}')
-            return redirect(checkout_session.url, code=303)
-
-* Add secret keys to .env file
-
-    STRIPE_PUBLIC_KEY_TEST = [the_key_here]
-    STRIPE_SECRET_KEY_TEST= [the_key_here]
-    STRIPE_WEBHOOK_SECRET = [the_key_here]
-
-* Add to settings .py:
-    from dotenv import load_dotenv
-    load_dotenv()
-
-    STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_SECRET_KEY')
-    STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
-    REDIRECT_DOMAIN = os.getenv('REDIRECT_DOMAIN', 'http://localhost:8000')
-
-> [!TIP]
-> Errors encountered:
-> 
-> `"Error in payment process: No API key provided."`
-> 
-> This was fixed by initialising the API key at the beginning of the logic:
-> 
-> ```python
-> @login_required
-> def payment(request, applicable_fee, stay_id):
->     try:
->         # Set API key at the beginning to avoid 
->         # "Error in payment process: No API key provided."
->         stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
-> ```
-
-Add Stripe cutsomer ID in profile model:
-
-    customer = stripe.Customer.create(
-            email=request.user.email
-            # Additional customer fields can be added here if needed
-        )
-        request.user.userprofile.stripe_customer_id = customer.id
-        request.user.userprofile.save()
-
-Pass id in logic: 
-    customer=request.user.userprofile.stripe_customer_id,
-
-Keep track of payment:
-* When user is about to pay, stripe transaction is recorded
-
-    @login_required
-    def payment(request,applicable_fee,stay_id):
-        ...
-
-            #update stay model field with strip checkout id
-            stay = Stay.objects.get(id=stay_id)
-            stay.stripe_checkout_id = checkout_session.id
-            stay.save()
-
-* When user paid: stripe transaction is marked as true:
-
-    @login_required
-    def payment_successful(request):
-        stripe.api_key = stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
-        checkout_session_id = request.GET.get('session_id', None)
-        session = stripe.checkout.Session.retrieve(checkout_session_id)
-        customer = stripe.Customer.retrieve(session.customer)
-        
-        #mark stay payment as successful (bool to Tue)
-        stay = Stay.objects.get(stripe_checkout_id=checkout_session_id)
-        stay.paid = True
-        stay.save()
-        print("Payment sucessful!")
-
-
-
-## static files
-
-* Install packages: `pip install django-storages boto3`
-Add to settings.py:
-
-    # Static files (CSS, JavaScript, Images)
-    # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-        STATIC_URL = 'static/'
-        STATICFILES_DIRS = [
-            os.path.join(BASE_DIR, 'static'),
-        ]
-
-        MEDIA_URL = '/media/'
-        MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-* Add to urls.py (project level):
-    from django.conf import settings
-    from django.conf.urls.static import static
-
-    urlpatterns = [
-    ...
-    ]
-
-    # Serve media files during development
-    if settings.DEBUG:
-        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-## Setup AWS S3 Bucket
-The project does not have any media files, with the exception of the logo and favicon.
-
-As a result, it felt that time should not be invested into a full integration of the S3 bucket.
-
-The steps below cover the initial steps followed to setup an AWS account and host the logo file on S3.
-* Create an account
-* Create an S3 Bucket (untick `Block all public access`)
-* Click on newly created bucket and go to Permissions
-* write JSON bucket policy:
-* Click `Policy Generator` and entert he following: 
-    Type:`S3 Bucket Policy`
-    Select `Allow`
-    Principal: `*`
-    Actions: `GetObject`
-    ARN: `[enter ARN number from Properties tab]/*`
-* Copy/Paste policy generated into the policy bucket.
-* In terminal run:
-    `pip install django-storages`
-    `pip install boto3`
-* In setting.py:
-
-    INSTALLED_APPS = [
-    
-        #S3 bucket
-        'storages',
-    ]
-
-
-
-## Heroku Setup (Production)
-* Log into heorku : `heroku login`
-* Add heroku remote : `git remote add heroku [Heroku Git URL]` (can be found in Heroku Settings)
-* Push code to Heroku: `git push heroku master`
-* Run first migration: `heroku run python manage.py migrate`
-
-Problem encountered: the Procfile generated with command line from documentation echo web: gunicorn app:app > Procfile created an issue relating to encoding. The encoding defaulted to UTF-16 instead of UTF-8.
-
-To solve this problem: create a new Procfile through a Notepad, selected encoding UTF-8 and called it Procfile.txt in the same location as the actual Procfile. I then deleted the previous Procfile and renamed Procfile.txt to Procfile.
-
-### 
-
-setup Debug = False
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-crdiits: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
-
-Add whitenoise in settings.py to middleware list
-
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-> [!TIP]
-> `MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.`. Adding whitenoise corrected the error. See below for process to adding whitenoise.
-
-> [!TIP]
-> If the `.css` file is not loading in production, move `'whitenoise.middleware.WhiteNoiseMiddleware'` to the top.
-> 
-> ```python
-> MIDDLEWARE = [
->     'django.middleware.security.SecurityMiddleware',
->     # Whitenoise package: used for production, should be set at the top
->     'whitenoise.middleware.WhiteNoiseMiddleware',
-> ]
-> ```
-
-> [!NOTE]
-> Procfile encoding: https://stackoverflow.com/questions/19846342/unable-to-parse-procfile
-
-## geolocation
-
-Credits: https://www.w3schools.com/html/html5_geolocation.asp
-
-
-In geolocation.js add:
-    const x = document.getElementById("userLocation");
-
-    function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-    }
-
-    function showPosition(position) {
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
-    }
-
-add to base.html:
-
-    {% block postloadjs %}
-        <script src="{% static 'js/geolocation.js' %}"></script>
-    {% endblock %}
-
-> [!TIP] `Uncaught TypeError: Cannot set properties of null (setting 'innerHTML')`. This was a result of the script being uploaded at the beginning of the template, before the element exists.  
-> This problem was solved by moving this specific script to the bottom of the body of the template.  
-> Add to `index.html`:
-> 
-> ```html
-> <button onclick="getLocation()">Try It</button>
-> <p id="userLocation"></p>
-> ```
-
-Once this has proven to work. We can proceed by incorporating the user location in the logic of `enter()`.
-
-We add a few more variables to `getlocation()`, which will be used to feed some `hidden` input field in the Enter form in enter.html.
-
-* add to geolocation.js:
-
-    document.addEventListener('DOMContentLoaded', function(){
-    
-    const latitudeField = document.getElementById("userLatitude") # new
-    const longitudeField = document.getElementById("userLongitude") # new
-
-    function getLocation() {
-        if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition); 
-        } else { 
-        alert("Geolocation is not supported by this browser.");
-        }
-    }
-
-    function showPosition(position) {
-
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-
-        // adds value to hidden inputs in index.html
-        latitudeField.value = latitude; # new
-        longitudeField.value = longitude; # new
-
-    }
-    getLocation() # new
-    })
-
-* add to enter.html the hidden inputs:
-
-    <form method="post">
-        {% csrf_token %}
-        <input type="hidden" id="userLatitude" name="latitude" value="">
-        <input type="hidden" id="userLongitude" name="longitude" value="">
-        {{stayform}}
-        <input type="submit" onclick="getLocation()" value="OK">
-    </form>
-
-* in views.py  in `enter()`:
-
-    @login_required
-    def enter(request):
-    
-        if request.method == "POST":
-            # capture user current location
-            latitude = request.POST.get('latitude')
-            longitude = request.POST.get('longitude')
-            print(f'{request.user.username}: latitude = {latitude} + longitude = {longitude}')
-
-Geolocation radius:
-> [!NOTE]
-> Geolocation credits: https://stackoverflow.com/questions/42686300/how-to-check-if-coordinate-inside-certain-area-python
-> Geolocation credits: https://geopy.readthedocs.io/en/stable/#module-geopy.distance
-
-* Install Geopy: `pip install geopy`
-* import geopy in views.py (parking_activity app):
-
-    from parking_management.models import Parking
-
-* add distance calculation logic between user and parkings `enter()`:
-
-    @login_required
-    def enter(request):
-    
-        if request.method == "POST":
-            ...
-
-            # set user location in tuple
-            user_location = [{'lat': {user_latitude}, 'lng': {user_longitude}}]
-            user_location_tuple = (float(user_latitude), float(user_longitude))
-          
-            # match current user location to parking radius (if any)
-            parkings = Parking.objects.all()
-            
-            # create for loop of parkings
-            for parking in parkings:
-
-                parking_radius = float(parking.radius)
-                
-                # set parking location in tuple
-                parking_location_tuple = (float(parking.latitude), float(parking.longitude))
-
-                #measure distance between user location and parking location
-                locations_distance = distance.distance(
-                    user_location_tuple,
-                    parking_location_tuple).meters
-                
-                print("Distance: {}".format(locations_distance))
-
-                if locations_distance <= parking_radius:
-                    print(f'You are in {parking.name}')
-
-                    ...
-
-                else:
-                    print(f'You are not in {parking.name}')
-
-
-**Error encountered** `TypeError: float() argument must be a string or a real number, not 'set'`: following Igor-S answer on stackoverflow, I encountered this error.
-
-This is because of the use of `({})`, which in Python define a set, rather than parentheses `()`.
-
-To fix this error by converting the values into `float`:
-    
-    user_location = (float(user_latitude), float(user_longitude))
-
-**Error encountered** `TypeError: '<=' not supported between instances of 'float' and 'str'`: following the above mentioned example provided on stackoverflow.
-
-This error happened because `parking.radius` is a string and `locations_distance` is a float.
-
-    if locations_distance <= parking_radius:
-        print(f'You are in {parking.name}')
-    else:
-        print(f'You are not in {parking.name}')
-
-Both values need to be in the same format:
-
-    parking_radius = float(parking.radius)
-
-**Error encountered** User geolocation innacuracy: in order to deal with lack of accuracy of the user location (which seems to be between 3m to 888m range based on various test), the minimum parking radius has been set to 1km (1000m).
-
-In future development, this radius could be drastically reduced by using GPS location. This would require using native features of the phone. Either through a mobile app, or using Django's progressive web app.
-
-* handle redirect to identified parking_id or not
-
-Due to potential innacuracy in geolocation, `get_parking_location()` might not return a parking ID.
-
-Depending on the scenario, `get_parking_location()` will redirect the user with out without the `parking id` as a parameter:
-
-    return redirect('enter_with_parking_id', parking_id=parking_name.id)
-
-    or
-
-    return redirect('enter') 
-
-To handle these two scenarios, two paths leading to the same view were made available:
-
-    path('enter/', views.enter, name='enter'),
-    path('enter/<int:parking_id>/', views.enter, name='enter_with_parking_id'),
-
-The parameter is then returned in `enter()` and is given a default value of `None`:
-
-    def enter(request, parking_id=None):
-
-* StayForm() handling and submission
-
-This part is handled by `enter()` and considers two scenarios through a form:
-* if parking_id is provided as an argument, the user is asked to confirm they are happy to be marked as having entered `parking_id`
-* if parking_id is None, the user is asked to select the parking name from a drop down menu.
-
-Upon submission of the form, a Stay object is created, together with an Enter Object, both are linked via a foreign Key.
-
-* rendering of parking fees (javascript)
-
-Within the javascript document, the following logic is applied:
-
-First implement a logic that collects the `parking_id`:
-
-If provided as a parameter, the logic picks up the parking_id from the url
-
-    // sets parking id as null by default
-    let parkingId = "null";
-    // captures parameter from url (if any)
-    const path = window.location.pathname;
-    const match = path.match(/\/enter\/(\d+)\//);
-    const parkingIdFromParam = match ? match[1] : null;
-    console.log(`parking id is ${parkingIdFromParam}`);
-
-If not provided as parameter, a drop down menu needs to be added to the html template looping over the different parking names available.
-
-    <!-- If parking ID is None -->
-    <form method="post">
-        {% csrf_token %}
-        <label for="parking-select">Select Parking:</label>
-        <select id="parking-select" name="parking_name">
-            <option value="">Select parking</option>
-            {% for parking in parking_list %}
-                <option value="{{ parking.id }}" 
-                    {% if parking_id == parking.id %}
-                        selected
-                    {% endif %}>
-                    {{ parking.name }}
-                </option>
-            {% endfor %}
-        </select>
-        <input type="submit" value="Submit the form">
-    </form>
-
-Once a parking name is selected, variable `manuallySelectedParking` collects the chosen parking name, which in turn give `parkingId` the id of the parking selected.
-
-    const manuallySelectedParking = document.getElementById('parking-select');
-        console.log("manuallySelectedParking=", manuallySelectedParking);
-
-    if(manuallySelectedParking){
-        manuallySelectedParking.addEventListener('change', function(){
-            console.log("this is getting accessed")
-            parkingId = this.value || "null";
-            console.log(`Updated parking id is ${parkingId}`);
-            // only trigger fetchRates() if parking_id is not null
-            // to avoid 404 error in console
-            if (parkingId !== "null"){
-                fetchRates();
-            }
-                
-            })
-
-
-Once `parking_id` is retrieved, the logic calls `get_parking_rates()` to return the parking rates. The function dynamically returns parking fees based on the parking selected.
-
-    #used to get parking rates through API (dynamically generated with js)
-    #note: safe = False allows to return a list instead of a dictonnary
-    # this is because Json expect a dict by default (add error to log of errors encourntered)
-    # credits: https://dev.to/chryzcode/django-json-response-safe-false-4f9i
-    def get_parking_rates(request, parking_id):
-        print(f'get_parking_rates parking id = {get_parking_rates}')
-        rates = Rate.objects.filter(parking_name_id = parking_id).values(
-            'rate_name',
-            'hour_range',
-            'rate',
-        )
-        return JsonResponse(list(rates), safe=False)
-
-`get_parking_rates()` is called from parking_fee.js at the bottom of template : `enter.html`
-    
-**enter.html**
-
-    {% block postloadjs %}
-    <script src="{% static 'js/parking_fee.js' %}"></script>
-    {% endblock %}
-
-**parking_fee.js**
-
-Create function `fetchRates()` to dynamically collect applicables rates from selected parking form the database.
-
-    function fetchRates(){
-        console.log(`ParkindId in fetchRates= ${parkingId}`);
-        if(parkingId){
-            fetch(`/parking_activity/get_parking_rates/${parkingId}/`)
-            .then(response => response.json())
-            .then(data =>{
-                console.log("Fetched rates", data);
-                renderRatesTable(data);
-            })
-            .catch(error => console.error("theres an error when getting the rates", error))
-        }   
-    }
-
-Once the data is collected, it can then be rendered in `enter.html` template with `renderRatesTable()`.
-
-    function renderRatesTable(data){
-
-        // get the body of the table
-        const table = document.getElementById("ratesTable");
-        const tbody = document.querySelector("table tbody")
-        tbody.innerHTML = "";
-
-        if(data.length>0){
-            
-            // shows table
-            table.style.display ="table"
-            // Adds data to table rwos
-
-            data.forEach(rate=>{
-                const tableRow = document.createElement('tr');
-                tableRow.innerHTML = `
-                <tr>
-                    <td>${rate.rate_name}</td>
-                    <td>${rate.hour_range}</td>
-                    <td>${rate.rate}</td>
-                </tr>
-                `;
-                tbody.appendChild(tableRow);
-            });
-        }else{
-            table.style.display = "none"
-        }
-    }
-
-    <table>
-        <thead>
-            <tr>
-                <th>Rate Name</th>
-                <th>Hour Range</th>
-                <th>Rate</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
-
-
-> [!TIP] `404 Page Not Found` when `parkingId` is null. To cover this, wrap `fetchRates()` within an if statement that checks if `parkingId` is null before triggering `fetchRates()`.
-> 
-> ```javascript
-> if (parkingId !== "null") {
->     fetchRates()
-> }
-> ```
-
-> [!NOTE]
-> https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
-> https://stackoverflow.com/questions/42686300/how-to-check-if-coordinate-inside-certain-area-python
-> https://geopy.readthedocs.io/en/stable/#module-geopy.distance
-
-# Parking Management App
-
-## Parking Manager Dashboard
-
-## Create New Parking (form)
-
-This feature is managed by `create_parking()`. 
-
-To enable this `ParkingForm` is created in forms.py, allowing to create Parking model objects.
-
-Upon successful submission, the newly created object passes its id, as a parameter to redirect the user to `parking_info()`
-
-Use Crispy Forms:
-* Run `pip install django-crispy-forms`
-* Run `pip install crispy-bootstrap5`
-* Run `pip install django-countries`
-
-* In Installed_apps (Settings.py) add:
-
-    INSTALLED_APPS = [
-        'django.contrib.admin',
-        ...
-        #crispy form packages
-        'crispy_forms',
-        'crispy_bootstrap5',
-
-    ]
-* In Settings.py, add:
-
-    CRISPY_TEMPLATE_PACK = 'bootstrap5'
-
-## See Parking Details (CRUD)
-
-# Parking Rates (CRUD)
-
-# Parking Inspector (see registration, take note of those not registered)
-
-## JS Validators on signup
-
-## django logging to see logs in production
-
-import os
-
-    LOGGING = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "handlers": {
-            "console": {
-                "class": "logging.StreamHandler",
-            },
-        },
-        "root": {
-            "handlers": ["console"],
-            "level": "WARNING",
-        },
-        "loggers": {
-            "django": {
-                "handlers": ["console"],
-                "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
-                "propagate": False,
-            },
-        },
-    }
-
-ciredits: https://docs.djangoproject.com/en/5.1/topics/logging/
-
-## is_parking_customer()
-
-## is_parking_manager()
-Used to prevent non `parking_manager` user types to access parking_management app functions.
-
-    class UserProfile(models.Model):
-        user = models.OneToOneField(User, on_delete=models.CASCADE)
-        user_type = models.IntegerField(choices=USER_TYPE, default = 1)
-    
-
-    def is_parking_manager(request):
-        print(f'request.user.userprofile.user_type: {request.user.userprofile.user_type}')
-        if request.user.userprofile.user_type != 2:
-            return False
-        return True
-
-        @login_required
-    def parking_manager_dashboard(request):
-        if not is_parking_manager(request):
-            return redirect('home')
-        
-        ...
-
-If the user_type is not '2' (parking manager), return user to home page.
-
-## decorators
-from django.views.decorators.http import require_POST
-@login_required
-
-from django.contrib.auth.decorators import login_required
-login_required
-
-
-## error handlers
-
-
-## Problem encountered - user getting logged out on mobile phone 
-when opening new borwser window when scanning QR code
-
-To solve this problem, add to settings.py:
-
-    # Prevent sessions from being reset
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True 
-    SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
-    SESSION_COOKIE_DOMAIN = '.geopay-12a0f6ced11c.herokuapp.com'
-    CSRF_TRUSTED_ORIGINS=['https://*.geopay-12a0f6ced11c.herokuapp.com']
-
-credits: https://stackoverflow.com/questions/3976498/why-doesnt-session-expire-at-browser-close-true-log-the-user-out-when-the-bro
-
-This has improve the result. However, the problem still persist. This could be due to the fact I havent deployed the SSL certificate on the site, as this is a paying feature.
-
-
-
-Credits:
-Validation for login : https://stackoverflow.com/questions/74245576/the-problem-of-not-displaying-validation-messages-in-allauth-after-overriding-al
-
-## sites used
-https://cdnjs.com/ : for cdn links
-https://tabular.email/: for email template
-https://icons8.com/ : icons on email
