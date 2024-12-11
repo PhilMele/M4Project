@@ -57,7 +57,7 @@ else:
     SESSION_COOKIE_DOMAIN = None
     CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'https://localhost:8000']
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 # credits: https://stackoverflow.com/questions/3976498/why-doesnt-session-expire-at-browser-close-true-log-the-user-out-when-the-bro
 
 # Application definition
@@ -276,4 +276,5 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'success',
 }
 
-MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+# Improve cache storage and fixes issue of messages not always being displayed
+MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
