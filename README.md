@@ -2558,25 +2558,12 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 </details>
 
 <details>
-    <summary style="color: white; background: black; padding: 5px;">forms.py</summary>
-    <p>
-        <kbd><img src="static/images/readme_images/testing/python/user_management/python-user-management-forms.png" alt="forms.py" /></kbd>
-    </p>
-</details>
-
-<details>
     <summary style="color: white; background: black; padding: 5px;">admin.py</summary>
     <p>
         <kbd><img src="static/images/readme_images/testing/python/user_management/python-user-management-admin.png" alt="admin.py" /></kbd>
     </p>
 </details>
 
-<details>
-    <summary style="color: white; background: black; padding: 5px;">admin.py</summary>
-    <p>
-        <kbd><img src="static/images/readme_images/testing/python/user_management/python-user-management-admin.png" alt="admin.py" /></kbd>
-    </p>
-</details>
 
 **Parking Management App**
 

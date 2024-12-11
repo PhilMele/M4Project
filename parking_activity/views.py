@@ -153,7 +153,6 @@ def enter(request, parking_id=None):
             stayform = StayForm()
 
     else:
-        print("Paring Id is none. Do this parrt later")
         if request.method == "POST":
 
             # get the parking_name value from POST
@@ -434,7 +433,6 @@ def stripe_webhook(request):
                 logger.info('Email sent successfully')
             except Exception as e:
                 logger.error('Error sending email: %s', str(e))
-            print('email is sent')
         except Stay.DoesNotExist:
             logger.error(
                 "Stay record not found for session ID: %s", session_id)

@@ -178,8 +178,6 @@ def parking_info(request, parking_id):
     if not is_parking_manager(request):
         return redirect('home')
 
-    print({parking_id})
-
     stay_objects_count = parking_space_available(request, parking_id)
     parking = get_object_or_404(Parking, id=parking_id)
     rates = Rate.objects.filter(parking_name=parking)
