@@ -179,7 +179,7 @@ def delete_user_account(request):
         if existing_stay_obj:
             messages.error(
                 request,
-                "Your delete your account whilst checked-in.")
+                "You cannot delete your account whilst checked-in.")
 
             return redirect('user-account')
 
