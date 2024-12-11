@@ -13,11 +13,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
-#stripe modul import
+# stripe modul import
 from dotenv import load_dotenv
 
 # to display custom alert messages
 from django.contrib.messages import constants as messages
+
+from decouple import config
+import dj_database_url
 
 load_dotenv()
 
@@ -35,8 +38,6 @@ STRIPE_SECRET_KEY_TEST = os.getenv('STRIPE_SECRET_KEY_TEST')
 STRIPE_WEBHOOK_SECRET_TEST = os.getenv('STRIPE_WEBHOOK_SECRET_TEST')
 REDIRECT_DOMAIN = os.getenv('REDIRECT_DOMAIN', 'http://localhost:8000/')
 
-
-# Credits : https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = [
@@ -50,7 +51,7 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_DOMAIN = '.geopay-12a0f6ced11c.herokuapp.com'
-    CSRF_TRUSTED_ORIGINS=['https://*.geopay-12a0f6ced11c.herokuapp.com']
+    CSRF_TRUSTED_ORIGINS = ['https://*.geopay-12a0f6ced11c.herokuapp.com']
 else:
     CSRF_COOKIE_SECURE = False
     SESSION_COOKIE_SECURE = False
@@ -58,7 +59,6 @@ else:
     CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'https://localhost:8000']
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-# credits: https://stackoverflow.com/questions/3976498/why-doesnt-session-expire-at-browser-close-true-log-the-user-out-when-the-bro
 
 # Application definition
 INSTALLED_APPS = [
@@ -81,11 +81,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 
-    #crispy form packages
+    # crispy form packages
     'crispy_forms',
     'crispy_bootstrap5',
 
-    #S3 bucket
+    # S3 bucket
     'storages',
 
     # erd generator
@@ -96,18 +96,16 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    #whitenoise package : used for production
+    # whitenoise package : used for production
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #All auth package:
+    # All auth package:
     'allauth.account.middleware.AccountMiddleware',
-    
 ]
 
 ROOT_URLCONF = 'm4project.urls'
@@ -117,7 +115,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-        
             os.path.join(BASE_DIR, 'templates', 'allauth'),
 
         ],
@@ -153,7 +150,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https' 
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[GeoPay]"
 
@@ -169,10 +166,6 @@ LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'm4project.wsgi.application'
 
-
-from decouple import config
-import dj_database_url
-
 DATABASES = {
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
@@ -183,16 +176,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.'
+                'password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.'
+                'password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.'
+                'password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -208,7 +205,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-#Crispy forms
+# Crispy forms
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
