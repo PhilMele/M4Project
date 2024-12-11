@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Stay, LeaveParking, EnterParking
 # Register your models here.
 
+
 class StayAdmin(admin.ModelAdmin):
     list_display = (
         'user',
@@ -11,6 +12,7 @@ class StayAdmin(admin.ModelAdmin):
 
     )
 
+
 class LeaveParkingAdmin(admin.ModelAdmin):
     list_display = (
         'user',
@@ -19,12 +21,14 @@ class LeaveParkingAdmin(admin.ModelAdmin):
         'timestamp_leave',
     )
 
+
 class FeeAdmin(admin.ModelAdmin):
     list_display = (
         'user',
         'calculated_fee',
         'parking_name',
     )
+
 
 class EnterParkingAdmin(admin.ModelAdmin):
     list_display = (
@@ -33,6 +37,7 @@ class EnterParkingAdmin(admin.ModelAdmin):
         'stay',
         'timestamp_enter',
     )
+
 
 admin.site.register(Stay, StayAdmin)
 

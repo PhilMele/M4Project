@@ -292,10 +292,10 @@ def add_rate(request, parking_id):
                 return redirect('parking-info', parking_id=parking_id)
             except ValidationError as e:
                 messages.error(
-                request,
-                "Oops. Something did not work. "
-                "It might be the hour range you have entered "
-                "already exist for another rate.")
+                    request,
+                    "Oops. Something did not work. "
+                    "It might be the hour range you have entered "
+                    "already exist for another rate.")
         else:
             messages.error(
                 request,

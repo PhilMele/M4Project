@@ -3,6 +3,7 @@ from django.contrib.sites.models import Site
 from .models import UserProfile
 from django.contrib.auth.models import User
 
+
 # Register your models here.
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = (
@@ -10,7 +11,6 @@ class UserProfileAdmin(admin.ModelAdmin):
         'user_type',
         'car_registration',
     )
-
 
 
 admin.site.register(UserProfile, UserProfileAdmin)

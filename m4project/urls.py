@@ -11,7 +11,7 @@ urlpatterns = [
     path('', include('user_management.urls')),
     path('parking_activity/', include('parking_activity.urls')),
     path('parking_management/', include('parking_management.urls')),
-] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = 'user_management.views.handler404'
 handler500 = 'user_management.views.handler500'
