@@ -191,8 +191,10 @@ Icons and images are hosted on S3 Bucket:
 
 * Logo was generated using MidJourney;
 * Icons used are mostly coming from FontAwesome;
-* Other icons, in particular those used in email find are sourced from Icons8;
-* There is no actual images, as it did not add any value to the purpose of the product
+* Other icons, in particular those used in emails are sourced from Icons8;
+* There is other image, as it did not add any value to the purpose of the product.
+
+As users do not need to upload any image, and in order to reduce devevlopment times, it was therefore decided to upload media assets directly on S3 Buckets (see S3 Bucket Section for process).
 
 ### 2.4 Wireframes <a name="wireframes"></a>
 
@@ -2660,7 +2662,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 | 18 | Parking Manager - User cannot create parking object with partial information provided | As Parking Manager, populate all fields but one. | User receives a prompt that missing field is mandatory. | User receives a prompt that missing field is mandatory. | Pass |
 | 19 | Parking Manager - User cannot enter a parking radius lower than 50m | As Parking Manager, enter parking radius value = 10 | User receives a prompt saying minimum value is 50. | User receives a prompt saying minimum value is 50. | Pass |
 | 20 | Parking Manager - User edits parking object | As Parking Manager, click on "edit" parking | User is redirected to edit parking form. | User is redirected to edit parking form. | Pass |
-| 21 | Parking Manager - User deletes parking object | As Parking Manager, click on "delete" parking | Parking object is deleted and user receives message confirming object is deleted. | Parking is deleted. Success message is displayed. Initially failed: this was due to session management. Corrected by session changing value against var `SESSION_ENGINE` in settings.py. | Pass |
+| 21 | Parking Manager - User deletes parking object | As Parking Manager, click on "delete" parking | Parking object is deleted and user receives message confirming object is deleted. | Parking is deleted. Success message is displayed.  | Initially failed: this was due to session management. Corrected by session changing value against var `SESSION_ENGINE` in settings.py. |
 | 22 | Parking Manager - User cannot delete parking object if Parking User is checked-in | As Parking Manager, if a user has checked-in, try to delete parking. | User receives a prompt advising this action isn't possible while cars are checked-in. | User receives a prompt advising this action isn't possible while cars are checked-in. | Pass |
 | 23 | Parking Manager - User cannot activate parking without parking rate object created | As Parking Manager, go to Parking Info template and look for "Activate" button. | Activate is not displayed and a prompt tells user to scroll down to create a rate. | Activate is not displayed and a prompt tells user to scroll down to create a rate. | Pass |
 | 24 | Parking Manager - User can access parking information live status: active/inactive | As Parking Manager, click on "info" button to see active/inactive | User can see if parking is active or inactive. | User can see if parking is active or inactive. | Pass |
@@ -2670,7 +2672,7 @@ The HTML tests are returning errors and warnings in relations to Django's syntha
 | 28 | Parking Manager - User can enter illegally parked registrations in parking inspector feature | As Parking Manager, enter car registration in input field from parking inspector page | User can enter car registration in input fields. | User can enter car registration in input fields. | Pass |
 | 29 | Parking Manager - User can access list of illegally parked cars from parking inspector feature | As Parking Manager, click bottom right tab to see car registrations entered from previous step. | User can see list of illegally parked cars they registered. | User can see list of illegally parked cars they registered. | Pass |
 | 30 | Parking Manager - User can create parking rate | As Parking Manager, click on "Add New Rate" button | User can create a new rate through rate form. | User can create a new rate through rate form. | Pass |
-| 31 | Parking Manager - User cannot create 2 parking rates for same hour range | As Parking Manager, in Add Rate page create a first rate and create a second one with the same hour_range field value (multiplier) | User is prompted that something is wrong and it might be because same hour range is appointed to another rate object. | User is prompted that something is wrong and it might be because same hour range is appointed to another rate object. | Pass |
+| 31 | Parking Manager - User cannot create 2 parking rates for same hour range | As Parking Manager, in Add Rate page create a first rate and create a second one with the same hour_range field value (multiplier) | User is prompted that something is wrong and it might be because same hour range is appointed to another rate object. | User is prompted that something is wrong and it might be because same hour range is appointed to another rate object. | Initally failed. `ValidationError` wasn’t imported. The initial logic add a `print()` which was replaced with `ValidationError`later on. |
 | 32 | Parking Manager - User cannot create a parking rate under value 0.1 | As Parking Manager, in Add Rate page create a rate value at 0. | User is prompted to add a value from 0.1 | User is prompted to add a value from 0.1 | Pass |
 | 33 | Parking Manager - User can edit a parking rate | As Parking Manager, click "Edit" and modify previously saved parking rate | New parking rate is saved and displayed to user. | New parking rate is saved and displayed to user. | Pass |
 | 34 | Parking Manager - User can delete a parking rate | As Parking Manager, click "delete" parking rate | Parking rate object is deleted. | Parking rate object is deleted. | Pass |
