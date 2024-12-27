@@ -19,7 +19,7 @@ Once you have setup a parking under the desired geolocation, as parking manager,
 Although a plus, the project does not require a mobile phone to be tested.
 
 <p align="center" width="100%">
-   <img width="200" src="static\images\readme_images\geopay_qr_code\geopay-qr-code.png">
+   <img width="200" src="static\images\readme_images\geopay_qr_code\geopay-qr-code-edited.png">
 </p>
 
 
